@@ -23,6 +23,8 @@ void init_DHB_PWM23_GPIO(void);
 void init_HEATER_PWM56_GPIO(void);
 void enable_DHB_gate_drivers(void);
 
+void pwm_ad_synch(void);
+
 
 //#define AUX_PWM1B_ENABLE
 //#define CUK_PWM2B_ENABLE

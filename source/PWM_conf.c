@@ -347,3 +347,28 @@ void enable_DHB_gate_drivers(void)
 
 }
 
+void pwm_ad_synch(void)
+{
+	//pwm2 = duty+1, pwm3 = duty-2*deadtime, ph3 = deadtime
+	   (*ePWM[1]).CMPA.half.CMPA = 444-111;//31;
+	   (*ePWM[1]).CMPB = 410;//31;
+
+	   (*ePWM[2]).CMPA.half.CMPA = 222;//31; //high side gate
+	   (*ePWM[2]).CMPB			 = 215;
+	   (*ePWM[3]).CMPA.half.CMPA = 222;//30-6;
+
+	   (*ePWM[4]).CMPA.half.CMPA = 8;//31;
+	   (*ePWM[4]).CMPB 			 = 8;//31;
+
+	   (*ePWM[5]).CMPA.half.CMPA = 80+14;//30-6;
+	   (*ePWM[5]).CMPB 			 = 215;//31;
+	   (*ePWM[6]).CMPA.half.CMPA = 80;
+
+	// PHASE CONTROL OF PWM CHANNELS
+
+	   (*ePWM[2]).TBPHS.half.TBPHS = 111; //0
+	   (*ePWM[3]).TBPHS.half.TBPHS = 111; //0+3
+	   (*ePWM[4]).TBPHS.half.TBPHS = 0;
+	   (*ePWM[5]).TBPHS.half.TBPHS = 40+7; //148
+	   (*ePWM[6]).TBPHS.half.TBPHS = 40; //148-7
+}
