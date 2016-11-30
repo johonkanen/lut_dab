@@ -29,11 +29,10 @@
 #include "uart_comm.h"
 
 /**** HW COMPILE ENABLE *****/
-#define ENABLE_DHB_GATE_DRIVERS 1
-#define ENABLE_DHB_GPIO 		1
-#define ENABLE_PFC_GPIO 		1
-#define ENABLE_HEATER_GPIO 		0
-#define ENABLE_AUX_GPIO 		1
+
+//	TODO
+
+
 /****************************/
 #define LINK_TO_FLASH 0
 #define INTERRUPT_TIMING 0
@@ -134,7 +133,6 @@ main(void)
 
    InitSpi();
 
-   //testifunktio(&meas);
    config_measurements(&meas);
 
    aux_meas = meas.aux_voltage;
@@ -147,10 +145,9 @@ main(void)
    EALLOW;
        SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 0;
    EDIS;
-   AUX_PWM1_config();
-   PFC_PWM4_config();
-   DHB_PWM23_config();
-   HEATER_PWM56_config();
+
+   PRI_DAB_PWM34_config();
+   SEC_DAB_PWM56_config();
 
    EALLOW;
    SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1; // start all PWM channels synchronized
@@ -245,10 +242,6 @@ main(void)
    GpioDataRegs.GPASET.bit.GPIO24 = 1;
    //GpioDataRegs.GPASET.bit.GPIO31 = 1; //set data read to dhb ad converter
 
-   (*ePWM[5]).CMPA.half.CMPA = 109+14;//30-6;
-   //(*ePWM[5]).CMPB 			 = 55;//31;
-   (*ePWM[6]).CMPA.half.CMPA = 109;
-
    init_msg_source();
 
    scale = SCALE;
@@ -263,62 +256,6 @@ main(void)
    GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
    EINT;
 
-   //enable pwm outputs
-
-#if (ENABLE_AUX_GPIO == 1)
-   init_AUX_PWM1_GPIO();
-#endif
-   // TODO, add ramp to aux reference
-/*
-   while(aux_voltage <= AUX_voltage_ctrl.ref)
-   {
-	   //wait for aux voltage to rise
-   }
-*/
-
-   (*ePWM[2]).CMPA.half.CMPA = 20;//31; //isolated side
-//   (*ePWM[2]).CMPB			 = 111
-   (*ePWM[3]).CMPA.half.CMPA = 20;//30-6;
-
-
-#if (ENABLE_PFC_GPIO == 1)
-   init_PFC_PWM4_GPIO();
-
-
-   while(DC_link_voltage_ctrl.rampup < (int16)DC_link_voltage_ctrl.ref)
-   {
-	   if(DC_link_voltage_ctrl.rampup > (int16)DC_link_voltage_ctrl.ref)
-	   {
-		   DC_link_voltage_ctrl.rampup = (int16)DC_link_voltage_ctrl.ref;
-	   }
-	   //wait for dc link voltage rampup to rise to reference value
-   }
-
-#endif
-
-
-   DINT;	//disable interrupts
-   EALLOW;  // This is needed to write to EALLOW protected register
-   PieVectTable.EPWM1_INT = &AUX_ctrl_cuk_rampup;
-   EDIS;    // This is needed to disable write to EALLOW protected registers
-   GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
-
-#if (ENABLE_DHB_GPIO == 1)
-   init_DHB_PWM23_GPIO();
-#endif
-// enable dhb gate drivers
-#if (ENABLE_DHB_GATE_DRIVERS == 1)
-   enable_DHB_gate_drivers();
-#endif
-
-   EINT;	//enable interrupts
-
-
-   while(!cuk_ready);
-   //enable heater gpio
-#if (ENABLE_HEATER_GPIO == 1)
-   init_HEATER_PWM56_GPIO();
-#endif
 // Loop forever and enjoy :)
    for(;;){}
 }
