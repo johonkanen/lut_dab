@@ -29,3 +29,9 @@ library files:
 "IQmath_fpu32.lib"
 "rts2800_fpu32_fast_supplement.lib"
 "libc.a"
+
+include general files like 
+
+f2806x_codestart branch.asm etc
+
+do not include CSMPasswords!!!

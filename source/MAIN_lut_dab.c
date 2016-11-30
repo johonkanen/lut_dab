@@ -35,7 +35,7 @@
 #define ENABLE_HEATER_GPIO 		0
 #define ENABLE_AUX_GPIO 		1
 /****************************/
-#define LINK_TO_FLASH 1
+#define LINK_TO_FLASH 0
 #define INTERRUPT_TIMING 0
 
 extern volatile struct EPWM_REGS *ePWM[7];
@@ -94,6 +94,8 @@ extern Uint16 RamfuncsLoadEnd;
 extern Uint16 RamfuncsRunStart;
 extern Uint16 RamfuncsLoadSize;
 
+
+float testitesti = 7.56;
 
 main(void)
 {
