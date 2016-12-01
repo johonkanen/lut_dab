@@ -10,12 +10,12 @@
 
 #include "PWM__conf.h"
 
-volatile struct EPWM_REGS *ePWM[7] =
- 			 {  &EPwm1Regs, &EPwm1Regs, &EPwm2Regs,	&EPwm3Regs,	&EPwm4Regs,	&EPwm5Regs,	&EPwm6Regs};
+volatile struct EPWM_REGS *ePWM[9] =
+ 			 {  &EPwm1Regs, &EPwm1Regs, &EPwm2Regs,	&EPwm3Regs,	&EPwm4Regs,	&EPwm5Regs,	&EPwm6Regs,	&EPwm7Regs,	&EPwm8Regs};
 
 void AUX_PWM1_config(void)
 {
-	Uint16 channel=1, period = 444-1; //j=1
+	Uint16 channel=1, period = 900-1; //j=1
 
 	(*ePWM[channel]).TBCTL.bit.PRDLD = TB_SHADOW;	        // set Immediate load
 	(*ePWM[channel]).TBPRD = period;		                // PWM frequency = 1 / period
@@ -66,9 +66,9 @@ void AUX_PWM1_config(void)
 void PRI_DAB_PWM34_config(void)
 {
 
-	Uint16 channel=3, period = 900-1; //j=1
+	Uint16 channel=2, period = 900-1; //j=1
 
-	for (channel=3; channel<4+1; channel++)
+	for (channel=2; channel<=3; channel++)
 	{
 
 		(*ePWM[channel]).TBCTL.bit.PRDLD = TB_SHADOW;	        // set Immediate load
@@ -138,7 +138,7 @@ void PRI_DAB_PWM34_config(void)
 			(*ePWM[channel]).HRCNFG.bit.EDGMODE = HR_BEP;          // MEP control on both edges
 			(*ePWM[channel]).HRCNFG.bit.CTLMODE = HR_PHS;          // CMPAHR and TBPRDHR HR control
 			(*ePWM[channel]).HRCNFG.bit.HRLOAD  = HR_CTR_ZERO; // load on CTR = 0 and CTR = TBPRD
-			(*ePWM[channel]).HRCNFG.bit.SELOUTB  = HR_CTR_ZERO; // load on CTR = 0 and CTR = TBPRD
+			(*ePWM[channel]).HRCNFG.bit.SELOUTB  = 1; // load on CTR = 0 and CTR = TBPRD
 			EDIS;
 
 			(*ePWM[channel]).ETSEL.bit.SOCAEN = 0x1;
@@ -152,9 +152,9 @@ void PRI_DAB_PWM34_config(void)
 void SEC_DAB_PWM56_config(void)
 {
 
-	Uint16 channel=5, period = 900-1; //j=1
+	Uint16 channel=4, period = 900-1; //j=1
 
-	for (channel=5; channel<6+1; channel++)
+	for (channel=4; channel<=5; channel++)
 	{
 
 		(*ePWM[channel]).TBCTL.bit.PRDLD = TB_SHADOW;	        // set Immediate load
@@ -253,17 +253,17 @@ void init_AUX_PWM1_GPIO(void)
 void init_pri_HB_GPIO(void)
 {
 	   EALLOW;
+	   GpioCtrlRegs.GPAPUD.bit.GPIO2 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO2 = 1;   // Configure GPIO0 as EPWM1A
+
+	   GpioCtrlRegs.GPAPUD.bit.GPIO3 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO3 = 1;   // Configure GPIO0 as EPWM1A
+
 	   GpioCtrlRegs.GPAPUD.bit.GPIO4 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
 	   GpioCtrlRegs.GPAMUX1.bit.GPIO4 = 1;   // Configure GPIO0 as EPWM1A
 
 	   GpioCtrlRegs.GPAPUD.bit.GPIO5 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
 	   GpioCtrlRegs.GPAMUX1.bit.GPIO5 = 1;   // Configure GPIO0 as EPWM1A
-
-	   GpioCtrlRegs.GPAPUD.bit.GPIO6 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO6 = 1;   // Configure GPIO0 as EPWM1A
-
-	   GpioCtrlRegs.GPAPUD.bit.GPIO7 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO7 = 1;   // Configure GPIO0 as EPWM1A
 
 
 	   EDIS;
@@ -272,17 +272,17 @@ void init_pri_HB_GPIO(void)
 void init_sec_HB_GPIO(void)
 {
 	   EALLOW;
+	   GpioCtrlRegs.GPAPUD.bit.GPIO6 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO6 = 1;   // Configure GPIO0 as EPWM1A
+
+	   GpioCtrlRegs.GPAPUD.bit.GPIO7 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO7 = 1;   // Configure GPIO0 as EPWM1A
+
 	   GpioCtrlRegs.GPAPUD.bit.GPIO8 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
 	   GpioCtrlRegs.GPAMUX1.bit.GPIO8 = 1;   // Configure GPIO0 as EPWM1A
 
 	   GpioCtrlRegs.GPAPUD.bit.GPIO9 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
 	   GpioCtrlRegs.GPAMUX1.bit.GPIO9 = 1;   // Configure GPIO0 as EPWM1A
-
-	   GpioCtrlRegs.GPAPUD.bit.GPIO10 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 1;   // Configure GPIO0 as EPWM1A
-
-	   GpioCtrlRegs.GPAPUD.bit.GPIO11 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO11 = 1;   // Configure GPIO0 as EPWM1A
 
 
 	   EDIS;

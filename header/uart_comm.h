@@ -11,7 +11,7 @@
 
 #include "DSP28x_Project.h"
 
-extern volatile struct EPWM_REGS *ePWM[7];
+//extern volatile struct EPWM_REGS *ePWM[9];
 /*
 #define aux_voltage 	AdcResult.ADCRESULT0
 #define dc_link_voltage AdcResult.ADCRESULT1

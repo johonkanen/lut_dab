@@ -37,7 +37,7 @@
 #define LINK_TO_FLASH 0
 #define INTERRUPT_TIMING 0
 
-extern volatile struct EPWM_REGS *ePWM[7];
+extern volatile struct EPWM_REGS *ePWM[9];
 extern Uint16 cuk_rampup;
 extern Uint16 cuk_ready;
 
@@ -152,111 +152,11 @@ main(void)
    EDIS;
    EPwm1Regs.TBCTL.bit.SWFSYNC = 1;
 
-/******************************************************************
-*
-*	setup AD conversions and PWM channels
-*
-*******************************************************************/
-   pwm_ad_synch();
-
-   startup_voltage 		= 1870; //=80V meas gain is 1/553 and filter gain is 3.12
-   voltage_has_risen 	= 0;
-   ad_timing_complete	= 0;
-   ad_timing_disable 	= 1;
-
-#if (INTERRUPT_TIMING==1)
-   ad_timing_disable 	= 0;
-#endif
-
-   EALLOW;
-   GpioCtrlRegs.GPBMUX1.bit.GPIO34 = 0;
-   GpioCtrlRegs.GPBDIR.bit.GPIO34 = 1;
-   EDIS;
-
-
-#if (INTERRUPT_TIMING==1)
-   init_AUX_PWM1_GPIO();
-   init_DHB_PWM23_GPIO();
-   init_PFC_PWM4_GPIO();
-   init_HEATER_PWM56_GPIO();
-#endif
-/******************************************************************
-*
-*	ad conversion timing
-*
-*******************************************************************/
-
-   // timing adc soc events
-   EALLOW;
-   PieVectTable.EPWM1_INT = &AUX_timing;
-   EDIS;
-   PieCtrlRegs.PIEIER3.bit.INTx1 = 1;
-   IER = M_INT3;
-   EINT;          						// Enable Global interrupt INTM
-   ERTM;          						// Enable Global realtime interrupt DBGM
-
-
-//   do //Nothing
-   //{}while(ad_timing_complete < 10);
-
-/******************************************************************
-*
-*	controller initializations found in .txt files
-*
-*******************************************************************/
-
-#include "config_control_gains.txt"
-   // MAP startup filter to pwm1 isr
-   EALLOW;
-   PieVectTable.EPWM1_INT = &startup_filter;
-   EDIS;
-
-   PieCtrlRegs.PIEIER3.bit.INTx1 = 1;
-
-   IER = M_INT3;
-   EINT;          						// Enable Global interrupt INTM
-   ERTM;          						// Enable Global realtime interrupt DBGM
-
-   // zero the sci memory pointers
-   sig_prbs.rdptr=0x7fff;
-   sig_prbs.wrptr=0;
-   sig_prbs.mem	= 0;
-
-   cuk_rampup 	= 40;
-   cuk_ready 	= 0;
-/*
-   do //Nothing
-   {}while(voltage_has_risen < 1);
-*/
-
-   /*************************************************************
-   *															*
-   *	initialization ready, disable charge resistor			*
-   *															*
-   *************************************************************/
    init_lut_dab_GPIO();
    init_pri_HB_GPIO();
    init_pri_HB_GPIO();
 
-   //toggle relay
-   GpioDataRegs.GPASET.bit.GPIO24 = 1;
-   //GpioDataRegs.GPASET.bit.GPIO31 = 1; //set data read to dhb ad converter
 
-   init_msg_source();
-
-   scale = SCALE;
-
-   rampup_init();
-
-   DINT;
-// After init re-map the proper interrupt
-   EALLOW;  // This is needed to write to EALLOW protected register
-//   PieVectTable.EPWM1_INT = &AUX_ctrl;
-   EDIS;    // This is needed to disable write to EALLOW protected registers
-   GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
-   EINT;
-
-// Loop forever and enjoy :)
    for(;;){}
 }
 
