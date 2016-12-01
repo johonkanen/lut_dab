@@ -4,12 +4,7 @@
  *  Created on: 30 Jun 2015
  *      Author: Jari
  */
-/*
-"${CG_TOOL_ROOT}/include"
-"${PROJECT_ROOT}"
-"${INSTALLROOT_2803x_V130}/DSP2803x_common/lib"
-"${INSTALLROOT_IQMATH_V160}/lib"
-*/
+
 #include "DSP28x_Project.h"
 #include "SCIA_conf.h"
 
@@ -38,21 +33,4 @@ void scia_echoback_init()
     SciaRegs.SCILBAUD    =0x0000;  // C2 = 9600
 
 	SciaRegs.SCICTL1.all =0x0023;  // Relinquish SCI from Reset
-}
-
-void scia_xmit(int a)
-{
-    while (SciaRegs.SCIFFTX.bit.TXFFST != 0) {}
-    SciaRegs.SCITXBUF=a;
-}
-
-void scia_msg(char* msg)
-{
-    int i;
-    i = 0;
-    while(msg[i] != '\0')
-    {
-        scia_xmit(msg[i]);
-        i++;
-    }
 }

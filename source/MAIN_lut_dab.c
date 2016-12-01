@@ -88,12 +88,6 @@ struct storage sig_prbs;
 struct measurements meas;
 //Uint16 memtest[170];
 
-extern Uint16 RamfuncsLoadStart;
-extern Uint16 RamfuncsLoadEnd;
-extern Uint16 RamfuncsRunStart;
-extern Uint16 RamfuncsLoadSize;
-
-
 float testitesti = 7.56;
 
 main(void)
@@ -133,11 +127,6 @@ main(void)
 
    config_measurements(&meas);
 
-   aux_meas = meas.aux_voltage;
-   pfc_meas = meas.dc_link_voltage;
-   dhb_meas = meas.dhb_current;
-   heater_meas = meas.heater_voltage;
-
 //   init_cla();
    // Configure PWM
    EALLOW;
@@ -150,9 +139,6 @@ main(void)
    AUX_PWM1_config();
    AUX_PWM7_config();
    AUX_PWM8_config();
-
-
-
 
    EALLOW;
    SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1; // start all PWM channels synchronized
@@ -170,19 +156,13 @@ main(void)
 
 void config_measurements(struct measurements* testi)
 {
-	testi->aux_voltage = 		(Uint16*)&(AdcResult.ADCRESULT8);	//+0
-	//
-	testi->dc_link_voltage = 	(Uint16*)&(AdcResult.ADCRESULT9); 	//+0
-	testi->pfc_current1 = 		(Uint16*)&(AdcResult.ADCRESULT2);	//+1
-	testi->pfc_current2 = 		(Uint16*)&(AdcResult.ADCRESULT3);	//+2
-	testi->mains_voltage = 		(Uint16*)&(AdcResult.ADCRESULT3);	//+3
-	//
-	testi->dhb_current = 		(Uint16*)&(AdcResult.ADCRESULT6); 	//+0
-	testi->dhb_output_voltage = (Uint16*)&(ext_ad.first_conv);		//+1
-	testi->dhb_cap_voltage =	(Uint16*)&(AdcResult.ADCRESULT7);	//+2
-	//
-	testi->heater_voltage = 	(Uint16*)&(ext_ad.second_conv);		//+0
-	testi->heater_current = 	(Uint16*)&(AdcResult.ADCRESULT4); 	//+1
+	testi->pri_current_lp 	= (Uint16*)&(AdcResult.ADCRESULT4);	//+1
+	testi->pri_current_1	= (Uint16*)&(AdcResult.ADCRESULT2);	//+0
+	testi->pri_current_2	= (Uint16*)&(AdcResult.ADCRESULT3); 	//+0
+	testi->pri_voltage 		= (Uint16*)&(AdcResult.ADCRESULT5);	//+2
+	// sec_measurements
+	testi->sec_current		= (Uint16*)&(ext_ad.first_conv);
+	testi->sec_voltage		= (Uint16*)&(ext_ad.second_conv);
 }
 
 

@@ -52,23 +52,3 @@ void Adc_config(void)
 
 	EDIS;
 }
-/*
-void config_measurements(struct measurements* testi)
-{
-
-	//testi->aux_voltage = (Uint16*)&(AdcResult.ADCRESULT0);
-	//meas.aux_voltage = 			(Uint16*)&(AdcResult.ADCRESULT0);
-
-	testi->dc_link_voltage = 		(Uint16*)&AdcResult.ADCRESULT1;
-	testi->pfc_current1 = 		(Uint16*)&AdcResult.ADCRESULT0;
-	testi->pfc_current2 = 		(Uint16*)&AdcResult.ADCRESULT0;
-	testi->mains_voltage = 		(Uint16*)&AdcResult.ADCRESULT0;
-	testi->dhb_current = 			(Uint16*)&AdcResult.ADCRESULT0;
-	testi->dhb_output_voltage = 	(Uint16*)&AdcResult.ADCRESULT0;
-	testi->dhb_cap_voltage =		(Uint16*)&AdcResult.ADCRESULT0;
-	testi->heater_voltage = 		(Uint16*)&AdcResult.ADCRESULT0;
-	testi->heater_current = 		(Uint16*)&AdcResult.ADCRESULT0;
-
-}
-
-*/

@@ -8,10 +8,15 @@
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
 
-
+extern Uint16 RamfuncsLoadStart;
+extern Uint16 RamfuncsLoadEnd;
+extern Uint16 RamfuncsRunStart;
+extern Uint16 RamfuncsLoadSize;
+/*
 extern Uint16 RamfuncsRunStart;
 extern Uint16 RamfuncsLoadStart;
 extern Uint16 RamfuncsLoadSize;
+*/
 /*
 
 extern Uint16 Cla1funcsLoadStart;
@@ -40,20 +45,13 @@ int32 startup_filter_mem[] = {0,0,0};
 
 struct measurements
 {
-	//aux_measurement
-	Uint16* aux_voltage;
-	//pfc measurements
-	Uint16* dc_link_voltage;
-	Uint16* pfc_current1;
-	Uint16* pfc_current2;
-	Uint16* mains_voltage;
-	//dhb_measurements
-	Uint16* dhb_current;
-	Uint16* dhb_output_voltage;
-	Uint16* dhb_cap_voltage;
-	//heater_measurements
-	Uint16* heater_voltage;
-	Uint16* heater_current;
+	Uint16* pri_current_lp;
+	Uint16* pri_current_1;
+	Uint16* pri_current_2;
+	Uint16* pri_voltage;
+	//sec measurements
+	Uint16* sec_current;
+	Uint16* sec_voltage;
 };
 
 struct storage
@@ -62,13 +60,6 @@ struct storage
 	Uint16 wrptr;
 	Uint32* mem;
 };
-/*
-Uint32 prbs_[512] =
-{
-#include "prbs14_parsed_32bit.txt"
-};
-*/
-
 Uint16	SCIdata;
 
 #endif /* GLOBAL_H_ */
