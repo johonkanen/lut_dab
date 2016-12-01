@@ -8,20 +8,24 @@
 
 void init_lut_dab_GPIO(void)
 {
-	//insert proper initialization here!
 	  EALLOW;
-	   GpioCtrlRegs.GPBMUX1.bit.GPIO34 = 0;
-	   GpioCtrlRegs.GPBDIR.bit.GPIO34 = 1;
 
-	   GpioCtrlRegs.GPAMUX2.bit.GPIO30 = 0;
-	   GpioCtrlRegs.GPADIR.bit.GPIO30 = 1;
+	  //24V_ok
+	  GpioCtrlRegs.GPAMUX1.bit.GPIO12 = 0;
+	  GpioCtrlRegs.GPADIR.bit.GPIO12 = 1;
 
-	   GpioCtrlRegs.GPAMUX2.bit.GPIO31 = 0;
-	   GpioCtrlRegs.GPADIR.bit.GPIO31 = 1;
+	  //TRIP
+	  GpioCtrlRegs.GPAMUX2.bit.GPIO19 = 0;
+	  GpioCtrlRegs.GPADIR.bit.GPIO19 = 1;
 
-	   GpioCtrlRegs.GPAMUX2.bit.GPIO24 = 0;
-	   GpioCtrlRegs.GPADIR.bit.GPIO24 = 1;
-	   EDIS;
+	  //connect
+	  GpioCtrlRegs.GPAMUX1.bit.GPIO11 = 0;
+	  GpioCtrlRegs.GPADIR.bit.GPIO11 = 1;
+
+	  //EMERGENCYSTOP
+	  GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 0;
+	  GpioCtrlRegs.GPADIR.bit.GPIO10 = 1;
+	  EDIS;
 
 }
 
@@ -54,7 +58,6 @@ void init_pri_HB_GPIO(void)
 	   GpioCtrlRegs.GPAPUD.bit.GPIO5 = 1;    // Disable pull-up on 	EPWM4B
 	   GpioCtrlRegs.GPAMUX1.bit.GPIO5 = 1;   // Configure GPIO5 as 	EPWM4B
 
-
 	   EDIS;
 }
 
@@ -73,14 +76,11 @@ void init_sec_HB_GPIO(void)
 	   GpioCtrlRegs.GPAPUD.bit.GPIO9 = 1;    // Disable pull-up 	EPWM7B
 	   GpioCtrlRegs.GPAMUX1.bit.GPIO9 = 1;   // Configure GPIO9 as 	EPWM7B
 
-
 	   EDIS;
 }
 
 void init_lut_dab_ext_ad_GPIO(void)
 {
-
-
 	  EALLOW;
 	  //ext ad enable
 	  GpioCtrlRegs.GPAMUX2.bit.GPIO16 = 1;
@@ -105,7 +105,7 @@ void init_lut_dab_ext_ad_GPIO(void)
 	  GpioCtrlRegs.GPAMUX2.bit.GPIO27 = 0;
 	  GpioCtrlRegs.GPADIR.bit.GPIO27 = 0;
 
-	  GpioCtrlRegs.GPAMUX2.bit.GPIO28 = 0;//enable pullup
+	  GpioCtrlRegs.GPAMUX2.bit.GPIO28 = 0;
 	  GpioCtrlRegs.GPADIR.bit.GPIO28 = 0;
 
 	  //D7
@@ -117,17 +117,21 @@ void init_lut_dab_ext_ad_GPIO(void)
 	  GpioCtrlRegs.GPAMUX2.bit.GPIO30 = 0;
 	  GpioCtrlRegs.GPADIR.bit.GPIO30 = 0;
 
-	  GpioCtrlRegs.GPAMUX2.bit.GPIO31 = 0;//enable pullup
+	  GpioCtrlRegs.GPAMUX2.bit.GPIO31 = 0;
 	  GpioCtrlRegs.GPADIR.bit.GPIO31 = 0;
 
 	  //D10-D11
-	  GpioCtrlRegs.GPBMUX1.bit.GPIO32 = 0;//enable pullup
+	  GpioCtrlRegs.GPBMUX1.bit.GPIO32 = 0;
 	  GpioCtrlRegs.GPBDIR.bit.GPIO32 = 0;
 
-	  GpioCtrlRegs.GPBMUX1.bit.GPIO33 = 0;//enable pullup
+	  GpioCtrlRegs.GPBMUX1.bit.GPIO33 = 0;
 	  GpioCtrlRegs.GPBDIR.bit.GPIO33 = 0;
 
-	   EDIS;
+	  //ext ad read = output
+	  GpioCtrlRegs.GPBMUX1.bit.GPIO39 = 1;//enable pullup
+	  GpioCtrlRegs.GPBDIR.bit.GPIO39 = 1;
+
+	  EDIS;
 
 
 }

@@ -40,8 +40,8 @@ void AUX_PWM1_config(void)
 	(*ePWM[channel]).CMPCTL.bit.SHDWBMODE = CC_SHADOW;
 
 
-	(*ePWM[channel]).AQCTLA.bit.PRD = AQ_CLEAR;
-	(*ePWM[channel]).AQCTLA.bit.CAU = AQ_SET;
+	(*ePWM[channel]).AQCTLA.bit.PRD = AQ_SET;
+	(*ePWM[channel]).AQCTLA.bit.CAU = AQ_CLEAR;
 
 	(*ePWM[channel]).AQCTLB.bit.PRD = AQ_CLEAR;
 	(*ePWM[channel]).AQCTLB.bit.CBU = AQ_SET;
