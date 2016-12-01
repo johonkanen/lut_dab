@@ -12,17 +12,13 @@
 
 void PWM_config(void);
 
+void AUX_PWM1_config(void);
+
 void PRI_DAB_PWM34_config(void);
 void SEC_DAB_PWM56_config(void);
 
 void AUX_PWM8_config(void);
 void AUX_PWM7_config(void);
-
-
-void AUX_PWM1_config(void);
-void DHB_PWM23_config(void);
-void PFC_PWM4_config(void);
-void HEATER_PWM56_config(void);
 
 void pwm_ad_synch(void);
 

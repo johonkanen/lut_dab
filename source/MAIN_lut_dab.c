@@ -105,6 +105,7 @@ main(void)
 // Step 2. Initialize GPIO:
    InitSciaGpio();
    init_lut_dab_GPIO();
+   init_lut_dab_ext_ad_GPIO();
 
 // Disable CPU interrupts
    DINT;
