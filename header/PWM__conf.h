@@ -15,6 +15,10 @@ void PWM_config(void);
 void PRI_DAB_PWM34_config(void);
 void SEC_DAB_PWM56_config(void);
 
+void AUX_PWM8_config(void);
+void AUX_PWM7_config(void);
+
+
 void AUX_PWM1_config(void);
 void DHB_PWM23_config(void);
 void PFC_PWM4_config(void);
@@ -26,6 +30,9 @@ void init_AUX_PWM1_GPIO(void);
 void init_DHB_PWM23_GPIO(void);
 void init_HEATER_PWM56_GPIO(void);
 void enable_DHB_gate_drivers(void);
+
+
+
 
 
 void init_pri_HB_GPIO(void);

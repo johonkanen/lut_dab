@@ -147,6 +147,13 @@ main(void)
    PRI_DAB_PWM34_config();
    SEC_DAB_PWM56_config();
 
+   AUX_PWM1_config();
+   AUX_PWM7_config();
+   AUX_PWM8_config();
+
+
+
+
    EALLOW;
    SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1; // start all PWM channels synchronized
    EDIS;
@@ -154,7 +161,7 @@ main(void)
 
    init_lut_dab_GPIO();
    init_pri_HB_GPIO();
-   init_pri_HB_GPIO();
+   init_sec_HB_GPIO();
 
 
    for(;;){}
