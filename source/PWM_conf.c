@@ -66,14 +66,14 @@ void AUX_PWM1_config(void)
 void PRI_DAB_PWM34_config(void)
 {
 
-	Uint16 channel=2, period = 900-1; //j=1
+	Uint16 channel=3, period = 900-1; //j=1
 
 	for (channel=3; channel<4+1; channel++)
 	{
 
 		(*ePWM[channel]).TBCTL.bit.PRDLD = TB_SHADOW;	        // set Immediate load
 		(*ePWM[channel]).TBPRD = period;		                // PWM frequency = 1 / period
-		(*ePWM[channel]).CMPA.half.CMPA = period<<1;          // set duty 18% initially
+		(*ePWM[channel]).CMPA.half.CMPA = period>>1;          // set duty 18% initially
 		(*ePWM[channel]).CMPA.half.CMPAHR = (1 << 8);         // initialize HRPWM extension
 		(*ePWM[channel]).CMPB = period>>1;	                // set duty 50% initially
 		(*ePWM[channel]).TBPHS.all = 0;
@@ -159,7 +159,7 @@ void SEC_DAB_PWM56_config(void)
 
 		(*ePWM[channel]).TBCTL.bit.PRDLD = TB_SHADOW;	        // set Immediate load
 		(*ePWM[channel]).TBPRD = period;		                // PWM frequency = 1 / period
-		(*ePWM[channel]).CMPA.half.CMPA =  period<<1;          // set duty 18% initially
+		(*ePWM[channel]).CMPA.half.CMPA =  period>>1;          // set duty 18% initially
 		(*ePWM[channel]).CMPA.half.CMPAHR = (1 << 8);         // initialize HRPWM extension
 		(*ePWM[channel]).CMPB = period>>1;	                // set duty 50% initially
 		(*ePWM[channel]).TBPHS.all = 0;
@@ -215,8 +215,8 @@ void SEC_DAB_PWM56_config(void)
 			(*ePWM[channel]).DBCTL.bit.OUT_MODE = DB_FULL_ENABLE; // Enable Dead-band module
 			(*ePWM[channel]).DBCTL.bit.POLSEL = DB_ACTV_HIC; // Active High Complementary (AHC)
 
-			(*ePWM[channel]).DBRED = 5; // RED = 30 TBCLKs initially
-			(*ePWM[channel]).DBFED = 5;
+			(*ePWM[channel]).DBRED = 23; // RED = 30 TBCLKs initially
+			(*ePWM[channel]).DBFED = 23;
 
 
 			EALLOW;
@@ -250,24 +250,39 @@ void init_AUX_PWM1_GPIO(void)
 	   EDIS;
 }
 
-void init_DHB_PWM23_GPIO(void)
+void init_pri_HB_GPIO(void)
 {
 	   EALLOW;
-	   GpioCtrlRegs.GPAPUD.bit.GPIO2 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO2 = 1;   // Configure GPIO0 as EPWM1A
-
-#ifdef CUK_PWM2B_ENABLE
-	   GpioCtrlRegs.GPAPUD.bit.GPIO3 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO3 = 1;   // Configure GPIO0 as EPWM1A
-#endif
-
 	   GpioCtrlRegs.GPAPUD.bit.GPIO4 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
 	   GpioCtrlRegs.GPAMUX1.bit.GPIO4 = 1;   // Configure GPIO0 as EPWM1A
 
-#ifdef CUK_PWM3B_ENABLE
 	   GpioCtrlRegs.GPAPUD.bit.GPIO5 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
 	   GpioCtrlRegs.GPAMUX1.bit.GPIO5 = 1;   // Configure GPIO0 as EPWM1A
-#endif
+
+	   GpioCtrlRegs.GPAPUD.bit.GPIO6 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO6 = 1;   // Configure GPIO0 as EPWM1A
+
+	   GpioCtrlRegs.GPAPUD.bit.GPIO7 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO7 = 1;   // Configure GPIO0 as EPWM1A
+
+
+	   EDIS;
+}
+
+void init_sec_HB_GPIO(void)
+{
+	   EALLOW;
+	   GpioCtrlRegs.GPAPUD.bit.GPIO8 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO8 = 1;   // Configure GPIO0 as EPWM1A
+
+	   GpioCtrlRegs.GPAPUD.bit.GPIO9 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO9 = 1;   // Configure GPIO0 as EPWM1A
+
+	   GpioCtrlRegs.GPAPUD.bit.GPIO10 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 1;   // Configure GPIO0 as EPWM1A
+
+	   GpioCtrlRegs.GPAPUD.bit.GPIO11 = 1;    // Disable pull-up on GPIO0 (EPWM1A)
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO11 = 1;   // Configure GPIO0 as EPWM1A
 
 
 	   EDIS;

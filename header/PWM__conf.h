@@ -27,6 +27,10 @@ void init_DHB_PWM23_GPIO(void);
 void init_HEATER_PWM56_GPIO(void);
 void enable_DHB_gate_drivers(void);
 
+
+void init_pri_HB_GPIO(void);
+void init_sec_HB_GPIO(void);
+
 void pwm_ad_synch(void);
 
 

@@ -131,8 +131,6 @@ main(void)
    scia_fifo_init();	   // Initialize the SCI FIFO
    scia_echoback_init();  // Initialize SCI for echoback
 
-   InitSpi();
-
    config_measurements(&meas);
 
    aux_meas = meas.aux_voltage;
@@ -198,8 +196,8 @@ main(void)
    ERTM;          						// Enable Global realtime interrupt DBGM
 
 
-   do //Nothing
-   {}while(ad_timing_complete < 10);
+//   do //Nothing
+   //{}while(ad_timing_complete < 10);
 
 /******************************************************************
 *
@@ -226,10 +224,10 @@ main(void)
 
    cuk_rampup 	= 40;
    cuk_ready 	= 0;
-
+/*
    do //Nothing
    {}while(voltage_has_risen < 1);
-
+*/
 
    /*************************************************************
    *															*
@@ -237,6 +235,8 @@ main(void)
    *															*
    *************************************************************/
    init_lut_dab_GPIO();
+   init_pri_HB_GPIO();
+   init_pri_HB_GPIO();
 
    //toggle relay
    GpioDataRegs.GPASET.bit.GPIO24 = 1;
@@ -251,7 +251,7 @@ main(void)
    DINT;
 // After init re-map the proper interrupt
    EALLOW;  // This is needed to write to EALLOW protected register
-   PieVectTable.EPWM1_INT = &AUX_ctrl;
+//   PieVectTable.EPWM1_INT = &AUX_ctrl;
    EDIS;    // This is needed to disable write to EALLOW protected registers
    GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
    EINT;
