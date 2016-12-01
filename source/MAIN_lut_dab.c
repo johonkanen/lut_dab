@@ -32,7 +32,6 @@
 
 //	TODO
 
-
 /****************************/
 #define LINK_TO_FLASH 0
 #define INTERRUPT_TIMING 0
@@ -105,6 +104,7 @@ main(void)
 
 // Step 2. Initialize GPIO:
    InitSciaGpio();
+   init_lut_dab_GPIO();
 
 // Disable CPU interrupts
    DINT;
@@ -149,7 +149,8 @@ main(void)
    EDIS;
    EPwm1Regs.TBCTL.bit.SWFSYNC = 1;
 
-   init_lut_dab_GPIO();
+   init_AUX_PWM1_GPIO();
+
    init_pri_HB_GPIO();
    init_sec_HB_GPIO();
 
@@ -173,7 +174,6 @@ __interrupt void PWM1_int(void)
 	float measgain = (float)0.109890109890110;
 	float juttu=0;
 	int16 mail;
-
 
 	cnt_jee--;
 
