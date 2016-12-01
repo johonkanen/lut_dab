@@ -31,22 +31,9 @@ void init_DHB_PWM23_GPIO(void);
 void init_HEATER_PWM56_GPIO(void);
 void enable_DHB_gate_drivers(void);
 
-
-
-
-
 void init_pri_HB_GPIO(void);
 void init_sec_HB_GPIO(void);
 
 void pwm_ad_synch(void);
-
-
-//#define AUX_PWM1B_ENABLE
-//#define CUK_PWM2B_ENABLE
-//#define CUK_PWM3B_ENABLE
-//#define PFC_PWM4B_ENABLE
-//#define HEATER_PWM5B_ENABLE
-//#define HEATER_PWM6B_ENABLE
-
 
 #endif /* PWM__CONF_H_ */

@@ -30,7 +30,7 @@ void scia_echoback_init()
 	SciaRegs.SCICTL2.bit.RXBKINTENA =1;
 
 	SciaRegs.SCIHBAUD    =0x0000;  // 937500 baud @LSPCLK = 15MHz (60 MHz SYSCLK).
-    SciaRegs.SCILBAUD    =0x0000;  // C2 = 9600
+    SciaRegs.SCILBAUD    =0x0002;  // C2 = 9600
 
 	SciaRegs.SCICTL1.all =0x0023;  // Relinquish SCI from Reset
 }

@@ -1,7 +1,7 @@
 /*
  * GLOBAL.h
  *
- *  Created on: 30.7.2015
+ *  Created on: 1.12.2016
  *      Author: jhonkanen
  */
 
@@ -12,18 +12,7 @@ extern Uint16 RamfuncsLoadStart;
 extern Uint16 RamfuncsLoadEnd;
 extern Uint16 RamfuncsRunStart;
 extern Uint16 RamfuncsLoadSize;
-/*
-extern Uint16 RamfuncsRunStart;
-extern Uint16 RamfuncsLoadStart;
-extern Uint16 RamfuncsLoadSize;
-*/
-/*
 
-extern Uint16 Cla1funcsLoadStart;
-extern Uint16 Cla1funcsRunStart;
-extern Uint16 Cla1funcsLoadSize;
-
-*/
 Uint16 startup_voltage;
 
 // ramp up signals
@@ -45,6 +34,7 @@ int32 startup_filter_mem[] = {0,0,0};
 
 struct measurements
 {
+	//pri measurements
 	Uint16* pri_current_lp;
 	Uint16* pri_current_1;
 	Uint16* pri_current_2;

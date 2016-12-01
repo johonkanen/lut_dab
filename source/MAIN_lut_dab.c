@@ -56,6 +56,8 @@ Uint32	rampmem,scale;
 #define SCALE		15891 /* 1s rampup*/
 //#define SCALE		317816
 
+Uint16 cnt_jee=0;
+
 int32 filtergains[] = {0x15B91CE5, 0x95B91CE5,0};
 
 void config_measurements(struct measurements*);
@@ -86,9 +88,9 @@ struct ext_ad_result
 
 struct storage sig_prbs;
 struct measurements meas;
-//Uint16 memtest[170];
 
-float testitesti = 7.56;
+__interrupt void PWM1_int(void);
+
 
 main(void)
 {
@@ -125,6 +127,8 @@ main(void)
    scia_fifo_init();	   // Initialize the SCI FIFO
    scia_echoback_init();  // Initialize SCI for echoback
 
+   //init the measurement structure
+
    config_measurements(&meas);
 
 //   init_cla();
@@ -150,9 +154,53 @@ main(void)
    init_sec_HB_GPIO();
 
 
+	EALLOW;  // allow write to protected register
+	PieVectTable.EPWM1_INT = &PWM1_int;
+	EDIS;    //
+
+	// Enable CPU INT3 which is connected to EPWM1-6 INT:
+	IER |= M_INT3;
+	PieCtrlRegs.PIEIER3.bit.INTx1 = 1;
+	EINT;   // Enable Global interrupt INTM
+	ERTM;   // Enable Global realtime interrupt
+
+
    for(;;){}
 }
 
+__interrupt void PWM1_int(void)
+{
+	float measgain = (float)0.109890109890110;
+	float juttu=0;
+	int16 mail;
+
+
+	cnt_jee--;
+
+	juttu = measgain * (*meas.pri_current_1);
+	mail = (int16)juttu-222;
+
+	/*
+
+		include control code here
+
+	*/
+
+	EPwm4Regs.TBPHS.half.TBPHS = (int16)(juttu-222)+445;
+	EPwm5Regs.TBPHS.half.TBPHS = (int16)(juttu-222)+445;
+
+	    if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
+	    {
+			SciaRegs.SCITXBUF = mail;
+			SciaRegs.SCITXBUF = mail>>8;
+	    }
+
+
+	   // Clear INT flag for this timer
+	   EPwm1Regs.ETCLR.bit.INT = 1;
+	   // Acknowledge this interrupt to receive more interrupts from group 3
+	   PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
+}
 
 void config_measurements(struct measurements* testi)
 {
@@ -164,6 +212,3 @@ void config_measurements(struct measurements* testi)
 	testi->sec_current		= (Uint16*)&(ext_ad.first_conv);
 	testi->sec_voltage		= (Uint16*)&(ext_ad.second_conv);
 }
-
-
-
