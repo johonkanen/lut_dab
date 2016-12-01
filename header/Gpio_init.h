@@ -11,8 +11,6 @@
 
 void init_lut_dab_GPIO(void);
 
-
-
 void init_PFC_PWM4_GPIO(void);
 void init_AUX_PWM1_GPIO(void);
 void init_DHB_PWM23_GPIO(void);

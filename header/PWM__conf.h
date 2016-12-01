@@ -24,16 +24,6 @@ void DHB_PWM23_config(void);
 void PFC_PWM4_config(void);
 void HEATER_PWM56_config(void);
 
-
-void init_PFC_PWM4_GPIO(void);
-void init_AUX_PWM1_GPIO(void);
-void init_DHB_PWM23_GPIO(void);
-void init_HEATER_PWM56_GPIO(void);
-void enable_DHB_gate_drivers(void);
-
-void init_pri_HB_GPIO(void);
-void init_sec_HB_GPIO(void);
-
 void pwm_ad_synch(void);
 
 #endif /* PWM__CONF_H_ */
