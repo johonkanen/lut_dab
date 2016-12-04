@@ -18,6 +18,10 @@ void init_lut_dab_GPIO(void)
 	  GpioCtrlRegs.GPAMUX2.bit.GPIO19 = 0;
 	  GpioCtrlRegs.GPADIR.bit.GPIO19 = 1;
 
+	  //DAB enable
+	  GpioCtrlRegs.GPAMUX2.bit.GPIO17 = 0;
+	  GpioCtrlRegs.GPADIR.bit.GPIO17 = 1;
+
 	  //connect
 	  GpioCtrlRegs.GPAMUX1.bit.GPIO11 = 0;
 	  GpioCtrlRegs.GPADIR.bit.GPIO11 = 1;
