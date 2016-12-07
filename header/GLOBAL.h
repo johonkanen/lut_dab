@@ -32,6 +32,8 @@ int32 startup_filter_num[] = {0x00000000,0x40000000, 0x33E70ABC};
 int32 startup_filter_den[] = {0x40000000,0xA2822A24, 0x2224AB3C};
 int32 startup_filter_mem[] = {0,0,0};
 
+void read_ext_ad(void);
+
 struct measurements
 {
 	//pri measurements

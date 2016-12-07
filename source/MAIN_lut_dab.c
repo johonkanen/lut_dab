@@ -176,6 +176,8 @@ __interrupt void PWM1_int(void)
 	float juttu=0;
 	int16 mail;
 
+	read_ext_ad();
+
 	cnt_jee--;
 
 	juttu = measgain * (*meas.pri_current_1);

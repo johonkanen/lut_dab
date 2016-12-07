@@ -132,7 +132,7 @@ void init_lut_dab_ext_ad_GPIO(void)
 	  GpioCtrlRegs.GPBDIR.bit.GPIO33 = 0;
 
 	  //ext ad read = output
-	  GpioCtrlRegs.GPBMUX1.bit.GPIO39 = 1;//enable pullup
+	  GpioCtrlRegs.GPBMUX1.bit.GPIO39 = 0;//enable pullup
 	  GpioCtrlRegs.GPBDIR.bit.GPIO39 = 1;
 
 	  EDIS;
