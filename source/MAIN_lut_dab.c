@@ -41,7 +41,7 @@
 #define LINK_TO_FLASH 0
 #define INTERRUPT_TIMING 0
 
-void config_measurements(struct measurements*);
+
 
 
 main(void)
@@ -123,13 +123,4 @@ main(void)
    for(;;){}
 }
 
-void config_measurements(struct measurements* testi)
-{
-	testi->pri_current_lp 	= (Uint16*)&(AdcResult.ADCRESULT4);	//+0
-	testi->pri_current_1	= (Uint16*)&(AdcResult.ADCRESULT2);	//+1
-	testi->pri_current_2	= (Uint16*)&(AdcResult.ADCRESULT3); //+2
-	testi->pri_voltage 		= (Uint16*)&(AdcResult.ADCRESULT5);	//+3
-	// sec_measurements
-	testi->sec_current		= (Uint16*)&(ext_ad.first_conv);	//+4
-	testi->sec_voltage		= (Uint16*)&(ext_ad.second_conv);	//+5
-}
+

@@ -6,6 +6,7 @@
  */
 
 #include "ADC_conf.h"
+#include "datatypes.h"
 
 void Adc_config(void)
 {
@@ -51,4 +52,16 @@ void Adc_config(void)
 	AdcRegs.ADCSOC5CTL.bit.ACQPS 	= 6;	//set SOC8/9 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	EDIS;
+}
+
+
+void config_measurements(struct measurements* testi)
+{
+	testi->pri_current_lp 	= (Uint16*)&(AdcResult.ADCRESULT4);	//+0
+	testi->pri_current_1	= (Uint16*)&(AdcResult.ADCRESULT2);	//+1
+	testi->pri_current_2	= (Uint16*)&(AdcResult.ADCRESULT3); //+2
+	testi->pri_voltage 		= (Uint16*)&(AdcResult.ADCRESULT5);	//+3
+	// sec_measurements
+	testi->sec_current		= (Uint16*)&(ext_ad.first_conv);	//+4
+	testi->sec_voltage		= (Uint16*)&(ext_ad.second_conv);	//+5
 }

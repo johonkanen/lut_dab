@@ -17,6 +17,7 @@ __interrupt void PFC_timing(void);
 __interrupt void HEATER_timing(void);
 
 extern struct measurements meas;
+extern struct ext_ad_result ext_ad;
 
 void Adc_config(void);
 void config_measurements(struct measurements*);
