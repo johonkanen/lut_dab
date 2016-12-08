@@ -18,15 +18,19 @@
 //###########################################################################
 #include "DSP28x_Project.h"     	// Device Headerfile and Examples Include File
 //#include "SFO_V6.h"					// HRpwm calibration
+#include "GLOBAL.h"					//pragmas and global variables
+
+#include "interrupts.h"
 #include "Gpio_init.h"
 #include "ADC_conf.h"				//adc conf declarations
 #include "SCIA_conf.h"				//UART declarations
 #include "PWM__conf.h"				//pwm conf function declarations
 //#include "CLA.h"					//cla header definitions
-#include "GLOBAL.h"					//pragmas and global variables
 #include "control_structures.h"		//controller structures
 #include "controller_objects.h"		//controllers are defined here
 #include "uart_comm.h"
+
+
 
 /**** HW COMPILE ENABLE *****/
 
@@ -36,59 +40,7 @@
 #define LINK_TO_FLASH 0
 #define INTERRUPT_TIMING 0
 
-extern volatile struct EPWM_REGS *ePWM[9];
-extern Uint16 cuk_rampup;
-extern Uint16 cuk_ready;
-
-extern void init_cla(void);
-/**********************************/
-void rampup(void);
-void rampup_init(void);
-//extern void config_measurements(measurements*);
-
-Uint16 ref1,ref2,step,ramptest;
-Uint32	rampmem,scale;
-
-#define START_VAL 	3000
-#define END_VAL		4000
-//#define SCALE		37836 /* == 1/56757*2^31 == 450ms rampup */
-#define SCALE		15891 /* 1s rampup*/
-//#define SCALE		317816
-
-Uint16 cnt_jee=0;
-
-int32 filtergains[] = {0x15B91CE5, 0x95B91CE5,0};
-
 void config_measurements(struct measurements*);
-/*********************************/
-//int16* mailbox;
-
-Uint16* mailbox;
-Uint16  package;
-Uint16 ad_timing_complete;
-Uint16 ad_timing_disable;
-Uint16 memory;
-
-Uint16* aux_meas;
-Uint16* pfc_meas;
-Uint16* dhb_meas;
-Uint16* heater_meas;
-
-
-Uint16 ref1, ref2,step;
-Uint32 rampmem;
-Uint16 ramptest;
-
-struct ext_ad_result
-{
-	Uint16	first_conv;
-	Uint16	second_conv;
-}ext_ad;
-
-struct storage sig_prbs;
-struct measurements meas;
-
-__interrupt void PWM1_int(void);
 
 
 main(void)
@@ -168,41 +120,6 @@ main(void)
 
 
    for(;;){}
-}
-
-__interrupt void PWM1_int(void)
-{
-	float measgain = (float)0.109890109890110;
-	float juttu=0;
-	int16 mail;
-
-	read_ext_ad();
-
-	cnt_jee--;
-
-	juttu = measgain * (*meas.pri_current_1);
-	mail = (int16)juttu-222;
-
-	/*
-
-		include control code here
-
-	*/
-
-	EPwm4Regs.TBPHS.half.TBPHS = (int16)(juttu-222)+445;
-	EPwm5Regs.TBPHS.half.TBPHS = (int16)(juttu-222)+445;
-
-	    if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
-	    {
-			SciaRegs.SCITXBUF = mail;
-			SciaRegs.SCITXBUF = mail>>8;
-	    }
-
-
-	   // Clear INT flag for this timer
-	   EPwm1Regs.ETCLR.bit.INT = 1;
-	   // Acknowledge this interrupt to receive more interrupts from group 3
-	   PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
 }
 
 void config_measurements(struct measurements* testi)
