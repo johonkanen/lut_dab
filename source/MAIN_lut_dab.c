@@ -29,6 +29,7 @@
 #include "control_structures.h"		//controller structures
 #include "controller_objects.h"		//controllers are defined here
 #include "uart_comm.h"
+#include "datatypes.h"
 
 
 

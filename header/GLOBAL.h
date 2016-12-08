@@ -15,8 +15,6 @@ extern Uint16 RamfuncsLoadSize;
 
 Uint16 startup_voltage;
 
-
-
 extern volatile struct EPWM_REGS *ePWM[9];
 extern Uint16 cuk_rampup;
 extern Uint16 cuk_ready;
@@ -44,12 +42,6 @@ int32 filtergains[] = {0x15B91CE5, 0x95B91CE5,0};
 /*********************************/
 //int16* mailbox;
 
-struct ext_ad_result
-{
-	Uint16	first_conv;
-	Uint16	second_conv;
-}ext_ad;
-
 // ramp up signals
 
 Uint16 cuk_rampup;
@@ -69,30 +61,13 @@ int32 startup_filter_mem[] = {0,0,0};
 
 void read_ext_ad(void);
 
-//struct measurements
-//{
-//	//pri measurements
-//	Uint16* pri_current_lp;
-//	Uint16* pri_current_1;
-//	Uint16* pri_current_2;
-//	Uint16* pri_voltage;
-//	//sec measurements
-//	Uint16* sec_current;
-//	Uint16* sec_voltage;
-//};
-
-struct storage
-{
-	Uint16 rdptr;
-	Uint16 wrptr;
-	Uint32* mem;
-};
 Uint16	SCIdata;
 
 Uint16 cnt_jee=0;
 
 struct storage sig_prbs;
 struct measurements meas;
+struct ext_ad_result ext_ad;
 
 
 Uint16* mailbox;
