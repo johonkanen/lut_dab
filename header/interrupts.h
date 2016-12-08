@@ -13,12 +13,15 @@
 
 __interrupt void PWM1_int(void);
 
-
 void read_ext_ad(void);
-
 extern Uint16 cnt_jee;
-
 extern struct measurements meas;
+
+extern float measgain;
+extern float juttu;
+extern int16 mail;
+
+
 
 #endif /* INTERRUPTS_H_ */
 

@@ -19,6 +19,12 @@ extern volatile struct EPWM_REGS *ePWM[9];
 extern Uint16 cuk_rampup;
 extern Uint16 cuk_ready;
 
+
+float measgain = (float)0.109890109890110;
+float juttu=0;
+int16 mail;
+
+
 extern void init_cla(void);
 /**********************************/
 void rampup(void);
@@ -33,8 +39,6 @@ Uint32	rampmem,scale;
 //#define SCALE		37836 /* == 1/56757*2^31 == 450ms rampup */
 #define SCALE		15891 /* 1s rampup*/
 //#define SCALE		317816
-
-
 
 int32 filtergains[] = {0x15B91CE5, 0x95B91CE5,0};
 
@@ -58,8 +62,6 @@ Uint16 cuk_ready;
 int32 startup_filter_num[] = {0x00000000,0x40000000, 0x33E70ABC};
 int32 startup_filter_den[] = {0x40000000,0xA2822A24, 0x2224AB3C};
 int32 startup_filter_mem[] = {0,0,0};
-
-void read_ext_ad(void);
 
 Uint16	SCIdata;
 

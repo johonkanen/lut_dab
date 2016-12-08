@@ -10,9 +10,6 @@
 
 __interrupt void PWM1_int(void)
 {
-	float measgain = (float)0.109890109890110;
-	float juttu=0;
-	int16 mail;
 
 	read_ext_ad();
 
