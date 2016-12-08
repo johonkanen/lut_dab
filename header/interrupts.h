@@ -8,9 +8,7 @@
 #ifndef INTERRUPTS_H_
 #define INTERRUPTS_H_
 
-
 #include "DSP28x_Project.h"
-
 __interrupt void PWM1_int(void);
 
 void read_ext_ad(void);
