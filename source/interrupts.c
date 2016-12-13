@@ -20,21 +20,21 @@ __interrupt void PWM1_int(void)
 
 
 
-	ph_shift_1 = -225+(measgain * 2048);
-	ph_shift_2 =  225-(measgain * 2048);
+	ph_shift_1 = -225+(measgain * 2048-30);
+	ph_shift_2 =  225-(measgain * 2048+30);
 
-	ph_shift_3 = -225+(measgain * 2048);
-	ph_shift_4 =  225-(measgain * 2048);
+	ph_shift_3 = -225+(measgain * 2048-40);
+	ph_shift_4 =  225-(measgain * 2048+40);
 
 	ph_shift_pri_sec_1 = -225+(measgain * pri_current);
 	ph_shift_pri_sec_2 =  225-(measgain * pri_current);
 
 
 	EPwm3Regs.TBPHS.half.TBPHS = 225+ph_shift_1+ph_shift_pri_sec_1;
-	EPwm4Regs.TBPHS.half.TBPHS = 225+ph_shift_2-ph_shift_pri_sec_1;
+	EPwm4Regs.TBPHS.half.TBPHS = 225-ph_shift_2+ph_shift_pri_sec_1;
 
 	EPwm5Regs.TBPHS.half.TBPHS = 225+ph_shift_3+ph_shift_pri_sec_2;
-	EPwm6Regs.TBPHS.half.TBPHS = 225+ph_shift_4-ph_shift_pri_sec_2;
+	EPwm6Regs.TBPHS.half.TBPHS = 225-ph_shift_4+ph_shift_pri_sec_2;
 
 /*
 	EPwm4Regs.TBPHS.half.TBPHS = (int16)(juttu-222)+445;
