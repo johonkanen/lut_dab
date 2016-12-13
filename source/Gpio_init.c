@@ -50,17 +50,17 @@ void init_AUX_PWM1_GPIO(void)
 void init_pri_HB_GPIO(void)
 {
 	   EALLOW;
-	   GpioCtrlRegs.GPAPUD.bit.GPIO2 = 1;    // Disable pull-up 	EPWM3A
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO2 = 1;   // Configure GPIO2 as 	EPWM3A
+	   GpioCtrlRegs.GPAPUD.bit.GPIO4 = 1;    // Disable pull-up 	EPWM3A
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO4 = 1;   // Configure GPIO2 as 	EPWM3A
 
-	   GpioCtrlRegs.GPAPUD.bit.GPIO3 = 1;    // Disable pull-up on 	EPWM3B
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO3 = 1;   // Configure GPIO3 as 	EPWM3B
+	   GpioCtrlRegs.GPAPUD.bit.GPIO5 = 1;    // Disable pull-up on 	EPWM3B
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO5 = 1;   // Configure GPIO3 as 	EPWM3B
 
-	   GpioCtrlRegs.GPAPUD.bit.GPIO4 = 1;    // Disable pull-up on 	EPWM4A
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO4 = 1;   // Configure GPIO4 as 	EPWM4A
+	   GpioCtrlRegs.GPAPUD.bit.GPIO6 = 1;    // Disable pull-up on 	EPWM4A
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO6 = 1;   // Configure GPIO4 as 	EPWM4A
 
-	   GpioCtrlRegs.GPAPUD.bit.GPIO5 = 1;    // Disable pull-up on 	EPWM4B
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO5 = 1;   // Configure GPIO5 as 	EPWM4B
+	   GpioCtrlRegs.GPAPUD.bit.GPIO7 = 1;    // Disable pull-up on 	EPWM4B
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO7 = 1;   // Configure GPIO5 as 	EPWM4B
 
 	   EDIS;
 }
@@ -68,17 +68,17 @@ void init_pri_HB_GPIO(void)
 void init_sec_HB_GPIO(void)
 {
 	   EALLOW;
-	   GpioCtrlRegs.GPAPUD.bit.GPIO6 = 1;    // Disable pull-up 	EPWM5A
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO6 = 1;	 // Configure GPIO6 as 	EPWM5A
+	   GpioCtrlRegs.GPAPUD.bit.GPIO8 = 1;    // Disable pull-up 	EPWM5A
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO8 = 1;	 // Configure GPIO6 as 	EPWM5A
 
-	   GpioCtrlRegs.GPAPUD.bit.GPIO7 = 1;    // // Disable pull-up 	EPWM6B
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO7 = 1;   // Configure GPIO7 as 	EPWM6B
+	   GpioCtrlRegs.GPAPUD.bit.GPIO9 = 1;    // // Disable pull-up 	EPWM5B
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO9 = 1;   // Configure GPIO7 as 	EPWM5B
 
-	   GpioCtrlRegs.GPAPUD.bit.GPIO8 = 1;    // Disable pull-up 	EPWM7A
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO8 = 1;   // Configure GPIO8 as 	EPWM7A
+	   GpioCtrlRegs.GPAPUD.bit.GPIO10 = 1;    // Disable pull-up 	EPWM6A
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 1;   // Configure GPIO8 as EPWM6A
 
-	   GpioCtrlRegs.GPAPUD.bit.GPIO9 = 1;    // Disable pull-up 	EPWM7B
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO9 = 1;   // Configure GPIO9 as 	EPWM7B
+	   GpioCtrlRegs.GPAPUD.bit.GPIO11 = 1;    // Disable pull-up 	EPWM6B
+	   GpioCtrlRegs.GPAMUX1.bit.GPIO11 = 1;   // Configure GPIO9 as EPWM6B
 
 	   EDIS;
 }

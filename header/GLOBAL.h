@@ -28,11 +28,16 @@ extern volatile struct EPWM_REGS *ePWM[9];
 extern Uint16 cuk_rampup;
 extern Uint16 cuk_ready;
 
+
+float measgain = (float)0.109890109890110;
+
+
 struct storage sig_prbs;
 struct measurements meas;
 struct ext_ad_result ext_ad;
 
-float measgain = (float)0.109890109890110;
+//extern float measgain;
+
 float juttu=0;
 int16 mail;
 Uint16 ref1,ref2,step,ramptest;

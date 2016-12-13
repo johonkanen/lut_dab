@@ -35,5 +35,4 @@ struct ext_ad_result
 	Uint16	second_conv;
 };
 
-
 #endif /* DATATYPES_H_ */

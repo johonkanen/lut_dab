@@ -70,9 +70,9 @@ void AUX_PWM1_config(void)
 void PRI_DAB_PWM34_config(void)
 {
 
-	Uint16 channel=2, period = 900-1; //j=1
+	Uint16 channel=3, period = 900-1; //j=1
 
-	for (channel=2; channel<=3; channel++)
+	for (channel=3; channel<=4; channel++)
 	{
 
 		(*ePWM[channel]).TBCTL.bit.PRDLD = TB_SHADOW;	        // set Immediate load
@@ -107,8 +107,8 @@ void PRI_DAB_PWM34_config(void)
 			(*ePWM[channel]).DBCTL.bit.OUT_MODE = DB_FULL_ENABLE; // Enable Dead-band module
 			(*ePWM[channel]).DBCTL.bit.POLSEL = DB_ACTV_HIC; // Active High Complementary (AHC)
 
-			(*ePWM[channel]).DBRED = 23;
-			(*ePWM[channel]).DBFED = 23;
+			(*ePWM[channel]).DBRED = 24;
+			(*ePWM[channel]).DBFED = 24;
 /*
 			EALLOW;
 			(*ePWM[channel]).HRCNFG.all = 0x0;
@@ -133,8 +133,8 @@ void PRI_DAB_PWM34_config(void)
 			(*ePWM[channel]).DBCTL.bit.OUT_MODE = DB_FULL_ENABLE; // Enable Dead-band module
 			(*ePWM[channel]).DBCTL.bit.POLSEL = DB_ACTV_HIC; // Active High Complementary (AHC)
 
-			(*ePWM[channel]).DBRED = 23; // RED = 30 TBCLKs initially
-			(*ePWM[channel]).DBFED = 23;
+			(*ePWM[channel]).DBRED = 24; // RED = 30 TBCLKs initially
+			(*ePWM[channel]).DBFED = 24;
 
 /*
 			EALLOW;
@@ -156,9 +156,9 @@ void PRI_DAB_PWM34_config(void)
 void SEC_DAB_PWM56_config(void)
 {
 
-	Uint16 channel=4, period = 900-1; //j=1
+	Uint16 channel=5, period = 900-1; //j=1
 
-	for (channel=4; channel<=5; channel++)
+	for (channel=5; channel<=6; channel++)
 	{
 
 		(*ePWM[channel]).TBCTL.bit.PRDLD = TB_SHADOW;	        // set Immediate load
@@ -193,8 +193,8 @@ void SEC_DAB_PWM56_config(void)
 			(*ePWM[channel]).DBCTL.bit.OUT_MODE = DB_FULL_ENABLE; // Enable Dead-band module
 			(*ePWM[channel]).DBCTL.bit.POLSEL = DB_ACTV_HIC; // Active High Complementary (AHC)
 
-			(*ePWM[channel]).DBRED = 23; // RED = 30 TBCLKs initially
-			(*ePWM[channel]).DBFED = 23;
+			(*ePWM[channel]).DBRED = 24; // RED = 30 TBCLKs initially
+			(*ePWM[channel]).DBFED = 24;
 /*
 			EALLOW;
 			(*ePWM[channel]).HRCNFG.all = 0x0;

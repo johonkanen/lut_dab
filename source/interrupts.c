@@ -15,7 +15,7 @@ __interrupt void PWM1_int(void)
 
 	cnt_jee--;
 
-	juttu = measgain * (*meas.pri_current_1);
+//	juttu = measgain * (*meas.pri_current_1);
 	mail = (int16)juttu-222;
 
 	/*
@@ -24,9 +24,15 @@ __interrupt void PWM1_int(void)
 
 	*/
 
+	EPwm3Regs.TBPHS.half.TBPHS = 224+30;
+	EPwm4Regs.TBPHS.half.TBPHS = 224-30;
+	EPwm5Regs.TBPHS.half.TBPHS = 224+60;
+	EPwm6Regs.TBPHS.half.TBPHS = 224-60;
+
+/*
 	EPwm4Regs.TBPHS.half.TBPHS = (int16)(juttu-222)+445;
 	EPwm5Regs.TBPHS.half.TBPHS = (int16)(juttu-222)+445;
-
+*/
 	    if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
 			SciaRegs.SCITXBUF = mail;

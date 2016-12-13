@@ -100,6 +100,9 @@ main(void)
 
    init_AUX_PWM1_GPIO();
 
+   duty_ch(4) = 444;
+
+
    init_pri_HB_GPIO();
    init_sec_HB_GPIO();
 

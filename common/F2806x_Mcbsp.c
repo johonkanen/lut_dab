@@ -21,8 +21,8 @@
 // generator (CLKG) cycles required for the Mcbsp initialization routine.
 //---------------------------------------------------------------------------
 
-
-#define CPU_SPD              80E6
+//this was 80e6 for some reason -jari
+#define CPU_SPD              90E6
 #define MCBSP_SRG_FREQ       CPU_SPD/2   // SRG input is LSPCLK (SYSCLKOUT/2) for examples
 
 #define CLKGDV_VAL           1

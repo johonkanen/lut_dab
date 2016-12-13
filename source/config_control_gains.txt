@@ -1,10 +1,4 @@
-//imma a test file
 // note, include *clean* newline to suppress compiler warning
    
    InitPi(&AUX_voltage_ctrl,(int32)0x3D70A3D4,(int32)0x83666,(int16)2731);//2677 // 18.5 = 2731	// ref = 2610/16.223V kP 0x3D70A3D4, Ki 0x83666
-   
-   
-   // DC link meas gain == 7.4697
-   InitPi(&DC_link_voltage_ctrl,(int32)0xA0DC706,(int32)0xEA90,(int16)1294); //1376==185V  1000 = 142V Kp = 0x11111111 Ki = 0xC717 1307 = 175V
-   //141B8E0D
    
