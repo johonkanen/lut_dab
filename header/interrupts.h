@@ -30,11 +30,11 @@ extern float measgain;
 
 #define pri_current (*meas.pri_current_1)
 
-EXT Uint16 ph_shift_1;
-EXT Uint16 ph_shift_2;
+EXT int16 ph_shift_1;
+EXT int16 ph_shift_2;
 
-EXT Uint16 ph_shift_3;
-EXT Uint16 ph_shift_4;
+EXT int16 ph_shift_3;
+EXT int16 ph_shift_4;
 
 EXT Uint16 ph_shift_pri_sec_1;
 EXT Uint16 ph_shift_pri_sec_2;
