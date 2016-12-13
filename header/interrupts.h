@@ -33,6 +33,12 @@ extern float measgain;
 EXT Uint16 ph_shift_1;
 EXT Uint16 ph_shift_2;
 
+EXT Uint16 ph_shift_3;
+EXT Uint16 ph_shift_4;
+
+EXT Uint16 ph_shift_pri_sec_1;
+EXT Uint16 ph_shift_pri_sec_2;
+
 #endif /* INTERRUPTS_H_ */
 
 
