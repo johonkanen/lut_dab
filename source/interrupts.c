@@ -4,6 +4,7 @@
  *  Created on: 8.12 2016
  *      Author: Jari
  */
+#define INTERRUPTS_C
 
 #include "interrupts.h"
 #include "datatypes.h"
@@ -15,8 +16,10 @@ __interrupt void PWM1_int(void)
 
 	cnt_jee--;
 
-//	juttu = measgain * (*meas.pri_current_1);
-	mail = (int16)juttu-222;
+
+
+	ph_shift_1 = -224+(measgain * pri_current);
+	ph_shift_2 = 224-(measgain * pri_current);
 
 	/*
 
@@ -24,10 +27,13 @@ __interrupt void PWM1_int(void)
 
 	*/
 
-	EPwm3Regs.TBPHS.half.TBPHS = 224+30;
-	EPwm4Regs.TBPHS.half.TBPHS = 224-30;
-	EPwm5Regs.TBPHS.half.TBPHS = 224+60;
-	EPwm6Regs.TBPHS.half.TBPHS = 224-60;
+//	ph_shift = ((Uint16))(measgain*pri_current);
+
+
+	EPwm3Regs.TBPHS.half.TBPHS = 224+ph_shift_1;
+	EPwm4Regs.TBPHS.half.TBPHS = 224+ph_shift_2;
+	EPwm5Regs.TBPHS.half.TBPHS = 224;
+	EPwm6Regs.TBPHS.half.TBPHS = 224;
 
 /*
 	EPwm4Regs.TBPHS.half.TBPHS = (int16)(juttu-222)+445;

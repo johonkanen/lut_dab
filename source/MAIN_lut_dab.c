@@ -19,7 +19,6 @@
 #include "DSP28x_Project.h"     	// Device Headerfile and Examples Include File
 //#include "SFO_V6.h"					// HRpwm calibration
 #include "GLOBAL.h"					//pragmas and global variables
-
 #include "interrupts.h"
 #include "Gpio_init.h"
 #include "ADC_conf.h"				//adc conf declarations

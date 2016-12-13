@@ -32,17 +32,17 @@ void Adc_config(void)
 	AdcRegs.ADCSOC0CTL.bit.ACQPS 	= 6;	//set SOC0/1 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	//HF Primary current 1
-	AdcRegs.ADCSOC2CTL.bit.CHSEL 	= 2;	//set SOC2 channel select to ADCIN A1
+	AdcRegs.ADCSOC2CTL.bit.CHSEL 	= 2;	//set SOC2 channel select to ADCIN A2
 	AdcRegs.ADCSOC2CTL.bit.TRIGSEL 	= 0x05;	//set SOC2/3 start trigger as EPWM1 SOCA
 	AdcRegs.ADCSOC2CTL.bit.ACQPS 	= 6;	//set SOC2/3 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	//HF Primary current 2
-	AdcRegs.ADCSOC3CTL.bit.CHSEL 	= 2;	//set SOC3 channel select to ADCIN A1
+	AdcRegs.ADCSOC3CTL.bit.CHSEL 	= 2;	//set SOC3 channel select to ADCIN A2
 	AdcRegs.ADCSOC3CTL.bit.TRIGSEL 	= 0x06;	//set SOC4 start trigger as EPWM1 SOCB
 	AdcRegs.ADCSOC3CTL.bit.ACQPS 	= 6;	//set SOC4 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	//Primary voltage
-	AdcRegs.ADCSOC4CTL.bit.CHSEL 	= 4;	//set SOC6/7 channel select to ADCIN A2
+	AdcRegs.ADCSOC4CTL.bit.CHSEL 	= 4;	//set SOC6/7 channel select to ADCIN A4
 	AdcRegs.ADCSOC4CTL.bit.TRIGSEL 	= 0x06;	//set SOC6/7 start trigger as EPWM2SOCA
 	AdcRegs.ADCSOC4CTL.bit.ACQPS 	= 6;	//set SOC6/7 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 

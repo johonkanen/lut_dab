@@ -28,9 +28,9 @@ extern volatile struct EPWM_REGS *ePWM[9];
 extern Uint16 cuk_rampup;
 extern Uint16 cuk_ready;
 
-
 float measgain = (float)0.109890109890110;
 
+//#define pri_current *(Uint16)*meas.pri_current_1
 
 struct storage sig_prbs;
 struct measurements meas;
