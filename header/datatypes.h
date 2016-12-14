@@ -35,4 +35,16 @@ struct ext_ad_result
 	Uint16	second_conv;
 };
 
+struct f_pid_ctrl
+{
+	float ki;
+	float kp;
+	float kd;
+	float kf;
+	//reference and reference
+	float ref;
+	float ref_mem;
+	float scale;
+};
+
 #endif /* DATATYPES_H_ */

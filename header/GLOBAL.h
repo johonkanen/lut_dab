@@ -30,6 +30,8 @@ extern Uint16 cuk_ready;
 
 float measgain = (float)0.109890109890110;
 
+struct f_pid_ctrl voltage_ctrl;
+
 //#define pri_current *(Uint16)*meas.pri_current_1
 
 struct storage sig_prbs;
