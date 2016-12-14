@@ -56,6 +56,13 @@ main(void)
 // Disable CPU interrupts
    DINT;
 
+   void (*ctrl_ptr)(struct f_pid_ctrl*);
+
+   ctrl_ptr = &fpid_control;
+
+   (*ctrl_ptr)(&voltage_ctrl);
+
+
 // Initialize the PIE control registers to their default state.
    InitPieCtrl();
 
