@@ -55,13 +55,13 @@ main(void)
 
 // Disable CPU interrupts
    DINT;
-
+/*
    void (*ctrl_ptr)(struct f_pid_ctrl*);
 
    ctrl_ptr = &fpid_control;
 
    (*ctrl_ptr)(&voltage_ctrl);
-
+*/
 
 // Initialize the PIE control registers to their default state.
    InitPieCtrl();
@@ -85,8 +85,8 @@ main(void)
 
    config_measurements(&meas);
 
-#include "init_control_gains.txt"
-
+	//#include "init_control_gains.txt"
+   init_f_pid_control(&voltage_ctrl, (float)1, (float)0.1, (float)0, (float)0, (float)0.3,  &fpid_control);
 //   init_cla();
    // Configure PWM
    EALLOW;
