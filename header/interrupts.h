@@ -26,6 +26,8 @@ extern int16 mail;
 
 extern float measgain;
 
+extern struct f_pid_ctrl voltage_ctrl;
+
 #define duty_ch(X) ((*ePWM[X]).CMPA.half.CMPA)
 
 #define pri_current (*meas.pri_current_1)

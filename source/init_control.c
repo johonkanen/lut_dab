@@ -21,10 +21,10 @@ void init_f_pid_control(struct f_pid_ctrl* pid_controller, float kp, float ki, f
 	pid_controller->ref_mem 	= 0;
 	pid_controller->scale		= 0;
 	pid_controller->pid_control = ctrl_ptr;
-
+/*
 	pid_controller->pid_control(pid_controller);
 	execute_fpid_ctrl(pid_controller);
-
+*/
 }
 
 

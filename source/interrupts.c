@@ -16,8 +16,8 @@ __interrupt void PWM1_int(void)
 
 	cnt_jee--;
 
-
-
+	// macro for calling a function through a pointer
+	execute_fpid_ctrl(voltage_ctrl);
 
 	ph_shift_1 = -225+(measgain * 2048+30);
 	ph_shift_2 =  225-(measgain * 2048-30);

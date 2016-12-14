@@ -14,7 +14,4 @@ void init_f_pid_control(struct f_pid_ctrl* pid_controller, float kp, float ki, f
 
 void fpid_control(struct f_pid_ctrl*);
 
-#define execute_fpid_ctrl(X) (X->pid_control(X));
-
-
 #endif /* INIT_CONTROL_H_ */

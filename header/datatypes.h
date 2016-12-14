@@ -48,4 +48,7 @@ struct f_pid_ctrl
 	void (*pid_control)(struct f_pid_ctrl*);
 };
 
+#define execute_fpid_ctrl(X) ((&X)->pid_control((&X)));
+
+
 #endif /* DATATYPES_H_ */
