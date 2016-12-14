@@ -8,12 +8,6 @@
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
 
-#define START_VAL 	3000
-#define END_VAL		4000
-//#define SCALE		37836 /* == 1/56757*2^31 == 450ms rampup */
-#define SCALE		15891 /* 1s rampup*/
-//#define SCALE		317816
-
 void rampup(void);
 void rampup_init(void);
 

@@ -41,6 +41,8 @@ struct f_pid_ctrl
 	float kp;
 	float kd;
 	float kf;
+	float imem;
+	float dmem;
 	//reference and reference
 	float ref;
 	float ref_mem;
