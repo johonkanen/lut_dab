@@ -25,10 +25,9 @@
 #include "SCIA_conf.h"				//UART declarations
 #include "PWM__conf.h"				//pwm conf function declarations
 //#include "CLA.h"					//cla header definitions
-#include "control_structures.h"		//controller structures
-#include "controller_objects.h"		//controllers are defined here
 #include "uart_comm.h"
 #include "datatypes.h"
+#include "init_control.h"
 
 /**** HW COMPILE ENABLE *****/
 
@@ -78,6 +77,8 @@ main(void)
    //init the measurement structure
 
    config_measurements(&meas);
+
+#include "init_control_gains.txt"
 
 //   init_cla();
    // Configure PWM

@@ -45,6 +45,7 @@ struct f_pid_ctrl
 	float ref;
 	float ref_mem;
 	float scale;
+	void (*pid_control)(struct f_pid_ctrl*);
 };
 
 #endif /* DATATYPES_H_ */
