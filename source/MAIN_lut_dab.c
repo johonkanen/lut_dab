@@ -27,7 +27,8 @@
 //#include "CLA.h"					//cla header definitions
 #include "uart_comm.h"
 #include "datatypes.h"
-#include "init_control.h"
+#include "control.h"
+#include "ctrl_macros.h"
 
 /**** HW COMPILE ENABLE *****/
 
@@ -86,7 +87,7 @@ main(void)
    config_measurements(&meas);
 
 	//#include "init_control_gains.txt"
-   init_f_pid_control(&voltage_ctrl, (float)1, (float)0.1, (float)0, (float)0, (float)0.3,  &fpid_control);
+   init_f_pid_control(&voltage_ctrl, (float)1, (float)0.1, (float)0, (float)0, (float)0.3, &meas, &fpid_control);
 //   init_cla();
    // Configure PWM
    EALLOW;

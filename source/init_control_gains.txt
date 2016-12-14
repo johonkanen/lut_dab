@@ -1,4 +1,6 @@
 //initialize controller gains here
 
-init_f_pid_control(&voltage_ctrl, (float)1, (float)0.1, (float)0, (float)0, (float)0.3, &fpid_control(&voltage_ctrl));
+
+// 									    kp,         ki,       kd,       kf,        ref,
+init_f_pid_control(&voltage_ctrl, (float)1, (float)0.1, (float)0, (float)0, (float)0.3, &meas, &fpid_control(&voltage_ctrl));
 

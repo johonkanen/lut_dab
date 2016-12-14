@@ -8,6 +8,7 @@
 
 #include "interrupts.h"
 #include "datatypes.h"
+#include "ctrl_macros.h"
 
 __interrupt void PWM1_int(void)
 {
@@ -17,7 +18,9 @@ __interrupt void PWM1_int(void)
 	cnt_jee--;
 
 	// macro for calling a function through a pointer
-	m_execute_fpid_ctrl(voltage_ctrl);
+	float testi = m_execute_fpid_ctrl(voltage_ctrl);
+
+
 
 	ph_shift_1 = -225+(measgain * 2048+30);
 	ph_shift_2 =  225-(measgain * 2048-30);
