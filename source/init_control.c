@@ -32,20 +32,23 @@ float fpid_control(struct f_pid_ctrl* ctrl)
 	float input_current_error= (float)m_ctrl_meas-m_ref;
 	float output;
 
-	output = m_kp*input_current_error + m_imem;
+	output = m_kp*input_current_error + m_ki+m_imem;
 
 	if(output>=1)
 	{
-		m_imem -= (float)0.00001*abs(input_current_error);
+		m_imem -= (float)0.00001*fabs(input_current_error);
 		output = (float)1;
+		return output;
 	}
 	else if(output<=-1)
 	{
-		m_imem += (float)0.00001*abs(input_current_error);
+		m_imem += (float)0.00001*fabs(input_current_error);
 		output = (float)-1;
+		return output;
 	}
 	else
-		m_imem +=  m_ki*input_current_error;
-
-	return output;
+	{
+		m_imem +=  input_current_error;
+		return output;
+	}
 }
