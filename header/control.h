@@ -11,7 +11,7 @@
 #include "ctrl_macros.h"
 
 //pid_controller is the object for the pid controller for a specific control task
-void init_f_pid_control(struct f_pid_ctrl* pid_controller,
+void init_f_pid_control(struct f_pid_ctrl* pid_controller,//pointer to the controller "object"
 						float kp,//p gain
 						float ki,//I gain
 						float kd,//D gain
