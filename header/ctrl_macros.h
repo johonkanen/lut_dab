@@ -21,6 +21,7 @@
 #define m_ki ctrl->ki
 #define m_ref ctrl->ref
 #define m_imem ctrl->imem
+#define m_ctrl_meas *(Uint16*)*(ctrl->ctrl_meas)
 
 
 #endif /* CTRL_MACROS_H_ */

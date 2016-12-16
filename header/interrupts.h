@@ -30,7 +30,7 @@ extern struct f_pid_ctrl voltage_ctrl;
 
 #define duty_ch(X) ((*ePWM[X]).CMPA.half.CMPA)
 
-#define pri_current (*meas.pri_current_1)
+#define m_pri_current (*meas.pri_current_1)
 
 EXT int16 ph_shift_1;
 EXT int16 ph_shift_2;

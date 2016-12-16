@@ -10,7 +10,7 @@
 #include "control.h"
 #pragma CODE_SECTION(fpid_control, "ramfuncs");
 
-void init_f_pid_control(struct f_pid_ctrl* pid_controller, float kp, float ki, float kd, float kf, float ref,struct measurements* ctrl_meas,float (*ctrl_ptr)(struct f_pid_ctrl* pid_controller))
+void init_f_pid_control(struct f_pid_ctrl* pid_controller, float kp, float ki, float kd, float kf, float ref,Uint16* ctrl_meas,float (*ctrl_ptr)(struct f_pid_ctrl* pid_controller))
 {
 	pid_controller->kp 			= kp*m_12bit_gain;
 	pid_controller->kd 			= kd*m_12bit_gain;
@@ -29,19 +29,19 @@ void init_f_pid_control(struct f_pid_ctrl* pid_controller, float kp, float ki, f
 
 float fpid_control(struct f_pid_ctrl* ctrl)
 {
-	float input_current_error= (float)*(meas.pri_current_1)-m_ref;
+	float input_current_error= (float)m_ctrl_meas-m_ref;
 	float output;
 
 	output = m_kp*input_current_error + m_imem;
 
 	if(output>=1)
 	{
-		m_imem -= (float)0.0001*abs(input_current_error);
+		m_imem -= (float)0.00001*abs(input_current_error);
 		output = (float)1;
 	}
 	else if(output<=-1)
 	{
-		m_imem += (float)0.0001*abs(input_current_error);
+		m_imem += (float)0.00001*abs(input_current_error);
 		output = (float)-1;
 	}
 	else

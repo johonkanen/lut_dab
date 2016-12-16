@@ -47,7 +47,7 @@ struct f_pid_ctrl
 	float ref;
 	float ref_mem;
 	float scale;
-	struct measurements* ctrl_meas; //pointer to a measurement struct
+	Uint16* ctrl_meas; //pointer to a measurement struct
 	float (*pid_control)(struct f_pid_ctrl*);
 };
 
