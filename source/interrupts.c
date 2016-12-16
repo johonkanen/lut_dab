@@ -17,7 +17,7 @@ __interrupt void PWM1_int(void)
 
 
 	read_ext_ad();
-
+	//GpioDataRegs.GPASET.bit.GPIO17 = 1;
 	cnt_jee--;
 
 	// macro for calling a function through a pointer
@@ -27,7 +27,8 @@ __interrupt void PWM1_int(void)
 	ctrl_scaled = ctrl_scaled*225;
 
 
-	GpioDataRegs.GPASET.bit.GPIO17 = 1;
+
+
 	ph_shift_1 = -225+(measgain * 2048+30);
 	ph_shift_2 =  225-(measgain * 2048-30);
 
@@ -36,14 +37,14 @@ __interrupt void PWM1_int(void)
 
 	ph_shift_pri_sec_1 = -225+(ctrl_scaled);
 	ph_shift_pri_sec_2 =  225-(ctrl_scaled);
-	GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
+
 
 	EPwm3Regs.TBPHS.half.TBPHS = 225+ph_shift_1+ph_shift_pri_sec_1;
 	EPwm4Regs.TBPHS.half.TBPHS = 225-ph_shift_2+ph_shift_pri_sec_1;
 
 	EPwm5Regs.TBPHS.half.TBPHS = 225+ph_shift_3+ph_shift_pri_sec_2;
 	EPwm6Regs.TBPHS.half.TBPHS = 225-ph_shift_4+ph_shift_pri_sec_2;
-
+	//GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
 	if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
 			SciaRegs.SCITXBUF = mail;
