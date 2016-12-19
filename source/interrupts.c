@@ -29,11 +29,11 @@ __interrupt void PWM1_int(void)
 
 
 
-	ph_shift_1 = -225+(measgain * 2048+30);
-	ph_shift_2 =  225-(measgain * 2048-30);
+	ph_shift_1 = -225+(measgain * 2048+0);
+	ph_shift_2 =  225-(measgain * 2048-0);
 
-	ph_shift_3 = -225+(measgain * 2048+40);
-	ph_shift_4 =  225-(measgain * 2048-40);
+	ph_shift_3 = -225+(measgain * 2048+0);
+	ph_shift_4 =  225-(measgain * 2048-0);
 
 	ph_shift_pri_sec_1 = -225+(ctrl_scaled);
 	ph_shift_pri_sec_2 =  225-(ctrl_scaled);
