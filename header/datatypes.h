@@ -52,4 +52,12 @@ struct f_pid_ctrl
 };
 
 
+struct pwm_interface
+{
+	volatile Uint16* p1_phase;
+	volatile Uint16* p2_phase;
+	volatile Uint16* s1_phase;
+	volatile Uint16* s2_phase;
+};
+
 #endif /* DATATYPES_H_ */

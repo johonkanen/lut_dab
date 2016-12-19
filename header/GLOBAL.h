@@ -31,6 +31,7 @@ struct f_pid_ctrl voltage_ctrl;
 struct storage sig_prbs;
 struct measurements meas;
 struct ext_ad_result ext_ad;
+struct pwm_interface phase_reg;
 
 //extern float measgain;
 

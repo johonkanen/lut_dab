@@ -20,6 +20,7 @@ __interrupt void PWM1_int(void);
 void read_ext_ad(void);
 extern Uint16 cnt_jee;
 extern struct measurements meas;
+extern struct pwm_interface phase_reg;
 
 extern float juttu;
 extern int16 mail;
@@ -28,7 +29,7 @@ extern float measgain;
 
 extern struct f_pid_ctrl voltage_ctrl;
 
-#define duty_ch(X) ((*ePWM[X]).CMPA.half.CMPA)
+//#define duty_ch(X) ((*ePWM[X]).CMPA.half.CMPA)
 
 #define m_pri_current (*meas.pri_current_1)
 
