@@ -47,8 +47,8 @@ __interrupt void PWM1_int(void)
 	//GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
 	if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
-			SciaRegs.SCITXBUF = mail;
-			SciaRegs.SCITXBUF = mail>>8;
+			SciaRegs.SCITXBUF = *meas.pri_current_1;
+			SciaRegs.SCITXBUF = *meas.pri_current_1>>8;
 	    }
 
 

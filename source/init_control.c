@@ -29,10 +29,10 @@ void init_f_pid_control(struct f_pid_ctrl* pid_controller, float kp, float ki, f
 
 float fpid_control(struct f_pid_ctrl* ctrl)
 {
-	float input_current_error= (float)m_ctrl_meas-m_ref;
+	float input_current_error= m_ref-(float)m_ctrl_meas;
 	float output;
 
-	output = m_kp*input_current_error + m_ki+m_imem;
+	output = m_kp*input_current_error + m_ki*m_imem;
 
 	if(output>=1)
 	{
