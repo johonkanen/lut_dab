@@ -26,10 +26,8 @@ __interrupt void PWM1_int(void)
 
 	ctrl_scaled= -m_execute_fpid_ctrl(voltage_ctrl);
 
+	// the 223 and 226 are used to scale the +/-1 output of PI control to phase register values
 	ctrl_scaled = ctrl_scaled*223+226;
-
-
-
 
 	ph_shift_1 = -225+(measgain * 2048+0);
 	ph_shift_2 =  225-(measgain * 2048-0);
@@ -42,10 +40,10 @@ __interrupt void PWM1_int(void)
 
 
 	*phase_reg.p1_phase = 225+ph_shift_1+ph_shift_pri_sec_1;
-	*phase_reg.p2_phase = 225-ph_shift_2-ph_shift_pri_sec_1;
+	*phase_reg.p2_phase = 225-ph_shift_2+ph_shift_pri_sec_1;
 
 	*phase_reg.s1_phase = 225+ph_shift_3+ph_shift_pri_sec_2;
-	*phase_reg.s2_phase = 225-ph_shift_4-ph_shift_pri_sec_2;
+	*phase_reg.s2_phase = 225-ph_shift_4+ph_shift_pri_sec_2;
 	//GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
 	if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
