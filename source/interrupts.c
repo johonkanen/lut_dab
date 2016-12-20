@@ -12,6 +12,8 @@
 
 #pragma CODE_SECTION(PWM1_int, "ramfuncs");
 
+float ctrl_scaled;
+
 __interrupt void PWM1_int(void)
 {
 
@@ -22,9 +24,9 @@ __interrupt void PWM1_int(void)
 
 	// macro for calling a function through a pointer
 
-	float ctrl_scaled = m_execute_fpid_ctrl(voltage_ctrl);
+	ctrl_scaled= -m_execute_fpid_ctrl(voltage_ctrl);
 
-	ctrl_scaled = ctrl_scaled*225;
+	ctrl_scaled = ctrl_scaled*223+226;
 
 
 
