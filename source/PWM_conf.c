@@ -13,6 +13,9 @@
 volatile struct EPWM_REGS *ePWM[9] =
  			 {  &EPwm1Regs, &EPwm1Regs, &EPwm2Regs,	&EPwm3Regs,	&EPwm4Regs,	&EPwm5Regs,	&EPwm6Regs,	&EPwm7Regs,	&EPwm8Regs};
 
+#define DT0 0
+
+
 void AUX_PWM1_config(void)
 {
 	Uint16 channel=1, period = 900-1; //j=1
@@ -107,8 +110,8 @@ void PRI_DAB_PWM34_config(void)
 			(*ePWM[channel]).DBCTL.bit.OUT_MODE = DB_FULL_ENABLE; // Enable Dead-band module
 			(*ePWM[channel]).DBCTL.bit.POLSEL = DB_ACTV_HIC; // Active High Complementary (AHC)
 
-			(*ePWM[channel]).DBRED = 24;
-			(*ePWM[channel]).DBFED = 24;
+			(*ePWM[channel]).DBRED = 24*DT0;
+			(*ePWM[channel]).DBFED = 24*DT0;
 /*
 			EALLOW;
 			(*ePWM[channel]).HRCNFG.all = 0x0;
@@ -133,8 +136,8 @@ void PRI_DAB_PWM34_config(void)
 			(*ePWM[channel]).DBCTL.bit.OUT_MODE = DB_FULL_ENABLE; // Enable Dead-band module
 			(*ePWM[channel]).DBCTL.bit.POLSEL = DB_ACTV_HIC; // Active High Complementary (AHC)
 
-			(*ePWM[channel]).DBRED = 24; // RED = 30 TBCLKs initially
-			(*ePWM[channel]).DBFED = 24;
+			(*ePWM[channel]).DBRED = 24*DT0; // RED = 30 TBCLKs initially
+			(*ePWM[channel]).DBFED = 24*DT0;
 
 /*
 			EALLOW;
@@ -193,8 +196,8 @@ void SEC_DAB_PWM56_config(void)
 			(*ePWM[channel]).DBCTL.bit.OUT_MODE = DB_FULL_ENABLE; // Enable Dead-band module
 			(*ePWM[channel]).DBCTL.bit.POLSEL = DB_ACTV_HIC; // Active High Complementary (AHC)
 
-			(*ePWM[channel]).DBRED = 24; // RED = 30 TBCLKs initially
-			(*ePWM[channel]).DBFED = 24;
+			(*ePWM[channel]).DBRED = 24*DT0; // RED = 30 TBCLKs initially
+			(*ePWM[channel]).DBFED = 24*DT0;
 /*
 			EALLOW;
 			(*ePWM[channel]).HRCNFG.all = 0x0;
@@ -219,8 +222,8 @@ void SEC_DAB_PWM56_config(void)
 			(*ePWM[channel]).DBCTL.bit.OUT_MODE = DB_FULL_ENABLE; // Enable Dead-band module
 			(*ePWM[channel]).DBCTL.bit.POLSEL = DB_ACTV_HIC; // Active High Complementary (AHC)
 
-			(*ePWM[channel]).DBRED = 23; // RED = 30 TBCLKs initially
-			(*ePWM[channel]).DBFED = 23;
+			(*ePWM[channel]).DBRED = 24*DT0; // RED = 30 TBCLKs initially
+			(*ePWM[channel]).DBFED = 24*DT0;
 
 /*
 			EALLOW;
