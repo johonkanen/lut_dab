@@ -14,7 +14,7 @@
 
 float ctrl_scaled;
 float duty1 = .1;
-float duty2 = .1;
+float duty2 = .2;
 
 __interrupt void PWM1_int(void)
 {
@@ -28,8 +28,13 @@ __interrupt void PWM1_int(void)
 
 	ctrl_scaled= m_execute_fpid_ctrl(voltage_ctrl);
 
+	if(duty1>duty2)
+		ctrl_scaled = (ctrl_scaled*223)*duty1+226*(1-duty1*duty2);
+	else
+		ctrl_scaled = (ctrl_scaled*223)*duty2+226*(1-duty1*duty2);
+
 	// the 223 and 226 are used to scale the +/-1 output of PI control to phase register values
-	ctrl_scaled = (ctrl_scaled*223)*duty1+226*(1-duty1*.1);
+	//ctrl_scaled = (ctrl_scaled*223)*duty1+226*(1-duty1*duty2);
 
 	ph_shift_1 = -225+(225+225*(1-duty1));
 	ph_shift_2 =  225-(225-225*(1-duty1));
