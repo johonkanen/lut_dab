@@ -13,7 +13,7 @@
 #pragma CODE_SECTION(PWM1_int, "ramfuncs");
 
 float ctrl_scaled;
-float duty1 = .5;
+float duty1 = 1;
 float duty2 = 1;
 float ctrl;
 float p_offset=1;
@@ -52,17 +52,17 @@ __interrupt void PWM1_int(void)
 	if(duty1>duty2)
 	{
 		ctrl_scaled = (ctrl*223)*duty2+226*(duty2);
-		d_offset = duty1;
+		d_offset = duty1-duty2;
 	}
 	else
 	{
 		ctrl_scaled = (ctrl*223)*duty1+226*(duty1);
-		d_offset = duty2;
+		d_offset = duty2-duty1;
 	}
 
 
-	if(ctrl<=0)
-		ctrl_scaled+=223*d_offset;
+	if(ctrl>=0)
+		ctrl_scaled+=223*d_offset*2;
 
 	// the 223 and 226 are used to scale the +/-1 output of PI control to phase register values
 
