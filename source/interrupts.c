@@ -14,7 +14,7 @@
 
 float ctrl_scaled;
 float duty1 = 1;
-float duty2 = 1;
+float duty2 = .62;
 float ctrl;
 float p_offset=1;
 float s_offset=1;
@@ -52,12 +52,12 @@ __interrupt void PWM1_int(void)
 	if(duty1>duty2)
 	{
 		ctrl_scaled = (ctrl*223)*duty2+226*(duty2);
-		d_offset = duty1-duty2;
+		d_offset = 1-duty2;
 	}
 	else
 	{
 		ctrl_scaled = (ctrl*223)*duty1+226*(duty1);
-		d_offset = duty2-duty1;
+		d_offset = 1-duty1;
 	}
 
 
