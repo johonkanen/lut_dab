@@ -66,11 +66,11 @@ __interrupt void PWM1_int(void)
 
 	// the 223 and 226 are used to scale the +/-1 output of PI control to phase register values
 
-	ph_shift_1 = -225+(225+225*(1-duty1));
-	ph_shift_2 =  225-(225-225*(1-duty1));
+	ph_shift_1 = 225*(1-duty1);
+	ph_shift_2 = 225*(1-duty1);
 
-	ph_shift_3 = -225+(225+225*(1-duty2));
-	ph_shift_4 =  225-(225-225*(1-duty2));
+	ph_shift_3 = 225*(1-duty2);
+	ph_shift_4 = 225*(1-duty2);
 
 	ph_shift_pri_sec_1 = -225+(ctrl_scaled);
 	ph_shift_pri_sec_2 =  225-(ctrl_scaled);
