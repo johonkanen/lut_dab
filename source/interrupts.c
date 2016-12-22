@@ -13,8 +13,8 @@
 #pragma CODE_SECTION(PWM1_int, "ramfuncs");
 
 float ctrl_scaled;
-float duty1 = .5;
-float duty2 = .62;
+float duty1 = .25;
+float duty2 = .25;
 float ctrl;
 float p_offset=1;
 float s_offset=1;
@@ -59,11 +59,15 @@ __interrupt void PWM1_int(void)
 	ph_shift_pri_sec_1 = -225+(ctrl_scaled);
 	ph_shift_pri_sec_2 =  225-(ctrl_scaled);
 
-	*phase_reg.p1_phase = p_offset*225+ph_shift_1+ph_shift_pri_sec_1;
-	*phase_reg.p2_phase = p_offset*225-ph_shift_2+ph_shift_pri_sec_1;
+	float phase;
 
-	*phase_reg.s1_phase = s_offset*225+ph_shift_3+ph_shift_pri_sec_2;
-	*phase_reg.s2_phase = s_offset*225-ph_shift_4+ph_shift_pri_sec_2;
+	phase = 1;
+
+	*phase_reg.p1_phase = 225;//p_offset*225+ph_shift_1+ph_shift_pri_sec_1;
+	*phase_reg.p2_phase = 225;//p_offset*225-ph_shift_2+ph_shift_pri_sec_1;
+
+	*phase_reg.s1_phase = 0;//s_offset*225+ph_shift_3+ph_shift_pri_sec_2;
+	*phase_reg.s2_phase = 0;//s_offset*225-ph_shift_4+ph_shift_pri_sec_2;
 	//GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
 	if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
