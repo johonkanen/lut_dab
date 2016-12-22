@@ -64,14 +64,14 @@ __interrupt void PWM1_int(void)
 	phase = m_execute_fpid_ctrl(voltage_ctrl);
 	phase = phase+1;
 	phase = phase*.25;
-	duty1 = .20;
+	duty1 = .3;
 	duty2 = .3;
 
-	*phase_reg.p1_phase = 449*duty1		  + 449*duty2;
-	*phase_reg.p2_phase = 					449*duty2;
+	*phase_reg.p1_phase = 449*duty1		  + 449*duty2-449*duty1*phase;
+	*phase_reg.p2_phase = 					449*duty2-449*duty1*phase;
 
-	*phase_reg.s1_phase = 449*duty1*phase;
-	*phase_reg.s2_phase = 449*duty1*phase + 449*duty2;
+	*phase_reg.s1_phase = 0;
+	*phase_reg.s2_phase = 449*duty2;
 
 
 	//GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
