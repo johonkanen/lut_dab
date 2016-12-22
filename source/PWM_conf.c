@@ -125,10 +125,10 @@ void PRI_DAB_PWM34_config(void)
 		}
 		else			//ch 2
 		{
-			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
-			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_SET;
-			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_SET;          // PWM toggle high/low
-			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_CLEAR;
+			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_SET;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_CLEAR;
+			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_SET;
 
 
 			(*ePWM[channel]).DBCTL.bit.IN_MODE = DBA_ALL;
@@ -211,10 +211,10 @@ void SEC_DAB_PWM56_config(void)
 		}
 		else			//ch 2
 		{
-			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_SET;          // PWM toggle high/low
-			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_CLEAR;
-			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
-			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_SET;
+			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_SET;
+			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_SET;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_CLEAR;
 
 
 			(*ePWM[channel]).DBCTL.bit.IN_MODE = DBA_ALL;

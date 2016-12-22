@@ -19,7 +19,7 @@ float ctrl;
 float p_offset=1;
 float s_offset=1;
 float d_offset;
-
+float phase;
 __interrupt void PWM1_int(void)
 {
 	read_ext_ad();
@@ -59,43 +59,20 @@ __interrupt void PWM1_int(void)
 	ph_shift_pri_sec_1 = -225+(ctrl_scaled);
 	ph_shift_pri_sec_2 =  225-(ctrl_scaled);
 
-	float phase;
+
 
 	phase = m_execute_fpid_ctrl(voltage_ctrl);
-	phase = fabs(phase);
-	duty1 = .5;
-	duty2 = .7;
+	phase = 0;
+	duty1 = 0;
+	duty2 = 0;
 
-/*
-	float phase_p,phase_s;
-	if(phase<0)
-	{
-		phase_p = -phase;
-		phase_s = 0;
-	}
-	else
-	{
-		phase_p = 0;
-		phase_s = phase;
-	}
-*/
+	*phase_reg.p1_phase = 0;
+	*phase_reg.p2_phase = 0;
 
-	if(duty1 <= duty2)
-	{
-		*phase_reg.p1_phase = 0;
-		*phase_reg.p2_phase = 450*(1-duty1);
+	*phase_reg.s1_phase = 0;
+	*phase_reg.s2_phase = 0;
 
-		*phase_reg.s1_phase = 450*(1-duty1*phase)-450*(1-duty2);
-		*phase_reg.s2_phase = 450+450*(1-duty1*phase);
-	}
-	else
-	{
-		*phase_reg.p1_phase = 0;
-		*phase_reg.p2_phase = 450*(1-duty1);
 
-		*phase_reg.s1_phase = 450*(1-duty1*phase*.5)+450*(1-duty2);
-		*phase_reg.s2_phase = 450*(1-duty1*phase*.5);
-	}
 	//GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
 
 	if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
