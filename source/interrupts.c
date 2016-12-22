@@ -64,8 +64,8 @@ __interrupt void PWM1_int(void)
 	phase = m_execute_fpid_ctrl(voltage_ctrl);
 	phase = phase+1;
 	phase = phase*.5;
-	duty1 = .42;
-	duty2 = .32;
+	duty1 = .99;
+	duty2 = .50;
 
 	if(duty1<duty2)
 	{
