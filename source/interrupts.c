@@ -13,8 +13,8 @@
 #pragma CODE_SECTION(PWM1_int, "ramfuncs");
 
 float ctrl_scaled;
-float duty1 = .25;
-float duty2 = .25;
+float duty1;
+float duty2;
 float phase;
 __interrupt void PWM1_int(void)
 {
@@ -25,8 +25,8 @@ __interrupt void PWM1_int(void)
 	// macro for calling a function through a pointer
 
 	phase = m_execute_fpid_ctrl(voltage_ctrl);
-	duty1 = .2;
-	duty2 = .3;
+	duty1 = .8;
+	duty2 = .1;
 
 	if (phase >=0)
 	{
