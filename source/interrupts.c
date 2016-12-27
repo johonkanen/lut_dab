@@ -62,28 +62,50 @@ __interrupt void PWM1_int(void)
 
 
 	phase = m_execute_fpid_ctrl(voltage_ctrl);
-	phase = phase+1;
-	phase = phase*.5;
-	duty1 = .99;
-	duty2 = .50;
+	phase = phase;
+	phase = phase;
+	duty1 = .9;
+	duty2 = 1;
 
-	if(duty1<duty2)
+	if (phase >=0)
 	{
-		*phase_reg.p1_phase = 449*duty1 + 449*duty2*phase;
-		*phase_reg.p2_phase = 0+449*duty2*phase;
+		if(duty1<duty2)
+		{
+			*phase_reg.p1_phase = 449*duty1 + 449*duty2*phase;
+			*phase_reg.p2_phase = 0+449*duty2*phase;
 
-		*phase_reg.s1_phase = 449*duty2;
-		*phase_reg.s2_phase = 0;
+			*phase_reg.s1_phase = 449*duty2;
+			*phase_reg.s2_phase = 0;
+		}
+		else
+		{
+			*phase_reg.p1_phase = 449*duty1;
+			*phase_reg.p2_phase = 0;
+
+			*phase_reg.s1_phase = 449*duty2+ 449*duty1*phase;
+			*phase_reg.s2_phase = 0+ 449*duty1*phase;
+		}
 	}
 	else
 	{
-		*phase_reg.p1_phase = 449*duty1;
-		*phase_reg.p2_phase = 0;
+		phase = -phase;
+		if(duty1<duty2)
+		{
+			*phase_reg.p1_phase = 449*duty1;
+			*phase_reg.p2_phase = 0;
 
-		*phase_reg.s1_phase = 449*duty2+ 449*duty1*phase;
-		*phase_reg.s2_phase = 0+ 449*duty1*phase;
+			*phase_reg.s1_phase = 449*duty2+449*duty2*phase;
+			*phase_reg.s2_phase = 0+449*duty2*phase;
+		}
+		else
+		{
+			*phase_reg.p1_phase = 449*duty1+ 449*duty1*phase;
+			*phase_reg.p2_phase = 0+ 449*duty1*phase;
+
+			*phase_reg.s1_phase = 449*duty2;
+			*phase_reg.s2_phase = 0;
+		}
 	}
-
 	//GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
 
 	if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
