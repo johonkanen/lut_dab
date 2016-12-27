@@ -15,10 +15,6 @@
 float ctrl_scaled;
 float duty1 = .25;
 float duty2 = .25;
-float ctrl;
-float p_offset=1;
-float s_offset=1;
-float d_offset;
 float phase;
 __interrupt void PWM1_int(void)
 {
@@ -29,10 +25,8 @@ __interrupt void PWM1_int(void)
 	// macro for calling a function through a pointer
 
 	phase = m_execute_fpid_ctrl(voltage_ctrl);
-	phase = phase;
-	phase = phase;
-	duty1 = .9;
-	duty2 = 1;
+	duty1 = .2;
+	duty2 = .1;
 
 	if (phase >=0)
 	{
