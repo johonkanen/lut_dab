@@ -9,6 +9,7 @@
 #include "interrupts.h"
 #include "datatypes.h"
 #include "ctrl_macros.h"
+#include "C28x_FPU_FastRTS.h"
 
 #pragma CODE_SECTION(PWM1_int, "ramfuncs");
 
@@ -16,6 +17,9 @@ float ctrl_scaled;
 float duty1;
 float duty2;
 float phase;
+float ctrl;
+float length;
+float neg_scale;
 __interrupt void PWM1_int(void)
 {
 	read_ext_ad();
@@ -24,9 +28,20 @@ __interrupt void PWM1_int(void)
 
 	// macro for calling a function through a pointer
 
-	phase = m_execute_fpid_ctrl(voltage_ctrl);
+	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
 	duty1 = .8;
 	duty2 = .1;
+	length = (duty1+duty2)*.5;
+	neg_scale = 1-1/(1+length);
+
+	if(ctrl<0)
+	{
+		phase = length+(1+length)*ctrl;
+	}
+	else
+		phase = length+(1-length)*ctrl;
+
+
 
 	if (phase >=0)
 	{
