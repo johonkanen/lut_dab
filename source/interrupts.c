@@ -29,86 +29,23 @@ __interrupt void PWM1_int(void)
 	// macro for calling a function through a pointer
 
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
-	duty1 = .8;
-	duty2 = .5;
+	ctrl = ctrl*.25;
+
+	phase = .25;
+	duty1 = .9;
+	duty2 = .9;
 	length = (duty1+duty2)*.5;
 	neg_scale = 1-1/(1+length);
 
-	if(ctrl<0)
+	if(duty1+duty2>0.5)
 	{
-		if(duty1>duty2)
-		{
-			phase = length+(1+length)*ctrl;
-		}
-		else
-		{
-			if(fabs(ctrl)>length)
-			{
+		*phase_reg.p1_phase = 0;//0
+		*phase_reg.p2_phase = 450*(1-duty1);
 
-			}
-			else
-			{
-
-			}
-			phase = length+(1+length)*ctrl;
-		}
-	}
-	else
-	{
-		if(duty2>duty1)
-		{
-			phase = length+(1-length)*ctrl;
-		}
-		else
-		{
-			phase = length+(1-length)*ctrl;
-		}
+		*phase_reg.s1_phase = 450*(1-duty1)*.125+900*phase;
+		*phase_reg.s2_phase = 450*(1-duty1)*.125+450*(1-duty2)+900*phase;
 	}
 
-
-
-
-
-
-	if (phase >=0)
-	{
-		if(duty1<duty2)
-		{
-			*phase_reg.p1_phase = 449*duty1 + 449*duty2*phase;
-			*phase_reg.p2_phase = 0+449*duty2*phase;
-
-			*phase_reg.s1_phase = 449*duty2;
-			*phase_reg.s2_phase = 0;
-		}
-		else
-		{
-			*phase_reg.p1_phase = 449*duty1;
-			*phase_reg.p2_phase = 0;
-
-			*phase_reg.s1_phase = 449*duty2+ 449*duty1*phase;
-			*phase_reg.s2_phase = 0+ 449*duty1*phase;
-		}
-	}
-	else
-	{
-		phase = -phase;
-		if(duty1<duty2)
-		{
-			*phase_reg.p1_phase = 449*duty1;
-			*phase_reg.p2_phase = 0;
-
-			*phase_reg.s1_phase = 449*duty2+449*duty1*phase;
-			*phase_reg.s2_phase = 0+449*duty1*phase;
-		}
-		else
-		{
-			*phase_reg.p1_phase = 449*duty1+ 449*duty2*phase;
-			*phase_reg.p2_phase = 0+ 449*duty2*phase;
-
-			*phase_reg.s1_phase = 449*duty2;
-			*phase_reg.s2_phase = 0;
-		}
-	}
 	//GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
 
 	if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
