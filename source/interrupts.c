@@ -29,17 +29,35 @@ __interrupt void PWM1_int(void)
 	// macro for calling a function through a pointer
 
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
-	duty1 = .8;
-	duty2 = .1;
+	duty1 = .1;
+	duty2 = .8;
 	length = (duty1+duty2)*.5;
 	neg_scale = 1-1/(1+length);
 
 	if(ctrl<0)
 	{
-		phase = length+(1+length)*ctrl;
+		if(d1>d2)
+		{
+			phase = length+(1+length)*ctrl;
+		}
+		else
+		{
+
+
+		}
 	}
 	else
-		phase = length+(1-length)*ctrl;
+	{
+		if(d2>d1)
+		{
+			phase = length+(1-length)*ctrl;
+		}
+
+
+	}
+
+
+
 
 
 
