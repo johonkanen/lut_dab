@@ -29,16 +29,16 @@ __interrupt void PWM1_int(void)
 	// macro for calling a function through a pointer
 
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
-	ctrl = ctrl*.25;
+	//ctrl = ctrl*.25;
 
-	phase = ctrl;
-	duty1 = .6;
-	duty2 = .6;
+	phase = 0;
+	duty1 = 1;
+	duty2 = fabs(ctrl);
 	length = (duty1+duty2)*.5;
-	neg_scale = 1-1/(1+length);
 
-	if(phase>0)
+	if(phase<=0) // note, the logic is backwards when compared to juhamatti modulation!!!
 	{
+		phase = -phase;
 		if(duty1+duty2>0.5)
 		{
 			if(duty1 == duty2)
@@ -46,22 +46,22 @@ __interrupt void PWM1_int(void)
 				*phase_reg.p1_phase = 0;//0
 				*phase_reg.p2_phase = 450*(1-duty1);
 
-				*phase_reg.s1_phase = 0+900*phase*(duty1+(1-duty1));
-				*phase_reg.s2_phase = 450*(1-duty1)+900*phase*(duty1+(1-duty1));
+				*phase_reg.s1_phase = 0				+900*phase;
+				*phase_reg.s2_phase = 450*(1-duty1)	+900*phase;
 			}
-			else
+			else if(duty1>duty2)
 			{
 				*phase_reg.p1_phase = 0;//0
-				*phase_reg.p2_phase = 450*(1-duty1);
+				*phase_reg.p2_phase = 0;
 
-				*phase_reg.s1_phase = 450*(1-duty1)*.5+900*phase;
-				*phase_reg.s2_phase = 450*(1-duty1)*.5+450*(1-duty2)+900*phase;
+				*phase_reg.s1_phase = 0				+900*phase+450*(duty2+(1-duty2)*.5);
+				*phase_reg.s2_phase = 450*(1-duty2)	+900*phase+450*(duty2+(1-duty2)*.5);
 			}
 		}
 	}
 	else
 	{
-		phase = -phase;
+
 		if(duty1+duty2>0.5)
 		{
 			if(duty1 == duty2)
@@ -69,8 +69,8 @@ __interrupt void PWM1_int(void)
 				*phase_reg.s1_phase = 0;//0
 				*phase_reg.s2_phase = 450*(1-duty1);
 
-				*phase_reg.p1_phase = 0+900*phase*(duty1+(1-duty1));
-				*phase_reg.p2_phase = 450*(1-duty1)+900*phase*(duty1+(1-duty1));
+				*phase_reg.p1_phase = 0+900*phase;
+				*phase_reg.p2_phase = 450*(1-duty1)+900*phase;
 			}
 			else
 			{
