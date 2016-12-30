@@ -56,6 +56,10 @@ __interrupt void PWM1_int(void)
 				*phase_reg.s1_phase = 0				+450*(duty2+(1-duty2)*.5);
 				*phase_reg.s2_phase = 450*(1-duty2)	+450*(duty2+(1-duty2)*.5);
 			}
+			else if(duty1<duty2)
+			{
+				//TODO
+			}
 		}
 	}
 	else
