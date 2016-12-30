@@ -29,15 +29,15 @@ __interrupt void PWM1_int(void)
 	// macro for calling a function through a pointer
 
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
-	ctrl = ctrl*.25;
+	ctrl = -ctrl*.25;
 
-	phase = ctrl;
+	phase = 0;
 	duty1 = 1;
-	duty2 = .9;
+	duty2 = fabs(ctrl)*4;
 
-	if(phase<=0) // note, the logic is backwards when compared to juhamatti modulation!!!
+	if(phase>=0) // note, the logic is backwards when compared to juhamatti modulation!!!
 	{
-		phase = -phase;
+
 		if(duty1+duty2>0.5)
 		{
 			if(duty1 == duty2)
@@ -60,7 +60,7 @@ __interrupt void PWM1_int(void)
 	}
 	else
 	{
-
+		phase = -phase;
 		if(duty1+duty2>0.5)
 		{
 			if(duty1 == duty2)
