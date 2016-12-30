@@ -32,8 +32,8 @@ __interrupt void PWM1_int(void)
 	ctrl = -ctrl*.25;
 
 	phase = 0;
-	duty1 = 1;
-	duty2 = fabs(ctrl)*4;
+	duty1 = 1-ctrl*2;
+	duty2 = .5;
 
 	if(phase>=0) // note, the logic is backwards when compared to juhamatti modulation!!!
 	{
@@ -50,11 +50,11 @@ __interrupt void PWM1_int(void)
 			}
 			else if(duty1>duty2)
 			{
-				*phase_reg.p1_phase = 0+449*(.5-duty1*.5)+900*phase;//0
-				*phase_reg.p2_phase = 0+449*(.5-duty1*.5)+900*phase;
+				*phase_reg.p1_phase = 450*(duty2)*.5-450*(1-duty1)*.5+900*phase;//0
+				*phase_reg.p2_phase = 450*(duty2)*.5+450*(1-duty1)*.5+900*phase;
 
-				*phase_reg.s1_phase = 0				+450*(duty2+(1-duty2)*.5);
-				*phase_reg.s2_phase = 450*(1-duty2)	+450*(duty2+(1-duty2)*.5);
+				*phase_reg.s1_phase = 0				;
+				*phase_reg.s2_phase = 450*(duty2)	;
 			}
 			else if(duty1<duty2)
 			{
