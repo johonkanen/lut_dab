@@ -37,7 +37,6 @@ __interrupt void PWM1_int(void)
 
 	if(phase>=0) // note, the logic is backwards when compared to juhamatti modulation!!!
 	{
-
 		if(duty1+duty2>0.5)
 		{
 			if(duty1 == duty2)
