@@ -31,9 +31,9 @@ __interrupt void PWM1_int(void)
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
 	ctrl = -ctrl*.25;
 
-	phase = 0;
-	duty1 = .6;
-	duty2 = .30;
+	phase = ctrl;
+	duty1 = .3;
+	duty2 = .2;
 
 	if(phase>=0)
 	{
@@ -71,16 +71,24 @@ __interrupt void PWM1_int(void)
 				*phase_reg.p1_phase = 0;//0
 				*phase_reg.p2_phase = 450*(1-duty1);
 
-				*phase_reg.s1_phase = 0				+900*phase*(duty1)*2;
-				*phase_reg.s2_phase = 450*(1-duty1)	+900*phase*(duty1)*2;
+				*phase_reg.s1_phase = 0				+900*phase*(duty1+duty2);
+				*phase_reg.s2_phase = 450*(1-duty1)	+900*phase*(duty1+duty2);
 			}
 			else if(duty1>duty2)
 			{
-				*phase_reg.p1_phase = 450*(duty1);//0
-				*phase_reg.p2_phase = 0;
+				*phase_reg.p1_phase = 0				+450*(duty1-duty2)*.5+900*phase*(duty1+duty2);
+				*phase_reg.p2_phase = 450*(1-duty1)	+450*(duty1-duty2)*.5+900*phase*(duty1+duty2);
 
 				*phase_reg.s1_phase = 0;
-				*phase_reg.s2_phase = 450*(duty2);
+				*phase_reg.s2_phase = 450*(1-duty2);
+			}
+			else if(duty1<duty2)
+			{
+				*phase_reg.p1_phase = 0				+450*(duty1-duty2)*.5+900*phase*(duty1+duty2);
+				*phase_reg.p2_phase = 450*(1-duty1)	+450*(duty1-duty2)*.5+900*phase*(duty1+duty2);
+
+				*phase_reg.s1_phase = 0;
+				*phase_reg.s2_phase = 450*(1-duty2);
 			}
 		}
 
@@ -119,11 +127,19 @@ __interrupt void PWM1_int(void)
 		{
 			if(duty1 == duty2)
 			{
-				*phase_reg.p1_phase = 0				+900*phase*(duty1)*2;//0
-				*phase_reg.p2_phase = 450*(1-duty1)	+900*phase*(duty1)*2;
+				*phase_reg.p1_phase = 0				+900*phase*(duty1+duty2);//0
+				*phase_reg.p2_phase = 450*(1-duty1)	+900*phase*(duty1+duty2);
 
 				*phase_reg.s1_phase = 0				;
 				*phase_reg.s2_phase = 450*(1-duty1)	;
+			}
+			else if(duty1>duty2)
+			{
+				*phase_reg.p1_phase = 0				+450*(duty1-duty2)*.5;//0
+				*phase_reg.p2_phase = 450*(1-duty1)	+450*(duty1-duty2)*.5;
+
+				*phase_reg.s1_phase = 0				+900*phase*(duty1+duty2);
+				*phase_reg.s2_phase = 450*(1-duty2)	+900*phase*(duty1+duty2);
 			}
 		}
 	}
