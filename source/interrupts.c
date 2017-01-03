@@ -82,13 +82,13 @@ __interrupt void PWM1_int(void)
 				*phase_reg.s1_phase = 0;
 				*phase_reg.s2_phase = 450*(1-duty2);
 			}
-			else if(duty1<duty2)
+			else if(duty1<duty2) // TODO
 			{
-				*phase_reg.p1_phase = 0				+450*(duty1-duty2)*.5+900*phase*(duty1+duty2);
-				*phase_reg.p2_phase = 450*(1-duty1)	+450*(duty1-duty2)*.5+900*phase*(duty1+duty2);
+				*phase_reg.p1_phase = 0;
+				*phase_reg.p2_phase = 450*(1-duty2);
 
-				*phase_reg.s1_phase = 0;
-				*phase_reg.s2_phase = 450*(1-duty2);
+				*phase_reg.s1_phase = 0				+450*(duty1-duty2)*.5+900*phase*(duty1+duty2);
+				*phase_reg.s2_phase = 450*(1-duty1)	+450*(duty1-duty2)*.5+900*phase*(duty1+duty2);
 			}
 		}
 
@@ -140,6 +140,14 @@ __interrupt void PWM1_int(void)
 
 				*phase_reg.s1_phase = 0				+900*phase*(duty1+duty2);
 				*phase_reg.s2_phase = 450*(1-duty2)	+900*phase*(duty1+duty2);
+			}
+			else if(duty1<duty2) // TODO
+			{
+				*phase_reg.p1_phase = 0;
+				*phase_reg.p2_phase = 450*(1-duty2);
+
+				*phase_reg.s1_phase = 0				+450*(duty1-duty2)*.5+900*phase*(duty1+duty2);
+				*phase_reg.s2_phase = 450*(1-duty1)	+450*(duty1-duty2)*.5+900*phase*(duty1+duty2);
 			}
 		}
 	}
