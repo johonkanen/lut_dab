@@ -31,11 +31,11 @@ __interrupt void PWM1_int(void)
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
 	ctrl = -ctrl*.25;
 
-	phase = 0;
-	duty1 = 1-ctrl*2;
-	duty2 = .5;
+	phase = ctrl;
+	duty1 = .8;
+	duty2 = .8;
 
-	if(phase>=0) // note, the logic is backwards when compared to juhamatti modulation!!!
+	if(phase>=0)
 	{
 		if(duty1+duty2>0.5)
 		{
@@ -74,13 +74,17 @@ __interrupt void PWM1_int(void)
 				*phase_reg.p1_phase = 0+900*phase;
 				*phase_reg.p2_phase = 450*(1-duty1)+900*phase;
 			}
-			else
+			else if(duty1>duty2)
 			{
-				*phase_reg.p1_phase = 0;//0
-				*phase_reg.p2_phase = 450*(1-duty1);
+				*phase_reg.p1_phase = 450*(duty2)*.5-450*(1-duty1)*.5;//0
+				*phase_reg.p2_phase = 450*(duty2)*.5+450*(1-duty1)*.5;
 
-				*phase_reg.s1_phase = 450*(1-duty1)*.5+900*phase;
-				*phase_reg.s2_phase = 450*(1-duty1)*.5+450*(1-duty2)+900*phase;
+				*phase_reg.s1_phase = 0				+900*phase;
+				*phase_reg.s2_phase = 450*(duty2)	+900*phase;
+			}
+			else if(duty1<duty2)
+			{
+				//TODO
 			}
 		}
 

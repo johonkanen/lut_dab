@@ -22,8 +22,8 @@ void init_f_pid_control(struct f_pid_ctrl* pid_controller, float kp, float ki, f
 	pid_controller->scale		= 0;
 	pid_controller->pid_control = ctrl_ptr;
 	pid_controller->ctrl_meas   = ctrl_meas;
-	pid_controller->imem		=0;
-	pid_controller->dmem		=0;
+	pid_controller->imem		= 0;
+	pid_controller->dmem		= 0;
 }
 
 
