@@ -60,7 +60,7 @@ int32 startup_filter_mem[] = {0,0,0};
 
 Uint16	SCIdata;
 
-Uint16 cnt_jee=0;
+int16 cnt_jee=0;
 
 Uint16* mailbox;
 Uint16  package;

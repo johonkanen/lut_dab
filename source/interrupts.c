@@ -31,10 +31,11 @@ __interrupt void PWM1_int(void)
 
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
 	ctrl = -ctrl*.25;
+	//ctrl = cnt_jee*3.0518e-05*.25;
 
 	phase = ctrl;
-	duty1 = .85431;
-	duty2 = .30;
+	duty1 = .1;
+	duty2 = .1;
 
 	*(phase_reg.p1_phase+6) = 449;
 	*(phase_reg.p2_phase+6) = 449;
@@ -78,8 +79,8 @@ __interrupt void PWM1_int(void)
 				p1_phase = 0;//0
 				p2_phase = 0+450*(1-duty1);
 
-				s1_phase = 0				+888*phase*(duty1+duty2);
-				s2_phase = 0+450*(1-duty1)	+888*phase*(duty1+duty2);
+				s1_phase = 0				+900*phase*(duty1+duty2);
+				s2_phase = 0+450*(1-duty1)	+900*phase*(duty1+duty2);
 			}
 			else if(duty1>duty2)
 			{
@@ -134,8 +135,8 @@ __interrupt void PWM1_int(void)
 		{
 			if(duty1 == duty2)
 			{
-				p1_phase = 0				+888*phase*(duty1+duty2);//0
-				p2_phase = 0+450*(1-duty1)	+888*phase*(duty1+duty2);
+				p1_phase = 0				+900*phase*(duty1+duty2);//0
+				p2_phase = 0+450*(1-duty1)	+900*phase*(duty1+duty2);
 
 				s1_phase = 0				;
 				s2_phase = 0+450*(1-duty1)	;
@@ -197,8 +198,8 @@ __interrupt void PWM1_int(void)
 
 	if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
-			SciaRegs.SCITXBUF = p2_phase;
-			SciaRegs.SCITXBUF = p2_phase>>8;
+			SciaRegs.SCITXBUF = (Uint16)phase;
+			SciaRegs.SCITXBUF = (Uint16)phase>>8;
 	    }
 
 	// Clear INT flag for this timer
