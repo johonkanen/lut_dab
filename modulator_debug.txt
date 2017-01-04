@@ -1,0 +1,18 @@
+DAB modulaattori debug 4.1.2017
+
+d1 = 1; d2 = 1; g3 jättää pulsseja tekemättä kun ctrl = 0, (ctrl = -0.25 vastaa maksimitehoa)
+
+d1 = 1; d2 = .6; g3 jättää pulsseja tekemättä kun ctrl = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
