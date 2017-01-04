@@ -20,6 +20,7 @@ float phase;
 float ctrl;
 float length;
 float neg_scale;
+Uint16 phase1,phase2,phase3,phase4;
 __interrupt void PWM1_int(void)
 {
 	read_ext_ad();
