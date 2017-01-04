@@ -32,8 +32,8 @@ __interrupt void PWM1_int(void)
 	ctrl = -ctrl*.25;
 
 	phase = ctrl;
-	duty1 = 1;
-	duty2 = 1;
+	duty1 = .9;
+	duty2 = .6;
 
 	if(phase>=0)
 	{
@@ -41,11 +41,11 @@ __interrupt void PWM1_int(void)
 		{
 			if(duty1 == duty2)
 			{
-				*phase_reg.p1_phase = 0;//0
-				*phase_reg.p2_phase = 450*(1-duty1);
+				*phase_reg.p1_phase = 0+900*phase;//0
+				*phase_reg.p2_phase = 450*(1-duty1)+900*phase;
 
-				*phase_reg.s1_phase = 0				+900*phase;
-				*phase_reg.s2_phase = 450*(1-duty1)	+900*phase;
+				*phase_reg.s1_phase = 0				;
+				*phase_reg.s2_phase = 450*(1-duty1)	;
 			}
 			else if(duty1>duty2)
 			{
@@ -100,11 +100,11 @@ __interrupt void PWM1_int(void)
 		{
 			if(duty1 == duty2)
 			{
-				*phase_reg.s1_phase = 0;//0
-				*phase_reg.s2_phase = 450*(1-duty1);
+				*phase_reg.p1_phase = 0;
+				*phase_reg.p2_phase = 450*(1-duty1);
 
-				*phase_reg.p1_phase = 0+900*phase;
-				*phase_reg.p2_phase = 450*(1-duty1)+900*phase;
+				*phase_reg.s1_phase = 0+900*phase;//0
+				*phase_reg.s2_phase = 450*(1-duty1)+900*phase;
 			}
 			else if(duty1>duty2)
 			{
