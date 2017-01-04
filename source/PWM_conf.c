@@ -13,7 +13,7 @@
 volatile struct EPWM_REGS *ePWM[9] =
  			 {  &EPwm1Regs, &EPwm1Regs, &EPwm2Regs,	&EPwm3Regs,	&EPwm4Regs,	&EPwm5Regs,	&EPwm6Regs,	&EPwm7Regs,	&EPwm8Regs};
 // DTO == 0 => no deadtime
-#define DT0 1
+#define DT0 0
 
 
 void AUX_PWM1_config(void)

@@ -33,8 +33,14 @@ __interrupt void PWM1_int(void)
 	ctrl = -ctrl*.25;
 
 	phase = ctrl;
-	duty1 = .30;
+	duty1 = .85431;
 	duty2 = .30;
+
+	*(phase_reg.p1_phase+6) = 449;
+	*(phase_reg.p2_phase+6) = 449;
+	*(phase_reg.s1_phase+6) = 449;
+	*(phase_reg.s2_phase+6) = 449;
+
 
 	if(phase>=0)
 	{
@@ -161,15 +167,26 @@ __interrupt void PWM1_int(void)
 		s1_phase+=1;
 		s2_phase+=1;
 	}
-/*
-	if(p1_phase>442||p2_phase>442||s1_phase>442||s2_phase>442)
+
+	if(*phase_reg.p1_phase>448)
 	{
-		p1_phase+=10;
-		p2_phase+=10;
-		s1_phase+=10;
-		s2_phase+=10;
+		*(phase_reg.p2_phase+6) = 447;
 	}
-*/
+
+	if(*phase_reg.p2_phase>448)
+	{
+		*(phase_reg.p2_phase+6) = 447;
+	}
+
+	if(*phase_reg.s1_phase>448)
+	{
+		*(phase_reg.s1_phase+6) = 447;
+	}
+
+	if(*phase_reg.s2_phase>448)
+	{
+		*(phase_reg.s2_phase+6) = 447;
+	}
 
 	*phase_reg.p1_phase = p1_phase;
 	*phase_reg.p2_phase = p2_phase;
