@@ -73,9 +73,9 @@ void AUX_PWM1_config(void)
 void PRI_DAB_PWM34_config(void)
 {
 
-	Uint16 channel=3, period = 900-1; //j=1
+	Uint16 channel=2, period = 900-1; //j=1
 
-	for (channel=3; channel<=4; channel++)
+	for (channel=2; channel<=3; channel++)
 	{
 
 		(*ePWM[channel]).TBCTL.bit.PRDLD = TB_SHADOW;	        // set Immediate load

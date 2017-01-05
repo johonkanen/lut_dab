@@ -24,18 +24,19 @@ Uint16 p1_phase,p2_phase,s1_phase,s2_phase;
 __interrupt void PWM1_int(void)
 {
 	read_ext_ad();
-	//GpioDataRegs.GPASET.bit.GPIO17 = 1;
+
 	cnt_jee--;
 
 	// macro for calling a function through a pointer
 
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
+	GpioDataRegs.GPASET.bit.GPIO17 = 1;
 	ctrl = -ctrl*.25;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
 	phase = ctrl;
-	duty1 = .1;
-	duty2 = .1;
+	duty1 = .3;
+	duty2 = .5;
 
 	*(phase_reg.p1_phase+6) = 449;
 	*(phase_reg.p2_phase+6) = 449;
@@ -159,7 +160,7 @@ __interrupt void PWM1_int(void)
 			}
 		}
 	}
-	//GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
+	GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
 
 	if(p1_phase==0||p2_phase==0||s1_phase==0||s2_phase==0)
 	{
@@ -169,22 +170,22 @@ __interrupt void PWM1_int(void)
 		s2_phase+=1;
 	}
 
-	if(*phase_reg.p1_phase>447)
+	if(p1_phase>448)
+	{
+		*(phase_reg.p1_phase+6) = 447;
+	}
+
+	if(p2_phase>448)
 	{
 		*(phase_reg.p2_phase+6) = 447;
 	}
 
-	if(*phase_reg.p2_phase>447)
-	{
-		*(phase_reg.p2_phase+6) = 447;
-	}
-
-	if(*phase_reg.s1_phase>447)
+	if(s1_phase>448)
 	{
 		*(phase_reg.s1_phase+6) = 447;
 	}
 
-	if(*phase_reg.s2_phase>447)
+	if(s2_phase>448)
 	{
 		*(phase_reg.s2_phase+6) = 447;
 	}
