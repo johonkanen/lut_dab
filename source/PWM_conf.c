@@ -70,7 +70,7 @@ void AUX_PWM1_config(void)
 	(*ePWM[channel]).ETPS.bit.INTPRD = ET_1ST;            // Generate INT on 1st event
 }
 
-void PRI_DAB_PWM34_config(void)
+void PRI_DAB_PWM23_config(void)
 {
 
 	Uint16 channel=2, period = 900-1; //j=1
@@ -100,31 +100,6 @@ void PRI_DAB_PWM34_config(void)
 
 		if (channel & 1) //ch3
 		{
-
-			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_SET;          // PWM toggle high/low
-			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_CLEAR;
-			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
-			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_SET;
-
-			(*ePWM[channel]).DBCTL.bit.IN_MODE = DBA_ALL;
-			(*ePWM[channel]).DBCTL.bit.OUT_MODE = DB_FULL_ENABLE; // Enable Dead-band module
-			(*ePWM[channel]).DBCTL.bit.POLSEL = DB_ACTV_HIC; // Active High Complementary (AHC)
-
-			(*ePWM[channel]).DBRED = 24*DT0;
-			(*ePWM[channel]).DBFED = 24*DT0;
-/*
-			EALLOW;
-			(*ePWM[channel]).HRCNFG.all = 0x0;
-			(*ePWM[channel]).HRCNFG.bit.EDGMODE = HR_BEP;          // MEP control on both edges
-			(*ePWM[channel]).HRCNFG.bit.CTLMODE = HR_PHS;          // CMPAHR and TBPRDHR HR control
-			(*ePWM[channel]).HRCNFG.bit.HRLOAD  = HR_CTR_ZERO; // load on CTR = 0 and CTR = TBPRD
-			(*ePWM[channel]).HRCNFG.bit.SELOUTB  = 1; // load on CTR = 0 and CTR = TBPRD
-			EDIS;
-*/
-
-		}
-		else			//ch 2
-		{
 			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
 			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_SET;
 			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_SET;          // PWM toggle high/low
@@ -148,6 +123,31 @@ void PRI_DAB_PWM34_config(void)
 			(*ePWM[channel]).HRCNFG.bit.SELOUTB  = 1; // load on CTR = 0 and CTR = TBPRD
 			EDIS;
 */
+
+		}
+		else			//ch 2
+		{
+
+			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_SET;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_CLEAR;
+			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_SET;
+
+			(*ePWM[channel]).DBCTL.bit.IN_MODE = DBA_ALL;
+			(*ePWM[channel]).DBCTL.bit.OUT_MODE = DB_FULL_ENABLE; // Enable Dead-band module
+			(*ePWM[channel]).DBCTL.bit.POLSEL = DB_ACTV_HIC; // Active High Complementary (AHC)
+
+			(*ePWM[channel]).DBRED = 24*DT0;
+			(*ePWM[channel]).DBFED = 24*DT0;
+/*
+			EALLOW;
+			(*ePWM[channel]).HRCNFG.all = 0x0;
+			(*ePWM[channel]).HRCNFG.bit.EDGMODE = HR_BEP;          // MEP control on both edges
+			(*ePWM[channel]).HRCNFG.bit.CTLMODE = HR_PHS;          // CMPAHR and TBPRDHR HR control
+			(*ePWM[channel]).HRCNFG.bit.HRLOAD  = HR_CTR_ZERO; // load on CTR = 0 and CTR = TBPRD
+			(*ePWM[channel]).HRCNFG.bit.SELOUTB  = 1; // load on CTR = 0 and CTR = TBPRD
+			EDIS;
+*/
 //			(*ePWM[channel]).ETSEL.bit.SOCAEN = 0x1;
 //			(*ePWM[channel]).ETSEL.bit.SOCASEL = 0x6;       // Select SOC from from CPMB on upcount
 //			(*ePWM[channel]).ETPS.bit.SOCAPRD = 0x1;
@@ -156,12 +156,12 @@ void PRI_DAB_PWM34_config(void)
 }
 
 
-void SEC_DAB_PWM56_config(void)
+void SEC_DAB_PWM45_config(void)
 {
 
-	Uint16 channel=5, period = 900-1; //j=1
+	Uint16 channel=4, period = 900-1; //j=1
 
-	for (channel=5; channel<=6; channel++)
+	for (channel=4; channel<=5; channel++)
 	{
 
 		(*ePWM[channel]).TBCTL.bit.PRDLD = TB_SHADOW;	        // set Immediate load
@@ -186,31 +186,6 @@ void SEC_DAB_PWM56_config(void)
 
 		if (channel & 1) //ch3
 		{
-
-			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_SET;          // PWM toggle high/low
-			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_CLEAR;
-			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
-			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_SET;
-
-			(*ePWM[channel]).DBCTL.bit.IN_MODE = DBA_ALL;
-			(*ePWM[channel]).DBCTL.bit.OUT_MODE = DB_FULL_ENABLE; // Enable Dead-band module
-			(*ePWM[channel]).DBCTL.bit.POLSEL = DB_ACTV_HIC; // Active High Complementary (AHC)
-
-			(*ePWM[channel]).DBRED = 24*DT0; // RED = 30 TBCLKs initially
-			(*ePWM[channel]).DBFED = 24*DT0;
-/*
-			EALLOW;
-			(*ePWM[channel]).HRCNFG.all = 0x0;
-			(*ePWM[channel]).HRCNFG.bit.EDGMODE = HR_BEP;          // MEP control on both edges
-			(*ePWM[channel]).HRCNFG.bit.CTLMODE = HR_PHS;          // CMPAHR and TBPRDHR HR control
-			(*ePWM[channel]).HRCNFG.bit.HRLOAD  = HR_CTR_ZERO; // load on CTR = 0 and CTR = TBPRD
-			(*ePWM[channel]).HRCNFG.bit.SELOUTB  = 1; // load on CTR = 0 and CTR = TBPRD
-			EDIS;
-*/
-
-		}
-		else			//ch 2
-		{
 			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
 			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_SET;
 			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_SET;          // PWM toggle high/low
@@ -225,6 +200,31 @@ void SEC_DAB_PWM56_config(void)
 			(*ePWM[channel]).DBRED = 24*DT0; // RED = 30 TBCLKs initially
 			(*ePWM[channel]).DBFED = 24*DT0;
 
+/*
+			EALLOW;
+			(*ePWM[channel]).HRCNFG.all = 0x0;
+			(*ePWM[channel]).HRCNFG.bit.EDGMODE = HR_BEP;          // MEP control on both edges
+			(*ePWM[channel]).HRCNFG.bit.CTLMODE = HR_PHS;          // CMPAHR and TBPRDHR HR control
+			(*ePWM[channel]).HRCNFG.bit.HRLOAD  = HR_CTR_ZERO; // load on CTR = 0 and CTR = TBPRD
+			(*ePWM[channel]).HRCNFG.bit.SELOUTB  = 1; // load on CTR = 0 and CTR = TBPRD
+			EDIS;
+*/
+
+		}
+		else			//ch 2
+		{
+
+			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_SET;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_CLEAR;
+			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_SET;
+
+			(*ePWM[channel]).DBCTL.bit.IN_MODE = DBA_ALL;
+			(*ePWM[channel]).DBCTL.bit.OUT_MODE = DB_FULL_ENABLE; // Enable Dead-band module
+			(*ePWM[channel]).DBCTL.bit.POLSEL = DB_ACTV_HIC; // Active High Complementary (AHC)
+
+			(*ePWM[channel]).DBRED = 24*DT0; // RED = 30 TBCLKs initially
+			(*ePWM[channel]).DBFED = 24*DT0;
 /*
 			EALLOW;
 			(*ePWM[channel]).HRCNFG.all = 0x0;

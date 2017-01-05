@@ -82,10 +82,10 @@ main(void)
 	//#include "init_control_gains.txt"
    init_f_pid_control(&voltage_ctrl, (float)4, (float)0.01, (float)0, (float)0, (float)0.3, (Uint16*)&meas.pri_current_1, &fpid_control);
 
-   phase_reg.p1_phase = &EPwm3Regs.TBPHS.half.TBPHS;
-   phase_reg.p2_phase = &EPwm4Regs.TBPHS.half.TBPHS;
-   phase_reg.s1_phase = &EPwm5Regs.TBPHS.half.TBPHS;
-   phase_reg.s2_phase = &EPwm6Regs.TBPHS.half.TBPHS;
+   phase_reg.p1_phase = &EPwm2Regs.TBPHS.half.TBPHS;
+   phase_reg.p2_phase = &EPwm3Regs.TBPHS.half.TBPHS;
+   phase_reg.s1_phase = &EPwm4Regs.TBPHS.half.TBPHS;
+   phase_reg.s2_phase = &EPwm5Regs.TBPHS.half.TBPHS;
 
 //   init_cla();
    // Configure PWM
@@ -93,8 +93,8 @@ main(void)
        SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 0;
    EDIS;
 
-   PRI_DAB_PWM34_config();
-   SEC_DAB_PWM56_config();
+   PRI_DAB_PWM23_config();
+   SEC_DAB_PWM45_config();
 
    AUX_PWM1_config();
    AUX_PWM7_config();
