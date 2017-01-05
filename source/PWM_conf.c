@@ -95,8 +95,8 @@ void PRI_DAB_PWM34_config(void)
 
 		(*ePWM[channel]).CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;
 		(*ePWM[channel]).CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
-		(*ePWM[channel]).CMPCTL.bit.SHDWAMODE = CC_SHADOW;
-		(*ePWM[channel]).CMPCTL.bit.SHDWBMODE = CC_SHADOW;
+		(*ePWM[channel]).CMPCTL.bit.SHDWAMODE = CC_IMMEDIATE;
+		(*ePWM[channel]).CMPCTL.bit.SHDWBMODE = CC_IMMEDIATE;
 
 		if (channel & 1) //ch3
 		{
@@ -181,8 +181,8 @@ void SEC_DAB_PWM56_config(void)
 
 		(*ePWM[channel]).CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;
 		(*ePWM[channel]).CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
-		(*ePWM[channel]).CMPCTL.bit.SHDWAMODE = CC_SHADOW;
-		(*ePWM[channel]).CMPCTL.bit.SHDWBMODE = CC_SHADOW;
+		(*ePWM[channel]).CMPCTL.bit.SHDWAMODE = CC_IMMEDIATE;
+		(*ePWM[channel]).CMPCTL.bit.SHDWBMODE = CC_IMMEDIATE;
 
 		if (channel & 1) //ch3
 		{

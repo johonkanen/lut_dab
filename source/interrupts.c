@@ -169,22 +169,22 @@ __interrupt void PWM1_int(void)
 		s2_phase+=1;
 	}
 
-	if(*phase_reg.p1_phase>448)
+	if(*phase_reg.p1_phase>447)
 	{
 		*(phase_reg.p2_phase+6) = 447;
 	}
 
-	if(*phase_reg.p2_phase>448)
+	if(*phase_reg.p2_phase>447)
 	{
 		*(phase_reg.p2_phase+6) = 447;
 	}
 
-	if(*phase_reg.s1_phase>448)
+	if(*phase_reg.s1_phase>447)
 	{
 		*(phase_reg.s1_phase+6) = 447;
 	}
 
-	if(*phase_reg.s2_phase>448)
+	if(*phase_reg.s2_phase>447)
 	{
 		*(phase_reg.s2_phase+6) = 447;
 	}
