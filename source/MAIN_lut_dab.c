@@ -30,11 +30,6 @@
 #include "control.h"
 #include "ctrl_macros.h"
 
-/**** HW COMPILE ENABLE *****/
-
-//	TODO
-
-/****************************/
 #define LINK_TO_FLASH 0
 #define INTERRUPT_TIMING 0
 
@@ -106,9 +101,6 @@ main(void)
    EPwm1Regs.TBCTL.bit.SWFSYNC = 1;
 
    init_AUX_PWM1_GPIO();
-
-   //duty_ch(4) = 444;
-
 
    init_pri_HB_GPIO();
    init_sec_HB_GPIO();

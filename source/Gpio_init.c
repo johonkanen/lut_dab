@@ -92,6 +92,10 @@ void init_lut_dab_ext_ad_GPIO(void)
 	  GpioCtrlRegs.GPAMUX2.bit.GPIO16 = 1;
 	  GpioCtrlRegs.GPADIR.bit.GPIO16 = 1;
 
+	  //ext ad read = output
+	  GpioCtrlRegs.GPBMUX1.bit.GPIO39 = 0;// configure as gpio
+	  GpioCtrlRegs.GPBDIR.bit.GPIO39 = 1;
+
 	  //D0-D6
 	  GpioCtrlRegs.GPAMUX2.bit.GPIO22 = 0;
 	  GpioCtrlRegs.GPADIR.bit.GPIO22 = 0;
@@ -133,9 +137,7 @@ void init_lut_dab_ext_ad_GPIO(void)
 	  GpioCtrlRegs.GPBMUX1.bit.GPIO33 = 0;
 	  GpioCtrlRegs.GPBDIR.bit.GPIO33 = 0;
 
-	  //ext ad read = output
-	  GpioCtrlRegs.GPBMUX1.bit.GPIO39 = 0;//enable pullup
-	  GpioCtrlRegs.GPBDIR.bit.GPIO39 = 1;
+
 
 	  EDIS;
 

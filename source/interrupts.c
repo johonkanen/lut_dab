@@ -35,8 +35,8 @@ __interrupt void PWM1_int(void)
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
 	phase = ctrl;
-	duty1 = .3;
-	duty2 = .5;
+	duty1 = .7658917437;
+	duty2 = .2223627;
 
 	*(phase_reg.p1_phase+6) = 449;
 	*(phase_reg.p2_phase+6) = 449;
@@ -160,7 +160,7 @@ __interrupt void PWM1_int(void)
 			}
 		}
 	}
-	GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
+
 
 	if(p1_phase==0||p2_phase==0||s1_phase==0||s2_phase==0)
 	{
@@ -190,6 +190,9 @@ __interrupt void PWM1_int(void)
 		*(phase_reg.s2_phase+6) = 447;
 	}
 
+	GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
+
+	//update phase shift registers
 	*phase_reg.p1_phase = p1_phase;
 	*phase_reg.p2_phase = p2_phase;
 
