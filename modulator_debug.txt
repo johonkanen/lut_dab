@@ -26,6 +26,13 @@ d1 = .8, d2 = 1, phase ok
 
 d1 = .8, d2 = .8 phase ok
 
+d1 + d2 < 1:
+
+d1 = d2 = 0.2, phase ok, modulaatiolla 1-2 clk liikaa rangea
+
+d1 = .3, d2 = .2, phase ok, modulaattorilla 1-2 clk liikaa rangea
+
+d1 = .2, d2 = .3, phase ok, modulaattorilla 1-2 clk liikaa rangea
 
 
 
