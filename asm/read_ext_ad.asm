@@ -17,11 +17,6 @@ _read_ext_ad:
 	MOVW	DP,#_GpioDataRegs
 	MOVL	ACC,@_GpioDataRegs+0 ;ACC = GPADAT
 
-	OR		@_GpioDataRegs+0xa, #0x80
-	NOP
-	OR		@_GpioDataRegs+0xc, #0x80
-
-
 	LSR		AH,#6		; move bits 0-6 to AH0
 	MOV		PL,AH		;PL has bits 0-6
 	AND		PL,#0x37F	;zero unused bits
@@ -36,13 +31,17 @@ _read_ext_ad:
 	LSL		AL,#0xa
 
 	OR		PL,AL
+	XOR		PL,#0x800
 
 ;latch second conversion
 
 	OR		@_GpioDataRegs+0xa, #0x80
 	NOP
+	NOP
 	OR		@_GpioDataRegs+0xc, #0x80
 
+	RPT		#3
+	||NOP
 ;read second conversion
 
 
