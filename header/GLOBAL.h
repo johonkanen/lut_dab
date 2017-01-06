@@ -23,6 +23,9 @@ float measgain = (float)0.109890109890110;
 
 struct f_pid_ctrl voltage_ctrl;
 
+struct f_pid_ctrl d1_ctrl;
+struct f_pid_ctrl d2_ctrl;
+
 struct storage sig_prbs;
 struct measurements meas;
 struct ext_ad_result ext_ad;

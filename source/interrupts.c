@@ -14,8 +14,8 @@
 #pragma CODE_SECTION(PWM1_int, "ramfuncs");
 
 float ctrl_scaled;
-float duty1;
-float duty2;
+float duty1,d1;
+float duty2,d2;
 float phase;
 float ctrl;
 float length;
@@ -30,13 +30,17 @@ __interrupt void PWM1_int(void)
 	// macro for calling a function through a pointer
 
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
+
+	d1	= m_execute_fpid_ctrl(d1_ctrl);
+	d2	= m_execute_fpid_ctrl(d2_ctrl);
+
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
 	ctrl = -ctrl*.25;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
 	phase = ctrl;
-	duty1 = 0;
-	duty2 = 0;
+	duty1 = d1*.5+.5;
+	duty2 = d2*.5+.5;
 
 	*(phase_reg.p1_phase+6) = 449;
 	*(phase_reg.p2_phase+6) = 449;
