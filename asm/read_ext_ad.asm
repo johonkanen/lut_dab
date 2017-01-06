@@ -15,6 +15,16 @@ _read_ext_ad:
 	MOVL	XAR0,#_ext_ad
 
 	MOVW	DP,#_GpioDataRegs
+
+	OR		@_GpioDataRegs+0xa, #0x80
+	RPT		#4
+	||NOP
+	OR		@_GpioDataRegs+0xc, #0x80
+
+	RPT		#6
+	||NOP
+
+
 	MOVL	ACC,@_GpioDataRegs+0 ;ACC = GPADAT
 
 	LSR		AH,#6		; move bits 0-6 to AH0
@@ -36,11 +46,11 @@ _read_ext_ad:
 ;latch second conversion
 
 	OR		@_GpioDataRegs+0xa, #0x80
-	NOP
-	NOP
+	RPT		#4
+	||NOP
 	OR		@_GpioDataRegs+0xc, #0x80
 
-	RPT		#3
+	RPT		#6
 	||NOP
 ;read second conversion
 
@@ -61,6 +71,7 @@ _read_ext_ad:
 	LSL		AL,#0xa
 
 	OR		PH,AL
+	XOR		PH,#0x800
 
 ; move data to ext_ad
 

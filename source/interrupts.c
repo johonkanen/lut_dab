@@ -202,8 +202,8 @@ __interrupt void PWM1_int(void)
 
 	if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
-			SciaRegs.SCITXBUF = (Uint16)phase;
-			SciaRegs.SCITXBUF = (Uint16)phase>>8;
+			SciaRegs.SCITXBUF = (Uint16)ext_ad.first_conv;
+			SciaRegs.SCITXBUF = (Uint16)ext_ad.first_conv>>8;
 	    }
 
 	// Clear INT flag for this timer

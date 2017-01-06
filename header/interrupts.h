@@ -22,6 +22,8 @@ extern int16 cnt_jee;
 extern struct measurements meas;
 extern struct pwm_interface phase_reg;
 
+extern struct ext_ad_result ext_ad;
+
 extern float juttu;
 extern int16 mail;
 
