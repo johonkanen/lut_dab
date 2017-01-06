@@ -75,7 +75,7 @@ main(void)
    config_measurements(&meas);
 
 	//#include "init_control_gains.txt"
-   init_f_pid_control(&voltage_ctrl, (float)4, (float)0.01, (float)0, (float)0, (float)0.3, (Uint16*)&meas.pri_current_1, &fpid_control);
+   init_f_pid_control(&voltage_ctrl, (float)4, (float)0.00, (float)0, (float)0, (float)0.3, (Uint16*)&meas.sec_current, &fpid_control);
 
    phase_reg.p1_phase = &EPwm2Regs.TBPHS.half.TBPHS;
    phase_reg.p2_phase = &EPwm3Regs.TBPHS.half.TBPHS;

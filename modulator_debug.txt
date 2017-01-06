@@ -14,6 +14,18 @@ d1 = .9; d2 = .6; g3 jättää pulsseja tekemättä kun ctrl = 0
 
 d1 = .6; d2 = .6; g1 jättää pulsseja tekemättä kun ctrl = 0
 
+DAB modulaattori debug 6.1.2017
+
+d1+d2 > 1:
+
+d1=d2= 1, phase ok
+
+d1 = 1, d2 = .8, phase ok
+
+d1 = .8, d2 = 1, phase ok
+
+d1 = .8, d2 = .8 phase ok
+
 
 
 

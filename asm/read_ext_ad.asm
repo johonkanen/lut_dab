@@ -17,8 +17,7 @@ _read_ext_ad:
 	MOVW	DP,#_GpioDataRegs
 
 	OR		@_GpioDataRegs+0xa, #0x80
-	RPT		#4
-	||NOP
+
 	OR		@_GpioDataRegs+0xc, #0x80
 
 	RPT		#6
@@ -46,8 +45,7 @@ _read_ext_ad:
 ;latch second conversion
 
 	OR		@_GpioDataRegs+0xa, #0x80
-	RPT		#4
-	||NOP
+
 	OR		@_GpioDataRegs+0xc, #0x80
 
 	RPT		#6
