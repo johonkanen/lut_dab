@@ -39,8 +39,8 @@ __interrupt void PWM1_int(void)
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
 	phase = ctrl;
-	duty1 = d1*.5+.5;
-	duty2 = d2*.5+.5;
+	duty1 =  d1*.5+.5;
+	duty2 =  d2*.5+.5;
 
 	*(phase_reg.p1_phase+6) = 449;
 	*(phase_reg.p2_phase+6) = 449;
@@ -206,8 +206,8 @@ __interrupt void PWM1_int(void)
 
 	if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
-			SciaRegs.SCITXBUF = (Uint16)ext_ad.first_conv;
-			SciaRegs.SCITXBUF = (Uint16)ext_ad.first_conv>>8;
+			SciaRegs.SCITXBUF = (Uint16)*meas.sec_current;
+			SciaRegs.SCITXBUF = (Uint16)*meas.sec_current>>8;
 	    }
 
 	// Clear INT flag for this timer
