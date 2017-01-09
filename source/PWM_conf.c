@@ -13,7 +13,7 @@
 volatile struct EPWM_REGS *ePWM[9] =
  			 {  &EPwm1Regs, &EPwm1Regs, &EPwm2Regs,	&EPwm3Regs,	&EPwm4Regs,	&EPwm5Regs,	&EPwm6Regs,	&EPwm7Regs,	&EPwm8Regs};
 // DTO == 0 => no deadtime
-#define DT0 0
+#define DT0 1
 
 
 void AUX_PWM1_config(void)
@@ -100,10 +100,10 @@ void PRI_DAB_PWM23_config(void)
 
 		if (channel & 1) //ch3
 		{
-			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
-			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_SET;
-			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_SET;          // PWM toggle high/low
-			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_CLEAR;
+			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_SET;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_CLEAR;
+			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_SET;
 
 
 			(*ePWM[channel]).DBCTL.bit.IN_MODE = DBA_ALL;

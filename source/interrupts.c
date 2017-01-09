@@ -38,9 +38,9 @@ __interrupt void PWM1_int(void)
 	ctrl = -ctrl*.25;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
-	phase = ctrl;
-	duty1 =  d1*.5+.5;
-	duty2 =  d2*.5+.5;
+	phase = 0.1;
+	duty1 =  .15;
+	duty2 =  .2;
 
 	*(phase_reg.p1_phase+6) = 449;
 	*(phase_reg.p2_phase+6) = 449;
