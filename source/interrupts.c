@@ -176,22 +176,22 @@ __interrupt void PWM1_int(void)
 
 	if(p1_phase>448)
 	{
-		*(phase_reg.p1_phase+6) = 447;
+		*(phase_reg.p1_phase+6) = 440;
 	}
 
 	if(p2_phase>448)
 	{
-		*(phase_reg.p2_phase+6) = 447;
+		*(phase_reg.p2_phase+6) = 440;
 	}
 
 	if(s1_phase>448)
 	{
-		*(phase_reg.s1_phase+6) = 447;
+		*(phase_reg.s1_phase+6) = 440;
 	}
 
 	if(s2_phase>448)
 	{
-		*(phase_reg.s2_phase+6) = 447;
+		*(phase_reg.s2_phase+6) = 440;
 	}
 
 	GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
