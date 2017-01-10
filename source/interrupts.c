@@ -23,6 +23,7 @@ float neg_scale;
 Uint16 p1_phase,p2_phase,s1_phase,s2_phase;
 __interrupt void PWM1_int(void)
 {
+	GpioDataRegs.GPASET.bit.GPIO17 = 1;
 	read_ext_ad();
 
 	cnt_jee--;
@@ -34,7 +35,7 @@ __interrupt void PWM1_int(void)
 	d1	= m_execute_fpid_ctrl(d1_ctrl);
 	d2	= m_execute_fpid_ctrl(d2_ctrl);
 
-	GpioDataRegs.GPASET.bit.GPIO17 = 1;
+
 	ctrl = -ctrl*.25;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
@@ -194,7 +195,7 @@ __interrupt void PWM1_int(void)
 		*(phase_reg.s2_phase+6) = 440;
 	}
 
-	GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
+
 
 	//update phase shift registers
 	*phase_reg.p1_phase = p1_phase;
@@ -206,12 +207,14 @@ __interrupt void PWM1_int(void)
 
 	if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
-			SciaRegs.SCITXBUF = (Uint16)*meas.sec_current;
-			SciaRegs.SCITXBUF = (Uint16)*meas.sec_current>>8;
+			ScibRegs.SCITXBUF = (Uint16)*meas.sec_current;
+			ScibRegs.SCITXBUF = (Uint16)*meas.sec_current>>8;
 	    }
 
 	// Clear INT flag for this timer
 	EPwm1Regs.ETCLR.bit.INT = 1;
 	// Acknowledge this interrupt to receive more interrupts from group 3
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
+
+	GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;
 }

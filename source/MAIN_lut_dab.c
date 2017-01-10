@@ -46,6 +46,7 @@ main(void)
 
 // Step 2. Initialize GPIO:
    InitSciaGpio();
+   InitScibGpio();
    init_lut_dab_GPIO();
    init_lut_dab_ext_ad_GPIO();
 
@@ -69,6 +70,9 @@ main(void)
 
    scia_fifo_init();	   // Initialize the SCI FIFO
    scia_echoback_init();  // Initialize SCI for echoback
+
+   scib_fifo_init();	   // Initialize the SCI FIFO
+   scib_echoback_init();  // Initialize SCI for echoback
 
    //init the measurement structure
 

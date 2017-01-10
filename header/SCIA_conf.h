@@ -10,6 +10,8 @@
 
 void scia_fifo_init(void);
 void scia_echoback_init(void);
+void scib_fifo_init(void);
+void scib_echoback_init(void);
 void scia_msg(char* msg);
 
 #endif /* SCIA_CONF_H_ */
