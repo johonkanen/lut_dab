@@ -100,11 +100,17 @@ void PRI_DAB_PWM23_config(void)
 
 		if (channel & 1) //ch3
 		{
+
+			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_SET;
+			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_SET;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_CLEAR;
+			/*
 			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_SET;          // PWM toggle high/low
 			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_CLEAR;
 			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
 			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_SET;
-
+*/
 
 			(*ePWM[channel]).DBCTL.bit.IN_MODE = DBA_ALL;
 
@@ -184,7 +190,7 @@ void SEC_DAB_PWM45_config(void)
 		(*ePWM[channel]).CMPCTL.bit.SHDWAMODE = CC_IMMEDIATE;
 		(*ePWM[channel]).CMPCTL.bit.SHDWBMODE = CC_IMMEDIATE;
 
-		if (channel & 1) //ch3
+		if (channel & 1) //ch5
 		{
 			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
 			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_SET;

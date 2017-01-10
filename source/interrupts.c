@@ -20,7 +20,7 @@ float phase;
 float ctrl;
 float length;
 float neg_scale;
-Uint16 p1_phase,p2_phase,s1_phase,s2_phase;
+Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxtest1 = 4095*.1,rxtest2 = 4095*.1,rxdata;
 __interrupt void PWM1_int(void)
 {
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
@@ -39,9 +39,9 @@ __interrupt void PWM1_int(void)
 	ctrl = -ctrl*.25;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
-	phase = 0.1;
-	duty1 =  .15;
-	duty2 =  .2;
+	phase = ctrl;
+	duty1 =  1-rxtest1*2.44200e-4;
+	duty2 =  rxtest2*2.44200e-4;
 
 	*(phase_reg.p1_phase+6) = 449;
 	*(phase_reg.p2_phase+6) = 449;
@@ -205,11 +205,26 @@ __interrupt void PWM1_int(void)
 	*phase_reg.s2_phase = s2_phase;
 
 
-	if (SciaRegs.SCIFFTX.bit.TXFFST == 0)
+	if (ScibRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
 			ScibRegs.SCITXBUF = (Uint16)*meas.sec_current;
 			ScibRegs.SCITXBUF = (Uint16)*meas.sec_current>>8;
 	    }
+
+
+	if (ScibRegs.SCIFFRX.bit.RXFFST == 2)
+	{
+		rxdata =  ScibRegs.SCIRXBUF.all<<8;
+		rxdata |=  ScibRegs.SCIRXBUF.all;
+		if (rxdata <0x1000)
+		{
+			rxtest1 = rxdata;
+		}
+		else if(rxdata < 0x1fff)
+		{
+			rxtest2 = rxdata-4096;
+		}
+	}
 
 	// Clear INT flag for this timer
 	EPwm1Regs.ETCLR.bit.INT = 1;
