@@ -30,7 +30,7 @@
 #include "control.h"
 #include "ctrl_macros.h"
 
-#define LINK_TO_FLASH 1
+#define LINK_TO_FLASH 0
 #define INTERRUPT_TIMING 0
 
 main(void)
