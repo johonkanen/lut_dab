@@ -20,7 +20,7 @@ float phase;
 float ctrl;
 float length;
 float neg_scale;
-Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.1,rxduty2 = 4095*.1,rxdata=0,rxphase=0;
+Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.1,rxduty2 = 4095*.1,rxdata=0,rxphase=2048;
 __interrupt void PWM1_int(void)
 {
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
