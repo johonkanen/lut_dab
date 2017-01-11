@@ -20,7 +20,7 @@ float phase;
 float ctrl;
 float length;
 float neg_scale;
-Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxtest1 = 4095*.1,rxtest2 = 4095*.1,rxdata;
+Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.1,rxduty2 = 4095*.1,rxdata=0,rxphase=0;
 __interrupt void PWM1_int(void)
 {
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
@@ -39,9 +39,9 @@ __interrupt void PWM1_int(void)
 	ctrl = -ctrl*.25;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
-	phase = ctrl;
-	duty1 =  rxtest1*2.44200e-4;
-	duty2 =  rxtest2*2.44200e-4;
+	phase =  (rxphase*4.88280e-4-1)*.25;
+	duty1 =  rxduty1*2.44200e-4;
+	duty2 =  rxduty2*2.44200e-4;
 
 	*(phase_reg.p1_phase+6) = 449;
 	*(phase_reg.p2_phase+6) = 449;
@@ -218,11 +218,17 @@ __interrupt void PWM1_int(void)
 		rxdata |=  ScibRegs.SCIRXBUF.all;
 		if (rxdata <0x1000)
 		{
-			rxtest1 = rxdata;
+			rxduty1 = rxdata;
 		}
 		else if(rxdata < 0x2000)
 		{
-			rxtest2 = rxdata-4096;
+			rxduty2 = rxdata-0x1000;
+		}
+		else if(rxdata < 0x3000)
+		{
+			rxphase= rxdata-0x2000;
+
+			//(duty-0x2000)/2048-1
 		}
 	}
 
