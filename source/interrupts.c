@@ -40,7 +40,7 @@ __interrupt void PWM1_int(void)
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
 	phase = ctrl;
-	duty1 =  1-rxtest1*2.44200e-4;
+	duty1 =  rxtest1*2.44200e-4;
 	duty2 =  rxtest2*2.44200e-4;
 
 	*(phase_reg.p1_phase+6) = 449;
@@ -220,7 +220,7 @@ __interrupt void PWM1_int(void)
 		{
 			rxtest1 = rxdata;
 		}
-		else if(rxdata < 0x1fff)
+		else if(rxdata < 0x2000)
 		{
 			rxtest2 = rxdata-4096;
 		}
