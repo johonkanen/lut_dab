@@ -88,6 +88,8 @@ main(void)
    phase_reg.s1_phase = &EPwm4Regs.TBPHS.half.TBPHS;
    phase_reg.s2_phase = &EPwm5Regs.TBPHS.half.TBPHS;
 
+   system_init = 0;
+
 //   init_cla();
    // Configure PWM
    EALLOW;
@@ -108,8 +110,7 @@ main(void)
 
    init_AUX_PWM1_GPIO();
 
-   init_pri_HB_GPIO();
-   init_sec_HB_GPIO();
+
 
 	EALLOW;  // allow write to protected register
 	PieVectTable.EPWM1_INT = &PWM1_int;
@@ -121,6 +122,48 @@ main(void)
 	EINT;   // Enable Global interrupt INTM
 	ERTM;   // Enable Global realtime interrupt
 
+	while(1)
+	{
+		if (ScibRegs.SCIFFRX.bit.RXFFST == 2)
+		{
+			rxdata =  ScibRegs.SCIRXBUF.all<<8;
+			rxdata |=  ScibRegs.SCIRXBUF.all;
+			if (rxdata <0x1000)
+			{
+				rxduty1 = rxdata;
+			}
+			else if(rxdata < 0x2000)
+			{
+				rxduty2 = rxdata-0x1000;
+			}
+			else if(rxdata < 0x3000)
+			{
+				rxphase= rxdata-0x2000;
+
+				//(duty-0x2000)/2048-1
+			}
+			else if(rxdata == 0xf999)
+			{
+				rxphase= 0x800;//phase = 0
+				rxduty1= 0;
+				rxduty2= 0;
+
+				//(duty-0x2000)/2048-1
+			}
+			else if(rxdata == 0xf666)
+			{
+				break;
+			}
+		}
+	}
+
+	while(system_init==0){}; //wait for first pass through interrupt
+
+	DINT;
+
+	init_pri_HB_GPIO();
+	init_sec_HB_GPIO();
+	EINT;
 
    for(;;){}
 }

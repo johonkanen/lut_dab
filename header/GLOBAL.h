@@ -19,6 +19,10 @@ extern Uint16 RamfuncsRunStart;
 extern Uint16 RamfuncsLoadSize;
 
 extern volatile struct EPWM_REGS *ePWM[9];
+
+extern Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1,rxduty2,rxdata,rxphase;
+
+
 float measgain = (float)0.109890109890110;
 
 struct f_pid_ctrl voltage_ctrl;
@@ -37,6 +41,7 @@ Uint16	SCIdata;
 int16 cnt_jee=0;
 
 Uint16* mailbox;
+Uint16 system_init;
 
 #endif /* GLOBAL_H_ */
 

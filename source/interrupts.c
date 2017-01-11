@@ -230,7 +230,17 @@ __interrupt void PWM1_int(void)
 
 			//(duty-0x2000)/2048-1
 		}
+		else if(rxdata == 0xf999)//stop modulation command
+		{
+			rxphase= 0x800;//phase = 0
+			rxduty1= 0;
+			rxduty2= 0;
+
+			//(duty-0x2000)/2048-1
+		}
 	}
+
+	system_init = 1;
 
 	// Clear INT flag for this timer
 	EPwm1Regs.ETCLR.bit.INT = 1;

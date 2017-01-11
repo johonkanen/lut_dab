@@ -33,6 +33,8 @@ extern struct f_pid_ctrl voltage_ctrl;
 extern struct f_pid_ctrl d1_ctrl;
 extern struct f_pid_ctrl d2_ctrl;
 
+
+extern Uint16 system_init;
 //#define duty_ch(X) ((*ePWM[X]).CMPA.half.CMPA)
 
 #define m_pri_current (*meas.pri_current_1)
