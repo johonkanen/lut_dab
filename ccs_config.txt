@@ -3,13 +3,13 @@ LUT_DAB_FLASH_lnk_F28069.cmd
 
 include paths:
 
+"${workspace_loc:/${ProjName}/asm}"
+"C:\ti\controlSUITE\libs\math\FPUfastRTS\V100\include"
+"${workspace_loc:/${ProjName}/common}"
+"${workspace_loc:/${ProjName}/header}"
 "${workspace_loc:/${ProjName}/source}"
 C:\ti\controlSUITE\device_support\f2806x\v151\F2806x_common\include
 "${CG_TOOL_ROOT}/include"
-"${workspace_loc:/${ProjName}/asm}"
-"${workspace_loc:/${ProjName}/Debug}"
-"${workspace_loc:/${ProjName}/gen}"
-"${workspace_loc:/${ProjName}/header}"
 C:\ti\controlSUITE\libs\math\IQmath\v160\include
 "C:\ti\controlSUITE\device_support\f2806x\v151\F2806x_headers\include"
 
@@ -17,6 +17,7 @@ linker include:
 
 "${CG_TOOL_ROOT}/lib"
 "C:\ti\controlSUITE\libs\math\FPUfastRTS\V100\lib"
+"C:\ti\controlSUITE\libs\math\FPUfastRTS\V100\include"
 "C:\ti\controlSUITE\libs\math\IQmath\v160\include"
 "C:\ti\controlSUITE\libs\math\IQmath\v160\lib"
 "${CG_TOOL_ROOT}/include"
@@ -25,8 +26,7 @@ C:\ti\controlSUITE\device_support\f2806x\v151\F2806x_common\lib
 
 library files:
 
-"C:\ti\ccsv5\tools\compiler\c2000_6.2.0\lib\rts2800_fpu32.lib"
-"IQmath_fpu32.lib"
+"C:\PROGRAMS\CCSv5\ccsv5\tools\compiler\c2000_6.2.0\lib\rts2800_fpu32.lib"
 "rts2800_fpu32_fast_supplement.lib"
 "libc.a"
 
