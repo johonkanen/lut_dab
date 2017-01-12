@@ -87,6 +87,12 @@ void PRI_DAB_PWM23_config(void)
 		(*ePWM[channel]).TBPHS.all = 0;
 		(*ePWM[channel]).TBCTR = 0;
 
+		EALLOW;
+		(*ePWM[channel]).TZSEL.bit.OSHT1 = 1;
+		(*ePWM[channel]).TZCTL.bit.TZA = TZ_FORCE_LO;
+		(*ePWM[channel]).TZCTL.bit.TZB = TZ_FORCE_LO;
+		EDIS;
+
 		(*ePWM[channel]).TBCTL.bit.CTRMODE = TB_COUNT_UP;//TB_COUNT_UP;
 		(*ePWM[channel]).TBCTL.bit.PHSEN = TB_ENABLE;		//synch to epwm1
 		(*ePWM[channel]).TBCTL.bit.SYNCOSEL = TB_SYNC_IN;	//TB_CTR_ZERO;
@@ -181,6 +187,12 @@ void SEC_DAB_PWM45_config(void)
 		(*ePWM[channel]).CMPB = period>>1;	                // set duty 50% initially
 		(*ePWM[channel]).TBPHS.all = 0;
 		(*ePWM[channel]).TBCTR = 0;
+
+		EALLOW;
+		(*ePWM[channel]).TZSEL.bit.OSHT6 = 1;
+		(*ePWM[channel]).TZCTL.bit.TZA = TZ_FORCE_LO;
+		(*ePWM[channel]).TZCTL.bit.TZB = TZ_FORCE_LO;
+		EDIS;
 
 		(*ePWM[channel]).TBCTL.bit.CTRMODE = TB_COUNT_UP;//TB_COUNT_UP;
 		(*ePWM[channel]).TBCTL.bit.PHSEN = TB_ENABLE;		//synch to epwm1

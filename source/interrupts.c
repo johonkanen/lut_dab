@@ -248,12 +248,32 @@ __interrupt void PWM1_int(void)
 		}
 		else if(rxdata == 0xf999)//stop modulation command
 		{
+			/*
 			rxphase= 0x800;//phase = 0
 			rxduty1= 0;
 			rxduty2= 0;
-
-
-
+			*/
+			EALLOW;
+			EPwm2Regs.TZFRC.bit.OST =1;
+			EPwm3Regs.TZFRC.bit.OST =1;
+			EPwm4Regs.TZFRC.bit.OST =1;
+			EPwm5Regs.TZFRC.bit.OST =1;
+			EDIS;
+			//(duty-0x2000)/2048-1
+		}
+		else if(rxdata == 0xf666)//stop modulation command
+		{
+			/*
+			rxphase= 0x800;//phase = 0
+			rxduty1= 0;
+			rxduty2= 0;
+			*/
+			EALLOW;
+			EPwm2Regs.TZCLR.bit.OST =1;
+			EPwm3Regs.TZCLR.bit.OST =1;
+			EPwm4Regs.TZCLR.bit.OST =1;
+			EPwm5Regs.TZCLR.bit.OST =1;
+			EDIS;
 			//(duty-0x2000)/2048-1
 		}
 	}
