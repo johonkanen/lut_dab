@@ -20,7 +20,8 @@ float phase;
 float ctrl;
 float length;
 float neg_scale;
-Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.1,rxduty2 = 4095*.1,rxdata=0,rxphase=2048;
+Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.1,rxduty2 = 4095*.1,rxdata=0,rxphase=2048, rx_vref=110;
+
 __interrupt void PWM1_int(void)
 {
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
@@ -39,7 +40,8 @@ __interrupt void PWM1_int(void)
 	ctrl = -ctrl*.25;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
-	phase =  (rxphase*4.88280e-4-1)*.25;
+	//phase =  (rxphase*4.88280e-4-1)*.25;
+	phase = ctrl*.25;
 	duty1 =  rxduty1*2.44200e-4;
 	duty2 =  rxduty2*2.44200e-4;
 
@@ -235,11 +237,22 @@ __interrupt void PWM1_int(void)
 
 			//(duty-0x2000)/2048-1
 		}
+		else if(rxdata < 0x6000)
+		{
+			rx_vref= rxdata-0x5000;
+			if(rx_vref >(Uint16)600)
+			{
+				rx_vref = 600;
+			}
+			//(duty-0x2000)/2048-1
+		}
 		else if(rxdata == 0xf999)//stop modulation command
 		{
 			rxphase= 0x800;//phase = 0
 			rxduty1= 0;
 			rxduty2= 0;
+
+
 
 			//(duty-0x2000)/2048-1
 		}
