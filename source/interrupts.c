@@ -37,7 +37,7 @@ __interrupt void PWM1_int(void)
 	d2	= m_execute_fpid_ctrl(d2_ctrl);
 
 
-	ctrl = -ctrl*.25;
+	ctrl = ctrl*.25;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
 	//phase =  (rxphase*4.88280e-4-1)*.25;
