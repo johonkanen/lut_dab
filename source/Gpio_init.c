@@ -89,8 +89,8 @@ void init_lut_dab_ext_ad_GPIO(void)
 {
 	  EALLOW;
 	  //ext ad enable
-	  GpioCtrlRegs.GPAMUX2.bit.GPIO16 = 1;
-	  GpioCtrlRegs.GPADIR.bit.GPIO16 = 1;
+	  GpioCtrlRegs.GPAMUX2.bit.GPIO16 = 0;
+	  GpioCtrlRegs.GPADIR.bit.GPIO16 = 0;
 
 	  //ext ad read = output
 	  GpioCtrlRegs.GPBMUX1.bit.GPIO39 = 0;// configure as gpio

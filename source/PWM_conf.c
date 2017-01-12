@@ -14,6 +14,7 @@ volatile struct EPWM_REGS *ePWM[9] =
  			 {  &EPwm1Regs, &EPwm1Regs, &EPwm2Regs,	&EPwm3Regs,	&EPwm4Regs,	&EPwm5Regs,	&EPwm6Regs,	&EPwm7Regs,	&EPwm8Regs};
 // DTO == 0 => no deadtime
 #define DT0 1
+#define DAB_V1_LEG2_POL 1
 
 
 void AUX_PWM1_config(void)
@@ -100,17 +101,20 @@ void PRI_DAB_PWM23_config(void)
 
 		if (channel & 1) //ch3
 		{
-
-			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
-			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_SET;
-			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_SET;          // PWM toggle high/low
-			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_CLEAR;
-			/*
+#if(DAB_V1_LEG2_POL==1)
+			//this reverses leg2 voltage polarity. Needed for fixing bug with lut dab v1
 			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_SET;          // PWM toggle high/low
 			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_CLEAR;
 			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
 			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_SET;
-*/
+#else
+			//this is the normal leg 2 polarity
+			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_CLEAR;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLA.bit.CAU = AQ_SET;
+			(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_SET;          // PWM toggle high/low
+			(*ePWM[channel]).AQCTLB.bit.CBU = AQ_CLEAR;
+#endif
+
 
 			(*ePWM[channel]).DBCTL.bit.IN_MODE = DBA_ALL;
 
@@ -217,7 +221,7 @@ void SEC_DAB_PWM45_config(void)
 */
 
 		}
-		else			//ch 2
+		else			//ch 4
 		{
 
 			(*ePWM[channel]).AQCTLA.bit.ZRO = AQ_SET;          // PWM toggle high/low
