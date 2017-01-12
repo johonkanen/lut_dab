@@ -30,7 +30,7 @@
 #include "control.h"
 #include "ctrl_macros.h"
 
-#define LINK_TO_FLASH 1
+#define LINK_TO_FLASH 0
 #define INTERRUPT_TIMING 0
 
 main(void)
@@ -79,7 +79,7 @@ main(void)
    config_measurements(&meas);
 
 	//#include "init_control_gains.txt"
-   init_f_pid_control(&voltage_ctrl, (float)4, (float)0.00, (float)0, (float)0, (float)0.3, (Uint16*)&meas.sec_current, &fpid_control);
+   init_f_pid_control(&voltage_ctrl, (float)4, (float)0.01, (float)0, (float)0, (float)0.3, (Uint16*)&meas.pri_current_1, &fpid_control);
    init_f_pid_control(&d1_ctrl, (float)4, (float)0.00, (float)0, (float)0, (float)0.3, (Uint16*)&meas.sec_current, &fpid_control);
    init_f_pid_control(&d2_ctrl, (float)4, (float)0.00, (float)0, (float)0, (float)0.3, (Uint16*)&meas.sec_voltage, &fpid_control);
 

@@ -42,8 +42,8 @@ __interrupt void PWM1_int(void)
 
 	//phase =  (rxphase*4.88280e-4-1)*.25;
 	phase = ctrl*.25;
-	duty1 =  rxduty1*2.44200e-4;
-	duty2 =  rxduty2*2.44200e-4;
+	duty1 =  rxduty1*m_12bit_gain;
+	duty2 =  rxduty2*m_12bit_gain;
 
 	*(phase_reg.p1_phase+6) = 449;
 	*(phase_reg.p2_phase+6) = 449;
@@ -244,6 +244,9 @@ __interrupt void PWM1_int(void)
 			{
 				rx_vref = 600;
 			}
+
+			voltage_ctrl.ref = rx_vref*m_12bit_gain;
+
 			//(duty-0x2000)/2048-1
 		}
 		else if(rxdata == 0xf666)//start modulation command

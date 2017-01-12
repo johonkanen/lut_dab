@@ -189,7 +189,7 @@ void SEC_DAB_PWM45_config(void)
 		(*ePWM[channel]).TBCTR = 0;
 
 		EALLOW;
-		(*ePWM[channel]).TZSEL.bit.OSHT6 = 1;
+		(*ePWM[channel]).TZSEL.bit.OSHT1 = 1;
 		(*ePWM[channel]).TZCTL.bit.TZA = TZ_FORCE_LO;
 		(*ePWM[channel]).TZCTL.bit.TZB = TZ_FORCE_LO;
 		EDIS;
