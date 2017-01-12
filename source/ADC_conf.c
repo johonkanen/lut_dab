@@ -43,7 +43,7 @@ void Adc_config(void)
 
 	//Primary voltage
 	AdcRegs.ADCSOC4CTL.bit.CHSEL 	= 4;	//set SOC6/7 channel select to ADCIN A4
-	AdcRegs.ADCSOC4CTL.bit.TRIGSEL 	= 0x06;	//set SOC6/7 start trigger as EPWM2SOCA
+	AdcRegs.ADCSOC4CTL.bit.TRIGSEL 	= 0x06;	//set SOC6/7 start trigger as EPWM1 SOCB
 	AdcRegs.ADCSOC4CTL.bit.ACQPS 	= 6;	//set SOC6/7 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	// low pass primary current

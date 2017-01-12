@@ -6,6 +6,8 @@
  */
 #include "Gpio_init.h"
 
+#define AUX_PWM1B_ENABLE
+
 void init_lut_dab_GPIO(void)
 {
 	  EALLOW;
@@ -89,12 +91,15 @@ void init_lut_dab_ext_ad_GPIO(void)
 {
 	  EALLOW;
 	  //ext ad enable
-	  GpioCtrlRegs.GPAMUX2.bit.GPIO16 = 0;
-	  GpioCtrlRegs.GPADIR.bit.GPIO16 = 0;
+	  GpioCtrlRegs.GPAMUX2.bit.GPIO16 = 1;
+	  GpioCtrlRegs.GPADIR.bit.GPIO16 = 1;
 
 	  //ext ad read = output
 	  GpioCtrlRegs.GPBMUX1.bit.GPIO39 = 0;// configure as gpio
 	  GpioCtrlRegs.GPBDIR.bit.GPIO39 = 1;
+
+	  GpioCtrlRegs.GPBMUX1.bit.GPIO34 = 0;// configure as gpio
+	  GpioCtrlRegs.GPBDIR.bit.GPIO34 = 0;//set as input
 
 	  //D0-D6
 	  GpioCtrlRegs.GPAMUX2.bit.GPIO22 = 0;
