@@ -41,7 +41,7 @@ __interrupt void PWM1_int(void)
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
 	//phase =  (rxphase*4.88280e-4-1)*.25;
-	phase = ctrl*.25;
+	phase = ctrl*.5;
 	duty1 =  rxduty1*m_12bit_gain;
 	duty2 =  rxduty2*m_12bit_gain;
 
@@ -240,9 +240,9 @@ __interrupt void PWM1_int(void)
 		else if(rxdata < 0x6000)
 		{
 			rx_vref= rxdata-0x5000;
-			if(rx_vref >(Uint16)600)
+			if(rx_vref >(Uint16)1200)
 			{
-				rx_vref = 600;
+				rx_vref = 1200;
 			}
 
 			voltage_ctrl.ref = rx_vref*m_12bit_gain;
