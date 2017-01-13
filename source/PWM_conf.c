@@ -322,7 +322,7 @@ void AUX_PWM7_config(void)
 	//EPwm1Regs.TBCTL.bit.SYNCOSEL = TB_CTR_ZERO;
 
 	(*ePWM[channel]).TBCTL.bit.CTRMODE = TB_COUNT_UP;
-	(*ePWM[channel]).TBCTL.bit.PHSEN = TB_ENABLE;		//master module
+	(*ePWM[channel]).TBCTL.bit.PHSEN = TB_DISABLE;		//master module
 	(*ePWM[channel]).TBCTL.bit.SYNCOSEL = TB_CTR_ZERO;
 	(*ePWM[channel]).TBCTL.bit.HSPCLKDIV = TB_DIV1;
 	(*ePWM[channel]).TBCTL.bit.CLKDIV = TB_DIV1;

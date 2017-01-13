@@ -57,7 +57,7 @@ void Adc_config(void)
 
 void config_measurements(struct measurements* testi)
 {
-	testi->pri_current_lp 	= (Uint16*)&(AdcResult.ADCRESULT4);	//+0
+	testi->pri_current_lp 	= (Uint16*)&(AdcResult.ADCRESULT5);	//+0
 	testi->pri_current_1	= (Uint16*)&(AdcResult.ADCRESULT2);	//+1
 	testi->pri_current_2	= (Uint16*)&(AdcResult.ADCRESULT3); //+2
 	testi->pri_voltage 		= (Uint16*)&(AdcResult.ADCRESULT4);	//+3

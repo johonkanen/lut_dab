@@ -46,7 +46,7 @@ __interrupt void PWM1_int(void)
 		i=0;
 	}
 
-	ctrl = ctrl*.25;// + sini[i]*.1;
+	ctrl = ctrl*.25 + sini[i]*.1;
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
@@ -227,8 +227,8 @@ __interrupt void PWM1_int(void)
 
 	if (ScibRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
-			ScibRegs.SCITXBUF = (Uint16)*meas.pri_current_2;
-			ScibRegs.SCITXBUF = (Uint16)*meas.pri_current_2>>8;
+			ScibRegs.SCITXBUF = (Uint16)*meas.pri_current_lp;
+			ScibRegs.SCITXBUF = (Uint16)*meas.pri_current_lp>>8;
 	    }
 
 
