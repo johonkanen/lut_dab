@@ -32,17 +32,17 @@ void Adc_config(void)
 	AdcRegs.ADCSOC0CTL.bit.ACQPS 	= 6;	//set SOC0/1 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	//HF Primary current 1
-	AdcRegs.ADCSOC2CTL.bit.CHSEL 	= 2;	//set SOC2 channel select to ADCIN A2
+	AdcRegs.ADCSOC2CTL.bit.CHSEL 	= 1;	//set SOC2 channel select to ADCIN A1
 	AdcRegs.ADCSOC2CTL.bit.TRIGSEL 	= 0x05;	//set SOC2/3 start trigger as EPWM1 SOCA
 	AdcRegs.ADCSOC2CTL.bit.ACQPS 	= 6;	//set SOC2/3 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	//HF Primary current 2
-	AdcRegs.ADCSOC3CTL.bit.CHSEL 	= 2;	//set SOC3 channel select to ADCIN A2
+	AdcRegs.ADCSOC3CTL.bit.CHSEL 	= 1;	//set SOC3 channel select to ADCIN A1
 	AdcRegs.ADCSOC3CTL.bit.TRIGSEL 	= 0x06;	//set SOC4 start trigger as EPWM1 SOCB
 	AdcRegs.ADCSOC3CTL.bit.ACQPS 	= 6;	//set SOC4 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	//Primary voltage
-	AdcRegs.ADCSOC4CTL.bit.CHSEL 	= 4;	//set SOC6/7 channel select to ADCIN A4
+	AdcRegs.ADCSOC4CTL.bit.CHSEL 	= 2;	//set SOC6/7 channel select to ADCIN A2
 	AdcRegs.ADCSOC4CTL.bit.TRIGSEL 	= 0x06;	//set SOC6/7 start trigger as EPWM1 SOCB
 	AdcRegs.ADCSOC4CTL.bit.ACQPS 	= 6;	//set SOC6/7 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
@@ -60,8 +60,8 @@ void config_measurements(struct measurements* testi)
 	testi->pri_current_lp 	= (Uint16*)&(AdcResult.ADCRESULT4);	//+0
 	testi->pri_current_1	= (Uint16*)&(AdcResult.ADCRESULT2);	//+1
 	testi->pri_current_2	= (Uint16*)&(AdcResult.ADCRESULT3); //+2
-	testi->pri_voltage 		= (Uint16*)&(AdcResult.ADCRESULT5);	//+3
+	testi->pri_voltage 		= (Uint16*)&(AdcResult.ADCRESULT4);	//+3
 	// sec_measurements
-	testi->sec_current		= (Uint16*)&(ext_ad.first_conv);	//+4
-	testi->sec_voltage		= (Uint16*)&(ext_ad.second_conv);	//+5
+	testi->sec_voltage		= (Uint16*)&(ext_ad.first_conv);	//+4
+	testi->sec_current		= (Uint16*)&(ext_ad.second_conv);	//+5
 }

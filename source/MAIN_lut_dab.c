@@ -79,7 +79,7 @@ main(void)
    config_measurements(&meas);
 
 	//#include "init_control_gains.txt"	Kp,			Ki			Kd		Kf			ref				measurement					control
-   init_f_pid_control(&voltage_ctrl, (float)4, (float)0.01, (float)0, (float)0, (float)0.025, (Uint16*)&meas.sec_current, &fpid_control);
+   init_f_pid_control(&voltage_ctrl, (float)4, (float)0.01, (float)0, (float)0, (float)0.025, (Uint16*)&meas.sec_voltage, &fpid_control);
    init_f_pid_control(&d1_ctrl, (float)4, (float)0.00, (float)0, (float)0, (float)0.3, (Uint16*)&meas.sec_current, &fpid_control);
    init_f_pid_control(&d2_ctrl, (float)4, (float)0.00, (float)0, (float)0, (float)0.3, (Uint16*)&meas.sec_voltage, &fpid_control);
 
