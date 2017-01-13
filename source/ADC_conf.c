@@ -33,12 +33,12 @@ void Adc_config(void)
 
 	//HF Primary current 1
 	AdcRegs.ADCSOC2CTL.bit.CHSEL 	= 1;	//set SOC2 channel select to ADCIN A1
-	AdcRegs.ADCSOC2CTL.bit.TRIGSEL 	= 0x05;	//set SOC2/3 start trigger as EPWM1 SOCA
+	AdcRegs.ADCSOC2CTL.bit.TRIGSEL 	= 0xf;	//set SOC2/3 start trigger as EPWM1 SOCA
 	AdcRegs.ADCSOC2CTL.bit.ACQPS 	= 6;	//set SOC2/3 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	//HF Primary current 2
 	AdcRegs.ADCSOC3CTL.bit.CHSEL 	= 1;	//set SOC3 channel select to ADCIN A1
-	AdcRegs.ADCSOC3CTL.bit.TRIGSEL 	= 0x06;	//set SOC4 start trigger as EPWM1 SOCB
+	AdcRegs.ADCSOC3CTL.bit.TRIGSEL 	= 0x10;	//set SOC4 start trigger as EPWM1 SOCB
 	AdcRegs.ADCSOC3CTL.bit.ACQPS 	= 6;	//set SOC4 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	//Primary voltage

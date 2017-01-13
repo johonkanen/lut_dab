@@ -30,7 +30,7 @@
 #include "control.h"
 #include "ctrl_macros.h"
 
-#define LINK_TO_FLASH 1
+#define LINK_TO_FLASH 0
 #define INTERRUPT_TIMING 0
 
 main(void)
@@ -100,6 +100,7 @@ main(void)
    SEC_DAB_PWM45_config();
 
    AUX_PWM1_config();
+   AUX_PWM6_config();
    AUX_PWM7_config();
    AUX_PWM8_config();
 
@@ -118,8 +119,10 @@ main(void)
 
 
 
-	// Enable CPU INT3 which is connected to EPWM1-6 INT:
-
+	EALLOW;
+	GpioCtrlRegs.GPAPUD.bit.GPIO10 = 1;    // Disable pull-up on GPIO10 (EPWM6A)
+	GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 1;   // Configure GPIO10 as EPWM6A
+	EDIS;
 
 	while(1)
 	{

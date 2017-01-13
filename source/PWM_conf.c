@@ -266,6 +266,47 @@ void SEC_DAB_PWM45_config(void)
 	}
 }
 
+
+void AUX_PWM6_config(void)
+{
+	Uint16 channel=6, period = 900-1; //j=1
+
+	(*ePWM[channel]).TBCTL.bit.PRDLD = TB_SHADOW;	        // set Immediate load
+	(*ePWM[channel]).TBPRD = period;		                // PWM frequency = 1 / period
+	(*ePWM[channel]).CMPA.half.CMPA = 4;          // set duty 18% initially
+	(*ePWM[channel]).CMPA.half.CMPAHR = (1 << 8);         // initialize HRPWM extension
+	(*ePWM[channel]).CMPB = 222;	                // set duty 50% initially
+	(*ePWM[channel]).TBPHS.all = 0;
+	(*ePWM[channel]).TBCTR = 0;
+
+	//EPwm1Regs.TBCTL.bit.SYNCOSEL = TB_CTR_ZERO;
+
+	(*ePWM[channel]).TBCTL.bit.CTRMODE = TB_COUNT_UP;
+	(*ePWM[channel]).TBCTL.bit.PHSEN = TB_ENABLE;		//master module
+	(*ePWM[channel]).TBCTL.bit.SYNCOSEL = TB_CTR_ZERO;
+	(*ePWM[channel]).TBCTL.bit.HSPCLKDIV = TB_DIV1;
+	(*ePWM[channel]).TBCTL.bit.CLKDIV = TB_DIV1;
+	(*ePWM[channel]).TBCTL.bit.FREE_SOFT = 11;
+
+	(*ePWM[channel]).CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;
+	(*ePWM[channel]).CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
+	(*ePWM[channel]).CMPCTL.bit.SHDWAMODE = CC_IMMEDIATE;
+	(*ePWM[channel]).CMPCTL.bit.SHDWBMODE = CC_IMMEDIATE;
+
+	(*ePWM[channel]).ETSEL.bit.SOCAEN = 0x1;
+	(*ePWM[channel]).ETSEL.bit.SOCASEL =ET_CTRU_CMPA;       // Select SOC from from CPMB on upcount
+	(*ePWM[channel]).ETPS.bit.SOCAPRD = 0x1;
+
+	(*ePWM[channel]).ETSEL.bit.SOCBEN = 0x1;
+	(*ePWM[channel]).ETSEL.bit.SOCBSEL = ET_CTR_PRD;       // Select SOC from from CPMB on upcount
+	(*ePWM[channel]).ETPS.bit.SOCBPRD = 0x1;
+
+	// Assumes ePWM1 clock is already enabled in InitSysCtrl();
+////	(*ePWM[channel]).ETSEL.bit.INTSEL = ET_CTR_ZERO;//ET_CTR_PRD;// ET_CTR_ZERO;      // Enable INT on Zero event
+//	(*ePWM[channel]).ETSEL.bit.INTEN = 1;   // Enable INT
+//	(*ePWM[channel]).ETPS.bit.INTPRD = ET_1ST;            // Generate INT on 1st event
+}
+
 void AUX_PWM7_config(void)
 {
 	Uint16 channel=7, period = 900-1; //j=1
