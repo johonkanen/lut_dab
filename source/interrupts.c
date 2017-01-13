@@ -46,7 +46,7 @@ __interrupt void PWM1_int(void)
 		i=0;
 	}
 
-	ctrl = ctrl*.25 + sini[i]*.1;
+	ctrl = ctrl*.25 + sini[i]*.2;
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
@@ -232,7 +232,7 @@ __interrupt void PWM1_int(void)
 	    }
 
 
-	if (ScibRegs.SCIFFRX.bit.RXFFST > 2)
+	if (ScibRegs.SCIFFRX.bit.RXFFST > 2|| ScibRegs.SCIRXST.bit.RXERROR == 1)
 	{
 		ScibRegs.SCICTL1.bit.SWRESET = 0;
 		ScibRegs.SCICTL1.bit.SWRESET = 1;
