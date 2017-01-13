@@ -50,8 +50,8 @@ __interrupt void PWM1_int(void)
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
-	phase =  (rxphase*4.88280e-4-1)*.25;
-	//phase = ctrl*.5;
+	//phase =  (rxphase*4.88280e-4-1)*.25;
+	phase = ctrl*.5;
 	duty1 =  rxduty1*m_12bit_gain;
 	duty2 =  rxduty2*m_12bit_gain;
 
