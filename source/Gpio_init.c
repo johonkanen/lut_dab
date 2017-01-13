@@ -29,8 +29,8 @@ void init_lut_dab_GPIO(void)
 	  GpioCtrlRegs.GPADIR.bit.GPIO11 = 1;
 
 	  //EMERGENCYSTOP
-	  //GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 0;
-	  //GpioCtrlRegs.GPADIR.bit.GPIO10 = 1;
+	  GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 0;
+	  GpioCtrlRegs.GPADIR.bit.GPIO10 = 1;
 	  EDIS;
 
 }

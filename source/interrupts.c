@@ -210,7 +210,7 @@ __interrupt void PWM1_int(void)
 
 
 
-	EPwm1Regs.CMPA.half.CMPA = 900-p2_phase;
+	EPwm1Regs.CMPA.half.CMPA = 900-s2_phase-10;
 	EPwm1Regs.CMPB = 900-s2_phase;
 
 	EPwm6Regs.CMPA.half.CMPA = *(phase_reg.p2_phase+6);

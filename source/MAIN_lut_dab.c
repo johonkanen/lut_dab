@@ -30,7 +30,7 @@
 #include "control.h"
 #include "ctrl_macros.h"
 
-#define LINK_TO_FLASH 0
+#define LINK_TO_FLASH 1
 #define INTERRUPT_TIMING 0
 
 main(void)
@@ -117,12 +117,6 @@ main(void)
 	PieVectTable.EPWM1_INT = &PWM1_int;
 	EDIS;    //
 
-
-
-	EALLOW;
-	GpioCtrlRegs.GPAPUD.bit.GPIO10 = 1;    // Disable pull-up on GPIO10 (EPWM6A)
-	GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 1;   // Configure GPIO10 as EPWM6A
-	EDIS;
 
 	while(1)
 	{

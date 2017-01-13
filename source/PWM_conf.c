@@ -47,8 +47,8 @@ void AUX_PWM1_config(void)
 	(*ePWM[channel]).AQCTLA.bit.PRD = AQ_SET;
 	(*ePWM[channel]).AQCTLA.bit.CAU = AQ_CLEAR;
 
-	(*ePWM[channel]).AQCTLB.bit.PRD = AQ_CLEAR;
-	(*ePWM[channel]).AQCTLB.bit.CBU = AQ_SET;
+	(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_SET;
+	(*ePWM[channel]).AQCTLB.bit.CBU = AQ_CLEAR;
 
 	EALLOW;
 	(*ePWM[channel]).HRCNFG.all = 0x0;
@@ -298,7 +298,7 @@ void AUX_PWM6_config(void)
 	(*ePWM[channel]).ETPS.bit.SOCAPRD = 0x1;
 
 	(*ePWM[channel]).ETSEL.bit.SOCBEN = 0x1;
-	(*ePWM[channel]).ETSEL.bit.SOCBSEL = ET_CTR_PRD;       // Select SOC from from CPMB on upcount
+	(*ePWM[channel]).ETSEL.bit.SOCBSEL = ET_CTR_ZERO;       // Select SOC from from CPMB on upcount
 	(*ePWM[channel]).ETPS.bit.SOCBPRD = 0x1;
 
 	// Assumes ePWM1 clock is already enabled in InitSysCtrl();
