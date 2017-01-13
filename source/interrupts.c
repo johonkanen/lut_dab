@@ -234,7 +234,8 @@ __interrupt void PWM1_int(void)
 
 	if (ScibRegs.SCIFFRX.bit.RXFFST > 2)
 	{
-		ScibRegs.SCIFFRX.bit.RXFFST = 1;
+		ScibRegs.SCICTL1.bit.SWRESET = 0;
+		ScibRegs.SCICTL1.bit.SWRESET = 1;
 	}
 
 	if (ScibRegs.SCIFFRX.bit.RXFFST == 2)
