@@ -46,7 +46,7 @@ __interrupt void PWM1_int(void)
 		i=0;
 	}
 
-	ctrl = ctrl*.25 + sini[i]*.1;
+	ctrl = ctrl*.25;// + sini[i]*.1;
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
@@ -72,6 +72,9 @@ __interrupt void PWM1_int(void)
 
 				s1_phase = 0				;
 				s2_phase = 0+450*(1-duty1)	;
+
+				EPwm1Regs.CMPB = p1_phase;
+				EPwm1Regs.CMPB = s2_phase;
 			}
 			else if(duty1>duty2)
 			{
@@ -219,8 +222,8 @@ __interrupt void PWM1_int(void)
 
 	if (ScibRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
-			ScibRegs.SCITXBUF = (Uint16)*meas.sec_current;
-			ScibRegs.SCITXBUF = (Uint16)*meas.sec_current>>8;
+			ScibRegs.SCITXBUF = (Uint16)*meas.pri_current_2;
+			ScibRegs.SCITXBUF = (Uint16)*meas.pri_current_2>>8;
 	    }
 
 
