@@ -25,7 +25,7 @@ float sini[136] = {0, 0.0465253121977467, 0.0929498609293922, 0.139173100960065,
 
 Uint16 i=0;
 
-Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.1,rxduty2 = 4095*.1,rxdata=0,rxphase=2048, rx_vref=110;
+Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.3,rxduty2 = 4095*.12,rxdata=0,rxphase=2048, rx_vref=110;
 
 __interrupt void PWM1_int(void)
 {
@@ -36,9 +36,10 @@ __interrupt void PWM1_int(void)
 
 	// macro for calling a function through a pointer
 
-	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
+	//ctrl = m_execute_fpid_ctrl(voltage_ctrl);
+	d1_ctrl.ref= m_execute_fpid_ctrl(voltage_ctrl);
 
-	d1	= m_execute_fpid_ctrl(d1_ctrl);
+	ctrl = m_execute_fpid_ctrl(d1_ctrl);
 	d2	= m_execute_fpid_ctrl(d2_ctrl);
 
 	if(i>135)
@@ -46,7 +47,7 @@ __interrupt void PWM1_int(void)
 		i=0;
 	}
 
-	ctrl = ctrl*.25 + sini[i]*.2;
+	ctrl = ctrl*.25;// + sini[i]*.2;
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
