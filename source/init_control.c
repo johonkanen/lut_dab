@@ -29,7 +29,7 @@ void init_f_pid_control(struct f_pid_ctrl* pid_controller, float kp, float ki, f
 
 float fpid_control(struct f_pid_ctrl* ctrl)
 {
-	float input_current_error= m_ref-(float)m_ctrl_meas*m_12bit_gain;
+	float input_current_error= m_ref-(float)m_ctrl_meas*m_12bit_gain+ctrl->ref_mem;
 	float output;
 
 	output = m_kp*input_current_error + m_ki*m_imem;

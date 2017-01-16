@@ -79,8 +79,10 @@ main(void)
    config_measurements(&meas);
 
 	//#include "init_control_gains.txt"	Kp,			Ki			Kd		Kf			ref				measurement					control
-   init_f_pid_control(&voltage_ctrl, (float).1, (float)0.0001, (float)0, (float)0, (float)0.025, (Uint16*)&meas.sec_voltage, &fpid_control);
+   init_f_pid_control(&voltage_ctrl, (float).13, (float)0.0001, (float)0, (float)0, (float)0.05, (Uint16*)&meas.sec_voltage, &fpid_control);
+
    init_f_pid_control(&d1_ctrl, (float)4, (float)0.01, (float)0, (float)0, (float)0.025, (Uint16*)&meas.pri_current_lp, &fpid_control);
+   d1_ctrl.ref_mem = 971*2.4420e-04;
    init_f_pid_control(&d2_ctrl, (float)4, (float)0.00, (float)0, (float)0, (float)0.3, (Uint16*)&meas.sec_voltage, &fpid_control);
 
    phase_reg.p1_phase = &EPwm2Regs.TBPHS.half.TBPHS;
