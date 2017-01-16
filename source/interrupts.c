@@ -228,8 +228,8 @@ __interrupt void PWM1_int(void)
 
 	if (ScibRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
-			ScibRegs.SCITXBUF = (Uint16)*(meas.pri_current_lp);
-			ScibRegs.SCITXBUF = (Uint16)*(meas.pri_current_lp)>>8;
+			ScibRegs.SCITXBUF = (Uint16)*(meas.sec_current);
+			ScibRegs.SCITXBUF = (Uint16)*(meas.sec_current)>>8;
 	    }
 
 
