@@ -27,6 +27,8 @@ Uint16 i=0;
 
 Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.3,rxduty2 = 4095*.12,rxdata=0,rxphase=2048, rx_vref=110;
 
+extern Uint16* mailbox;
+
 __interrupt void PWM1_int(void)
 {
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
@@ -36,10 +38,10 @@ __interrupt void PWM1_int(void)
 
 	// macro for calling a function through a pointer
 
-	//ctrl = m_execute_fpid_ctrl(voltage_ctrl);
+	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
 	d1_ctrl.ref= m_execute_fpid_ctrl(voltage_ctrl);
 
-	ctrl = m_execute_fpid_ctrl(d1_ctrl);
+	//ctrl = m_execute_fpid_ctrl(d1_ctrl);
 	d2	= m_execute_fpid_ctrl(d2_ctrl);
 
 	if(i>135)
@@ -228,8 +230,8 @@ __interrupt void PWM1_int(void)
 
 	if (ScibRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
-			ScibRegs.SCITXBUF = (Uint16)*(meas.sec_current);
-			ScibRegs.SCITXBUF = (Uint16)*(meas.sec_current)>>8;
+			ScibRegs.SCITXBUF = (Uint16)*((Uint16*)*mailbox);
+			ScibRegs.SCITXBUF = (Uint16)*((Uint16*)*mailbox)>>8;
 	    }
 
 
@@ -283,6 +285,22 @@ __interrupt void PWM1_int(void)
 			EPwm5Regs.TZCLR.bit.OST =1;
 			EDIS;
 			//(duty-0x2000)/2048-1
+		}
+		else if(rxdata == 0xf001)//start modulation command
+		{
+			//set mailbox* pri current lp
+			mailbox = (Uint16*)&meas.pri_current_lp;
+		}
+
+		else if(rxdata == 0xf002)//start modulation command
+		{
+			//set mailbox* sec current
+			mailbox =(Uint16*)&meas.sec_current;
+		}
+		else if(rxdata == 0xf003)//start modulation command
+		{
+			//set mailbox* sec_voltage
+			mailbox = (Uint16*)&meas.sec_voltage;
 		}
 		else if(rxdata == 0xf999)//stop modulation command
 		{
