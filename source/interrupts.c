@@ -262,9 +262,9 @@ __interrupt void PWM1_int(void)
 		else if(rxdata < 0x6000)
 		{
 			rx_vref= rxdata-0x5000;
-			if(rx_vref >(Uint16)600)// 600 corresponds to 92.5v voltage
+			if(rx_vref >(Uint16)1600)// 600 corresponds to 92.5v voltage
 			{
-				rx_vref = 600;
+				rx_vref = 1600;
 			}
 
 			voltage_ctrl.ref = rx_vref*m_12bit_gain;
