@@ -262,7 +262,7 @@ __interrupt void PWM1_int(void)
 		else if(rxdata < 0x6000)
 		{
 			rx_vref= rxdata-0x5000;
-			if(rx_vref >(Uint16)600)
+			if(rx_vref >(Uint16)600)// 600 corresponds to 92.5v voltage
 			{
 				rx_vref = 600;
 			}
@@ -286,23 +286,26 @@ __interrupt void PWM1_int(void)
 			EDIS;
 			//(duty-0x2000)/2048-1
 		}
-		else if(rxdata == 0xf001)//start modulation command
+		else if(rxdata == 0xf001)//stream primary current measurement
 		{
 			//set mailbox* pri current lp
 			mailbox = (Uint16*)&meas.pri_current_lp;
 		}
 
-		else if(rxdata == 0xf002)//start modulation command
+		else if(rxdata == 0xf002)//stream secondary current measurement
 		{
 			//set mailbox* sec current
 			mailbox =(Uint16*)&meas.sec_current;
 		}
-		else if(rxdata == 0xf003)//start modulation command
+		else if(rxdata == 0xf003)//stream secondary voltage measurement
 		{
 			//set mailbox* sec_voltage
 			mailbox = (Uint16*)&meas.sec_voltage;
 		}
-		else if(rxdata == 0xf004)//start modulation command
+
+
+
+		else if(rxdata == 0xf004)//stream test signal
 		{
 			//set mailbox* sec_voltage
 			mailbox = (Uint16*)&cnt_jee;
