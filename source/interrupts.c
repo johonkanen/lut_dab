@@ -302,6 +302,11 @@ __interrupt void PWM1_int(void)
 			//set mailbox* sec_voltage
 			mailbox = (Uint16*)&meas.sec_voltage;
 		}
+		else if(rxdata == 0xf004)//start modulation command
+		{
+			//set mailbox* sec_voltage
+			mailbox = (Uint16*)&cnt_jee;
+		}
 		else if(rxdata == 0xf999)//stop modulation command
 		{
 			/*
