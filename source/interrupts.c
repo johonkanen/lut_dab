@@ -57,15 +57,15 @@ __interrupt void PWM1_int(void)
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
-	phase =  (rxphase*4.88280e-4-1)*.25;
-	//phase = ctrl;
+	//phase =  (rxphase*4.88280e-4-1)*.25;
+	phase = ctrl;
 	duty1 =  rxduty1*m_12bit_gain;
 	duty2 =  rxduty2*m_12bit_gain;
 
-	*(phase_reg.p1_phase+6) = 449;
-	*(phase_reg.p2_phase+6) = 449;
-	*(phase_reg.s1_phase+6) = 449;
-	*(phase_reg.s2_phase+6) = 449;
+	*(phase_reg.p1_phase+6) = 448;
+	*(phase_reg.p2_phase+6) = 448;
+	*(phase_reg.s1_phase+6) = 448;
+	*(phase_reg.s2_phase+6) = 448;
 
 
 	if(phase>=0)
@@ -194,28 +194,45 @@ __interrupt void PWM1_int(void)
 		s1_phase+=1;
 		s2_phase+=1;
 	}
-
-	if(p1_phase>448)
+/************************************************************************************/
+	if(p1_phase>=*(phase_reg.p1_phase+6) && p1_phase_m<=*(phase_reg.p1_phase+6))
 	{
-		*(phase_reg.p1_phase+6) = 440;
+		*(phase_reg.p1_phase+6) =  p1_phase+3;
 	}
-
-	if(p2_phase>448)
+	else if(p1_phase<=*(phase_reg.p1_phase+6) && p1_phase_m>=*(phase_reg.p1_phase+6))
 	{
-		*(phase_reg.p2_phase+6) = 440;
+		*(phase_reg.p1_phase+6) =  p1_phase_m-3;
 	}
-
-	if(s1_phase>448)
+/************************************************************************************/
+	if(p2_phase>=*(phase_reg.p2_phase+6) && p2_phase_m<=*(phase_reg.p2_phase+6))
 	{
-		*(phase_reg.s1_phase+6) = 440;
+		*(phase_reg.p2_phase+6) =  p2_phase+3;
 	}
-
-	if(s2_phase>448)
+	else if(p2_phase<=*(phase_reg.p2_phase+6) && p2_phase_m>=*(phase_reg.p2_phase+6))
 	{
-		*(phase_reg.s2_phase+6) = 440;
+		*(phase_reg.p2_phase+6) =  p2_phase_m-3;
 	}
+/************************************************************************************/
+	if(s1_phase>=*(phase_reg.s1_phase+6) && s1_phase_m<=*(phase_reg.s1_phase+6))
+	{
+		*(phase_reg.s1_phase+6) =  s1_phase+3;
+	}
+	else if(s1_phase<=*(phase_reg.s1_phase+6) && s1_phase_m>=*(phase_reg.s1_phase+6))
+	{
+		*(phase_reg.s1_phase+6) =  s1_phase_m-3;
+	}
+/************************************************************************************/
+	if(s2_phase>=*(phase_reg.s2_phase+6) && s2_phase_m<=*(phase_reg.s2_phase+6))
+	{
+		*(phase_reg.s2_phase+6) =  s2_phase+3;
+	}
+	else if(s2_phase<=*(phase_reg.s2_phase+6) && s2_phase_m>=*(phase_reg.s2_phase+6))
+	{
+		*(phase_reg.s2_phase+6) =  s2_phase_m-3;
+	}
+/************************************************************************************/
 
-
+	//update measurement triggers
 
 	EPwm1Regs.CMPA.half.CMPA = 900-s2_phase-10;
 	EPwm1Regs.CMPB = 900-s2_phase;
@@ -230,8 +247,6 @@ __interrupt void PWM1_int(void)
 
 	*phase_reg.s1_phase = s1_phase;
 	*phase_reg.s2_phase = s2_phase;
-
-
 
 	p1_phase_m = p1_phase;
 	p2_phase_m = p2_phase;
