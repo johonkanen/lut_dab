@@ -333,7 +333,7 @@ __interrupt void PWM1_int(void)
 		else if(rxdata == 0xf004)//stream test signal
 		{
 			//set mailbox* sec_voltage
-			mailbox = (Uint16*)&cnt_jee;
+			mailbox = (Uint16*)&meas.pri_voltage;
 		}
 		else if(rxdata == 0xf999)//stop modulation command
 		{
