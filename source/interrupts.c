@@ -232,6 +232,12 @@ __interrupt void PWM1_int(void)
 	*phase_reg.s2_phase = s2_phase;
 
 
+
+	p1_phase_m = p1_phase;
+	p2_phase_m = p2_phase;
+	s1_phase_m = s1_phase;
+	s2_phase_m = s2_phase;
+
 	if (ScibRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
 			ScibRegs.SCITXBUF = (Uint16)*((Uint16*)*mailbox);
