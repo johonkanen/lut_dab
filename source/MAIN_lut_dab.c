@@ -30,7 +30,7 @@
 #include "control.h"
 #include "ctrl_macros.h"
 
-#define LINK_TO_FLASH 1
+#define LINK_TO_FLASH 0
 #define INTERRUPT_TIMING 0
 
 main(void)
@@ -81,7 +81,7 @@ main(void)
    mailbox = (Uint16*)&meas.pri_current_lp;
 
 	//#include "init_control_gains.txt"	Kp,			Ki			Kd		Kf			ref				measurement					control
-   init_f_pid_control(&voltage_ctrl, (float)30, (float)0.003, (float)0, (float)0, (float)0.06, (Uint16*)&meas.sec_voltage, &fpid_control);
+   init_f_pid_control(&voltage_ctrl, (float)30, (float)0.007, (float)0, (float)0, (float)0.06, (Uint16*)&meas.sec_voltage, &fpid_control);
 
    init_f_pid_control(&d1_ctrl, (float)10, (float)0.08, (float)0, (float)0, (float)0.025, (Uint16*)&meas.pri_current_lp, &fpid_control);
    d1_ctrl.ref_mem = 949*2.4420e-04; //primary current offset

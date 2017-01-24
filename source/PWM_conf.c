@@ -282,7 +282,7 @@ void AUX_PWM6_config(void)
 	//EPwm1Regs.TBCTL.bit.SYNCOSEL = TB_CTR_ZERO;
 
 	(*ePWM[channel]).TBCTL.bit.CTRMODE = TB_COUNT_UP;
-	(*ePWM[channel]).TBCTL.bit.PHSEN = TB_ENABLE;		//master module
+	(*ePWM[channel]).TBCTL.bit.PHSEN = TB_DISABLE;		//master module
 	(*ePWM[channel]).TBCTL.bit.SYNCOSEL = TB_CTR_ZERO;
 	(*ePWM[channel]).TBCTL.bit.HSPCLKDIV = TB_DIV1;
 	(*ePWM[channel]).TBCTL.bit.CLKDIV = TB_DIV1;
@@ -290,21 +290,24 @@ void AUX_PWM6_config(void)
 
 	(*ePWM[channel]).CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;
 	(*ePWM[channel]).CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
-	(*ePWM[channel]).CMPCTL.bit.SHDWAMODE = CC_IMMEDIATE;
-	(*ePWM[channel]).CMPCTL.bit.SHDWBMODE = CC_IMMEDIATE;
+	(*ePWM[channel]).CMPCTL.bit.SHDWAMODE = CC_SHADOW;
+	(*ePWM[channel]).CMPCTL.bit.SHDWBMODE = CC_SHADOW;
+
+
+	(*ePWM[channel]).AQCTLA.bit.PRD = AQ_SET;
+	(*ePWM[channel]).AQCTLA.bit.CAU = AQ_CLEAR;
+
+	(*ePWM[channel]).AQCTLB.bit.ZRO = AQ_SET;
+	(*ePWM[channel]).AQCTLB.bit.CBU = AQ_CLEAR;
+
 
 	(*ePWM[channel]).ETSEL.bit.SOCAEN = 0x1;
 	(*ePWM[channel]).ETSEL.bit.SOCASEL =ET_CTRU_CMPA;       // Select SOC from from CPMB on upcount
 	(*ePWM[channel]).ETPS.bit.SOCAPRD = 0x1;
 
 	(*ePWM[channel]).ETSEL.bit.SOCBEN = 0x1;
-	(*ePWM[channel]).ETSEL.bit.SOCBSEL = ET_CTR_ZERO;       // Select SOC from from CPMB on upcount
+	(*ePWM[channel]).ETSEL.bit.SOCBSEL = ET_CTRU_CMPB;       // Select SOC from from CPMB on upcount
 	(*ePWM[channel]).ETPS.bit.SOCBPRD = 0x1;
-
-	// Assumes ePWM1 clock is already enabled in InitSysCtrl();
-////	(*ePWM[channel]).ETSEL.bit.INTSEL = ET_CTR_ZERO;//ET_CTR_PRD;// ET_CTR_ZERO;      // Enable INT on Zero event
-//	(*ePWM[channel]).ETSEL.bit.INTEN = 1;   // Enable INT
-//	(*ePWM[channel]).ETPS.bit.INTPRD = ET_1ST;            // Generate INT on 1st event
 }
 
 void AUX_PWM7_config(void)

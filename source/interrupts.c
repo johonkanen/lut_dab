@@ -55,8 +55,8 @@ __interrupt void PWM1_int(void)
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
-	//phase =  (rxphase*4.88280e-4-1)*.25;
-	phase = ctrl;
+	phase =  (rxphase*4.88280e-4-1)*.25;
+	//phase = ctrl;
 	duty1 =  rxduty1*m_12bit_gain;
 	duty2 =  rxduty2*m_12bit_gain;
 
@@ -233,12 +233,16 @@ __interrupt void PWM1_int(void)
 	//update measurement triggers
 
 	EPwm1Regs.CMPA.half.CMPA = 900-s2_phase-10;
-	EPwm1Regs.CMPB = 900-s2_phase;
+	EPwm1Regs.CMPB = 900-s2_phase-10;
 
+	EPwm6Regs.CMPA.half.CMPA = 900-p2_phase-10;
+	EPwm6Regs.CMPB = 900-p2_phase-10;
+
+	/*
 	EPwm6Regs.CMPA.half.CMPA = *(phase_reg.p2_phase+6);
 
 	EPwm6Regs.TBPHS.half.TBPHS =p2_phase;
-
+*/
 	//update phase shift registers
 	*phase_reg.p1_phase = p1_phase;
 	*phase_reg.p2_phase = p2_phase;

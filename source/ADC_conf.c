@@ -47,9 +47,9 @@ void Adc_config(void)
 	AdcRegs.ADCSOC4CTL.bit.ACQPS 	= 6;	//set SOC6/7 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	// low pass primary current
-	AdcRegs.ADCSOC5CTL.bit.CHSEL 	= 9;	//set SOC8/9 channel select to ADCIN B1
-	AdcRegs.ADCSOC5CTL.bit.TRIGSEL 	= 0x10;	//set SOC8/9 start trigger as EPWM8 SOCA
-	AdcRegs.ADCSOC5CTL.bit.ACQPS 	= 6;	//set SOC8/9 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
+	AdcRegs.ADCSOC5CTL.bit.CHSEL 	= 9;	//set SOC5 channel select to ADCIN B1
+	AdcRegs.ADCSOC5CTL.bit.TRIGSEL 	= 0xf;	//set SOC5 start trigger as EPWM6 SOCA
+	AdcRegs.ADCSOC5CTL.bit.ACQPS 	= 6;	//set SOC5 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	EDIS;
 }
