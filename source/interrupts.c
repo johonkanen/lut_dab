@@ -173,7 +173,7 @@ __interrupt void PWM1_int(void)
 				s1_phase = 0				+900*phase*(duty1+duty2);
 				s2_phase = 0+450*(1-duty2)	+900*phase*(duty1+duty2);
 			}
-			else if(duty1<duty2) // TODO
+			else if(duty1<duty2)
 			{
 				p1_phase = 0;
 				p2_phase = 0+450*(1-duty1);
