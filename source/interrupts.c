@@ -63,9 +63,9 @@ __interrupt void PWM1_int(void)
 	d1_ctrl.ref= m_execute_fpid_ctrl(voltage_ctrl);
 
 
-	current_filter_2_output = (AdcResult.ADCRESULT5*current_filter2[0] +current_filter2_mem[0])*0.187600514608639;
-	current_filter2_mem[0] =  AdcResult.ADCRESULT5*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
-	current_filter2_mem[1] =  AdcResult.ADCRESULT5*current_filter2[2] 						  - current_filter_2_output*current_filter2[2+3];
+	current_filter_2_output = (AdcResult.ADCRESULT6*current_filter2[0] +current_filter2_mem[0]);
+	current_filter2_mem[0] =  AdcResult.ADCRESULT6*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
+	current_filter2_mem[1] =  AdcResult.ADCRESULT6*current_filter2[2] 						  - current_filter_2_output*current_filter2[2+3];
 	//ctrl = m_execute_fpid_ctrl(d1_ctrl);
 	//ctrl = m_execute_fpid_ctrl(d1_ctrl);
 
