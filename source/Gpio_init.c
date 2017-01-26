@@ -25,8 +25,9 @@ void init_lut_dab_GPIO(void)
 	  GpioCtrlRegs.GPADIR.bit.GPIO17 = 1;
 
 	  //connect
-	  GpioCtrlRegs.GPAMUX1.bit.GPIO11 = 0;
-	  GpioCtrlRegs.GPADIR.bit.GPIO11 = 1;
+	  GpioCtrlRegs.GPAPUD.bit.GPIO11 = 1;
+	  GpioCtrlRegs.GPAMUX1.bit.GPIO11 = 1;
+	  //GpioCtrlRegs.GPADIR.bit.GPIO11 = 1;
 
 	  //EMERGENCYSTOP
 	  GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 0;

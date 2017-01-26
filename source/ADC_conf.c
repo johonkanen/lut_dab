@@ -30,7 +30,7 @@ void Adc_config(void)
 	AdcRegs.ADCSOC0CTL.bit.CHSEL 	= 0;	//set SOC0/1 channel select to ADCIN A0/B0
 	AdcRegs.ADCSOC0CTL.bit.TRIGSEL 	= 0x11;	//set SOC0/1 - ePWM7, ADCSOCA
 	AdcRegs.ADCSOC0CTL.bit.ACQPS 	= 6;	//set SOC0/1 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
-/*
+
 	//HF Primary current 1
 	AdcRegs.ADCSOC2CTL.bit.CHSEL 	= 1;	//set SOC2 channel select to ADCIN A1
 	AdcRegs.ADCSOC2CTL.bit.TRIGSEL 	= 0xf;	//set SOC2/3 start trigger as EPWM1 SOCA
@@ -40,14 +40,14 @@ void Adc_config(void)
 	AdcRegs.ADCSOC3CTL.bit.CHSEL 	= 1;	//set SOC3 channel select to ADCIN A1
 	AdcRegs.ADCSOC3CTL.bit.TRIGSEL 	= 0x10;	//set SOC4 start trigger as EPWM1 SOCB
 	AdcRegs.ADCSOC3CTL.bit.ACQPS 	= 6;	//set SOC4 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
-*/
+
 	//Primary voltage
 	AdcRegs.ADCSOC4CTL.bit.CHSEL 	= 2;	//set SOC6/7 channel select to ADCIN A2
 	AdcRegs.ADCSOC4CTL.bit.TRIGSEL 	= 0x06;	//set SOC6/7 start trigger as EPWM1 SOCB
 	AdcRegs.ADCSOC4CTL.bit.ACQPS 	= 6;	//set SOC6/7 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	// low pass primary current
-	AdcRegs.ADCSOC5CTL.bit.CHSEL 	= 9;	//set SOC5 channel select to ADCIN B1
+	AdcRegs.ADCSOC5CTL.bit.CHSEL 	= 1;	//set SOC5 channel select to ADCIN B1
 	AdcRegs.ADCSOC5CTL.bit.TRIGSEL 	= 0xf;	//set SOC5 start trigger as EPWM6 SOCA
 	AdcRegs.ADCSOC5CTL.bit.ACQPS 	= 6;	//set SOC5 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
