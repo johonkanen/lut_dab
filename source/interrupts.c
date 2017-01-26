@@ -31,6 +31,16 @@ Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.3,rxduty2 = 4095*.12,
 
 extern Uint16* mailbox;
 
+extern float current_filter[2];// = {0.7921,0.2079};
+extern float current_filter_mem;// = 0;
+extern Uint16 current_filter_output;// = 0;
+
+
+extern float current_filter2[6];
+extern float current_filter2_mem[2];
+extern Uint16 current_filter_2_output;
+
+
 __interrupt void PWM1_int(void)
 {
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
@@ -40,11 +50,24 @@ __interrupt void PWM1_int(void)
 
 	// macro for calling a function through a pointer
 
+	/*
+	float current_filter[2] = {0.7921,0.2079};
+	float current_filter_mem = 0;
+	Uint16 current_filter_output = 0;
+	*/
+
+	current_filter_output = (Uint16)(current_filter_mem)+AdcResult.ADCRESULT5*current_filter[0];
+	current_filter_mem = AdcResult.ADCRESULT5*current_filter[0] + current_filter_output*current_filter[1];
+
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
 	d1_ctrl.ref= m_execute_fpid_ctrl(voltage_ctrl);
 
+
+	current_filter_2_output = (AdcResult.ADCRESULT5*current_filter2[0] +current_filter2_mem[0])*0.187600514608639;
+	current_filter2_mem[0] =  AdcResult.ADCRESULT5*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
+	current_filter2_mem[1] =  AdcResult.ADCRESULT5*current_filter2[2] 						  - current_filter_2_output*current_filter2[2+3];
 	//ctrl = m_execute_fpid_ctrl(d1_ctrl);
-	ctrl = m_execute_fpid_ctrl(d1_ctrl);
+	//ctrl = m_execute_fpid_ctrl(d1_ctrl);
 
 	if(i>135)
 	{
@@ -55,8 +78,8 @@ __interrupt void PWM1_int(void)
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
-	phase =  (rxphase*4.88280e-4-1)*.25;
-	//phase = ctrl;
+	//phase =  (rxphase*4.88280e-4-1)*.25;
+	phase = ctrl;
 	duty1 =  rxduty1*m_12bit_gain;
 	duty2 =  rxduty2*m_12bit_gain;
 
@@ -235,8 +258,8 @@ __interrupt void PWM1_int(void)
 	EPwm1Regs.CMPA.half.CMPA = 900-s2_phase-10;
 	EPwm1Regs.CMPB = 900-s2_phase-10;
 
-	EPwm6Regs.CMPA.half.CMPA = 900-p2_phase-10;
-	EPwm6Regs.CMPB = 900-p2_phase-10;
+	EPwm6Regs.CMPA.half.CMPA = 900-p2_phase-16;
+	EPwm6Regs.CMPB = 900-p2_phase-16;
 
 	/*
 	EPwm6Regs.CMPA.half.CMPA = *(phase_reg.p2_phase+6);
@@ -329,13 +352,20 @@ __interrupt void PWM1_int(void)
 			//set mailbox* sec_voltage
 			mailbox = (Uint16*)&meas.sec_voltage;
 		}
-
-
-
 		else if(rxdata == 0xf004)//stream test signal
 		{
 			//set mailbox* sec_voltage
 			mailbox = (Uint16*)&meas.pri_voltage;
+		}
+		else if(rxdata == 0xf005)//stream test signal
+		{
+			//set mailbox* sec_voltage
+			mailbox = (Uint16*)&meas.pri_current_1;
+		}
+		else if(rxdata == 0xf006)//stream test signal
+		{
+			//set mailbox* sec_voltage
+			mailbox = (Uint16*)&meas.pri_current_2;
 		}
 		else if(rxdata == 0xf999)//stop modulation command
 		{
