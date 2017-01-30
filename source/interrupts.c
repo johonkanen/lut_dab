@@ -68,7 +68,7 @@ __interrupt void PWM1_int(void)
 	//*((Uint16*)current_samples+i);
 	Uint16 j = 0;
 
-	for(j=0;j<12;j=j+2)
+	for(j=12;j<24;j=j+2)
 	{
 
 		current_filter_2_output = *(Uint16*)*((Uint16*)&current_samples+j)	*current_filter2[0] +current_filter2_mem[0];
@@ -348,9 +348,7 @@ __interrupt void PWM1_int(void)
 		else if(rxdata == 0xf001)//stream primary current measurement
 		{
 			//set mailbox* pri current lp
-			mailbox_addr = &current_filter_output;
-
-			mailbox = (Uint16*)&mailbox_addr;
+			mailbox =(Uint16*)&meas.pri_current_lp;
 		}
 
 		else if(rxdata == 0xf002)//stream secondary current measurement
