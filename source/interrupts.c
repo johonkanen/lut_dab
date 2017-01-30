@@ -41,6 +41,9 @@ extern float current_filter2_mem[2];
 extern Uint16 current_filter_2_output;
 
 
+Uint16* mailbox_addr;
+
+
 __interrupt void PWM1_int(void)
 {
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
@@ -55,17 +58,23 @@ __interrupt void PWM1_int(void)
 	float current_filter_mem = 0;
 	Uint16 current_filter_output = 0;
 	*/
-
+/*
 	current_filter_output = (Uint16)(current_filter_mem)+AdcResult.ADCRESULT5*current_filter[0];
 	current_filter_mem = AdcResult.ADCRESULT5*current_filter[0] + current_filter_output*current_filter[1];
-
+*/
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
 	d1_ctrl.ref= m_execute_fpid_ctrl(voltage_ctrl);
 
+	//*((Uint16*)current_samples+i);
+	Uint16 j = 0;
 
-	current_filter_2_output = (AdcResult.ADCRESULT6*current_filter2[0] +current_filter2_mem[0]);
-	current_filter2_mem[0] =  AdcResult.ADCRESULT6*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
-	current_filter2_mem[1] =  AdcResult.ADCRESULT6*current_filter2[2] 						  - current_filter_2_output*current_filter2[2+3];
+	for(j=0;j<12;j=j+2)
+	{
+
+		current_filter_2_output = *(Uint16*)*((Uint16*)&current_samples+j)	*current_filter2[0] +current_filter2_mem[0];
+		current_filter2_mem[0] =  *(Uint16*)*((Uint16*)&current_samples+j)	*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
+		current_filter2_mem[1] =  *(Uint16*)*((Uint16*)&current_samples+j)	*current_filter2[2] 						- current_filter_2_output*current_filter2[2+3];
+	}
 	//ctrl = m_execute_fpid_ctrl(d1_ctrl);
 	//ctrl = m_execute_fpid_ctrl(d1_ctrl);
 
@@ -339,7 +348,9 @@ __interrupt void PWM1_int(void)
 		else if(rxdata == 0xf001)//stream primary current measurement
 		{
 			//set mailbox* pri current lp
-			mailbox = (Uint16*)&meas.pri_current_lp;
+			mailbox_addr = &current_filter_output;
+
+			mailbox = (Uint16*)&mailbox_addr;
 		}
 
 		else if(rxdata == 0xf002)//stream secondary current measurement

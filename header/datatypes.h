@@ -60,4 +60,23 @@ struct pwm_interface
 	volatile Uint16* s2_phase;
 };
 
+struct ad_interface
+{
+	volatile Uint16* a1;
+	volatile Uint16* a2;
+	volatile Uint16* a3;
+	volatile Uint16* a4;
+	volatile Uint16* a5;
+	volatile Uint16* a6;
+	volatile Uint16* a7;
+	volatile Uint16* a8;
+	volatile Uint16* a9;
+	volatile Uint16* a10;
+	volatile Uint16* a11;
+	volatile Uint16* a12;
+	volatile Uint16* a13;
+};
+
+
+
 #endif /* DATATYPES_H_ */

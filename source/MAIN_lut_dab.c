@@ -78,6 +78,25 @@ main(void)
 
    config_measurements(&meas);
 
+
+   current_samples.a1 = (Uint16*)&(AdcResult.ADCRESULT2);
+   current_samples.a2 = (Uint16*)&(AdcResult.ADCRESULT3);
+   current_samples.a3 = (Uint16*)&(AdcResult.ADCRESULT5);
+   current_samples.a4 = (Uint16*)&(AdcResult.ADCRESULT6);
+   current_samples.a5 = (Uint16*)&(AdcResult.ADCRESULT7);
+   current_samples.a6 = (Uint16*)&(AdcResult.ADCRESULT8);
+   current_samples.a7 = (Uint16*)&(AdcResult.ADCRESULT9);
+   current_samples.a8 = (Uint16*)&(AdcResult.ADCRESULT10);
+   current_samples.a9 = (Uint16*)&(AdcResult.ADCRESULT11);
+   current_samples.a10 = (Uint16*)&(AdcResult.ADCRESULT12);
+   current_samples.a11 = (Uint16*)&(AdcResult.ADCRESULT13);
+   current_samples.a12 = (Uint16*)&(AdcResult.ADCRESULT14);
+   current_samples.a13 = (Uint16*)&(AdcResult.ADCRESULT15);
+
+
+
+
+
    meas.pri_current_lp = &current_filter_2_output;
 
    mailbox = (Uint16*)&meas.pri_current_lp;

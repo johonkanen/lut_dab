@@ -35,6 +35,8 @@ struct measurements meas;
 struct ext_ad_result ext_ad;
 struct pwm_interface phase_reg;
 
+struct ad_interface current_samples;
+
 float current_filter[2] = {0.439900846488443, 0.120198307023115};
 float current_filter_mem = 0;
 Uint16 current_filter_output = 0;
