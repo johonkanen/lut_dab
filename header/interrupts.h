@@ -18,6 +18,9 @@
 __interrupt void PWM1_int(void);
 
 void read_ext_ad(void);
+void mean_filter(void);
+
+
 extern int16 cnt_jee;
 extern struct measurements meas;
 extern struct pwm_interface phase_reg;

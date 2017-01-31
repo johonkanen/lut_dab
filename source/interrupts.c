@@ -48,6 +48,7 @@ __interrupt void PWM1_int(void)
 {
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
 	read_ext_ad();
+	mean_filter();
 
 	cnt_jee--;
 
@@ -66,8 +67,8 @@ __interrupt void PWM1_int(void)
 	d1_ctrl.ref= m_execute_fpid_ctrl(voltage_ctrl);
 
 	//*((Uint16*)current_samples+i);
-	Uint16 j = 0;
 
+/*
 	for(j=12;j<24;j=j+2)
 	{
 
@@ -75,6 +76,7 @@ __interrupt void PWM1_int(void)
 		current_filter2_mem[0] =  *(Uint16*)*((Uint16*)&current_samples+j)	*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
 		current_filter2_mem[1] =  *(Uint16*)*((Uint16*)&current_samples+j)	*current_filter2[2] 						- current_filter_2_output*current_filter2[2+3];
 	}
+	*/
 	//ctrl = m_execute_fpid_ctrl(d1_ctrl);
 	//ctrl = m_execute_fpid_ctrl(d1_ctrl);
 
