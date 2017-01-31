@@ -269,8 +269,8 @@ __interrupt void PWM1_int(void)
 
 	if (ScibRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
-			ScibRegs.SCITXBUF = sig_prbs;
-			ScibRegs.SCITXBUF = sig_prbs>>8;
+		ScibRegs.SCITXBUF = (Uint16)*((Uint16*)*mailbox);
+		ScibRegs.SCITXBUF = (Uint16)*((Uint16*)*mailbox)>>8;
 	    }
 
 
