@@ -47,39 +47,16 @@ Uint16* mailbox_addr;
 __interrupt void PWM1_int(void)
 {
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
+
+	//assembly functions in corresponding assembly files
 	read_ext_ad();
 	mean_filter();
 	prbs_9();
 
 	cnt_jee--;
 
-	// macro for calling a function through a pointer
-
-	/*
-	float current_filter[2] = {0.7921,0.2079};
-	float current_filter_mem = 0;
-	Uint16 current_filter_output = 0;
-	*/
-/*
-	current_filter_output = (Uint16)(current_filter_mem)+AdcResult.ADCRESULT5*current_filter[0];
-	current_filter_mem = AdcResult.ADCRESULT5*current_filter[0] + current_filter_output*current_filter[1];
-*/
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
 	d1_ctrl.ref= m_execute_fpid_ctrl(voltage_ctrl);
-
-	//*((Uint16*)current_samples+i);
-
-/*
-	for(j=12;j<24;j=j+2)
-	{
-
-		current_filter_2_output = *(Uint16*)*((Uint16*)&current_samples+j)	*current_filter2[0] +current_filter2_mem[0];
-		current_filter2_mem[0] =  *(Uint16*)*((Uint16*)&current_samples+j)	*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
-		current_filter2_mem[1] =  *(Uint16*)*((Uint16*)&current_samples+j)	*current_filter2[2] 						- current_filter_2_output*current_filter2[2+3];
-	}
-	*/
-	//ctrl = m_execute_fpid_ctrl(d1_ctrl);
-	//ctrl = m_execute_fpid_ctrl(d1_ctrl);
 
 	if(i>135)
 	{
@@ -270,8 +247,8 @@ __interrupt void PWM1_int(void)
 	EPwm1Regs.CMPA.half.CMPA = 900-s2_phase-10;
 	EPwm1Regs.CMPB = 900-s2_phase-10;
 
-	EPwm6Regs.CMPA.half.CMPA = 900-p2_phase-16;
-	EPwm6Regs.CMPB = 900-p2_phase-16;
+	EPwm6Regs.CMPA.half.CMPA = 900-sig_prbs-16;
+	EPwm6Regs.CMPB = 900-sig_prbs-16;
 
 	/*
 	EPwm6Regs.CMPA.half.CMPA = *(phase_reg.p2_phase+6);
