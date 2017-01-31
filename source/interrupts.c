@@ -49,6 +49,7 @@ __interrupt void PWM1_int(void)
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
 	read_ext_ad();
 	mean_filter();
+	prbs_9();
 
 	cnt_jee--;
 

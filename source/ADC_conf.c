@@ -17,7 +17,7 @@ void Adc_config(void)
 	AdcRegs.INTSEL1N2.bit.INT1CONT   = 0;	//Disable ADCINT1 Continuous mode
 	AdcRegs.INTSEL1N2.bit.INT1SEL	 = 4;	//setup EOC2 to trigger ADCINT1 to fire
 
-	AdcRegs.ADCSAMPLEMODE.bit.SIMULEN0 = 0;
+//	AdcRegs.ADCSAMPLEMODE.bit.SIMULEN0 = 0;
 //	AdcRegs.ADCSAMPLEMODE.bit.SIMULEN2 = 1;
 //	AdcRegs.ADCSAMPLEMODE.bit.SIMULEN4 = 0;
 //	AdcRegs.ADCSAMPLEMODE.bit.SIMULEN6 = 1;
@@ -28,7 +28,7 @@ void Adc_config(void)
 
 	//dummy adc trigger
 	AdcRegs.ADCSOC0CTL.bit.CHSEL 	= 0;	//set SOC0/1 channel select to ADCIN A0/B0
-	AdcRegs.ADCSOC0CTL.bit.TRIGSEL 	= 0x11;	//set SOC0/1 - ePWM7, ADCSOCA
+	AdcRegs.ADCSOC0CTL.bit.TRIGSEL 	= 0xf;	//set SOC0/1 - ePWM7, ADCSOCA
 	AdcRegs.ADCSOC0CTL.bit.ACQPS 	= 6;	//set SOC0/1 S/H Window to 7 ADC Clock Cycles, (6 ACQPS plus 1)
 
 	AdcRegs.ADCSOC1CTL.bit.CHSEL 	= 0;	//set SOC0/1 channel select to ADCIN A0/B0

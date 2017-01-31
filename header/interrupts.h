@@ -19,6 +19,7 @@ __interrupt void PWM1_int(void);
 
 void read_ext_ad(void);
 void mean_filter(void);
+void prbs_9(void);
 
 
 extern int16 cnt_jee;

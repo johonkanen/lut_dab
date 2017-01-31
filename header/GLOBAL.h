@@ -30,12 +30,13 @@ struct f_pid_ctrl voltage_ctrl;
 struct f_pid_ctrl d1_ctrl;
 struct f_pid_ctrl d2_ctrl;
 
-struct storage sig_prbs;
 struct measurements meas;
 struct ext_ad_result ext_ad;
 struct pwm_interface phase_reg;
 
 struct ad_interface current_samples;
+
+Uint16 sig_prbs;
 
 float current_filter[2] = {0.439900846488443, 0.120198307023115};
 float current_filter_mem = 0;

@@ -74,6 +74,9 @@ main(void)
    scib_fifo_init();	   // Initialize the SCI FIFO
    scib_echoback_init();  // Initialize SCI for echoback
 
+
+   sig_prbs = 0x7f;
+
    //init the measurement structure
 
    config_measurements(&meas);
