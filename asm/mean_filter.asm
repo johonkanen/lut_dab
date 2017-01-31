@@ -27,7 +27,7 @@ _mean_filter:
 	ADD		AH,@_AdcResult+14
 	ADD		AH,@_AdcResult+15
 
-	MOV		PH,#0x13b1
+	MOV		PH,#0x13b1 ;load multiplicant with 1/13 in Q32 format
 	MOV		PL,#0x3b14
 
 	MOVL	XT,P
@@ -36,11 +36,6 @@ _mean_filter:
 	MOVL	ACC,P
 	MOVW	DP, #_current_filter_2_output
 	MOV		@_current_filter_2_output,AH
-
-
-
-
-
 
 	LRETR
 ;**************************************************************
