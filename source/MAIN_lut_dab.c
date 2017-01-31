@@ -75,7 +75,7 @@ main(void)
    scib_echoback_init();  // Initialize SCI for echoback
 
 
-   sig_prbs = 0x7f;
+   sig_prbs = 0x21;
 
    //init the measurement structure
 

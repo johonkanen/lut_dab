@@ -21,7 +21,7 @@ void read_ext_ad(void);
 void mean_filter(void);
 void prbs_9(void);
 
-
+extern Uint16 sig_prbs;
 extern int16 cnt_jee;
 extern struct measurements meas;
 extern struct pwm_interface phase_reg;

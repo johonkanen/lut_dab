@@ -16,14 +16,14 @@ _prbs_9:
 		MOV		AL,@_sig_prbs+0	;load wrptr
 		MOV		AH,@_sig_prbs+0
 
-
-		LSL		AL,#4
-
+		LSR		AH,#4
 		XOR		AH,AL
-		AND		AH,#0x200
-		LSR		AL,#5
+		AND		AH,#1
+		LSR		AL,#1
+		LSL		AH,#8
 
 		OR		AL,AH
+
 
 
 ;prbs is ready
