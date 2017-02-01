@@ -45,3 +45,4 @@ _mean_filter:
 	.global	_ext_ad
 	.global _current_samples
 	.global _current_filter_2_output
+	.global _mean_filt

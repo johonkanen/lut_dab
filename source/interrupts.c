@@ -40,6 +40,7 @@ extern float current_filter2[6];
 extern float current_filter2_mem[2];
 extern Uint16 current_filter_2_output;
 
+extern Uint16 mean_filt;
 
 Uint16* mailbox_addr;
 
@@ -54,6 +55,7 @@ __interrupt void PWM1_int(void)
 	prbs_9();
 
 	cnt_jee--;
+
 
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
 	d1_ctrl.ref= m_execute_fpid_ctrl(voltage_ctrl);
@@ -247,8 +249,8 @@ __interrupt void PWM1_int(void)
 	EPwm1Regs.CMPA.half.CMPA = 900-s2_phase-10;
 	EPwm1Regs.CMPB = 900-s2_phase-10;
 
-	EPwm6Regs.CMPA.half.CMPA = 600-sig_prbs;
-	EPwm6Regs.CMPB = 600-sig_prbs;//900-sig_prbs-16;
+	EPwm6Regs.CMPA.half.CMPA = 750-sig_prbs;
+	EPwm6Regs.CMPB = 750-sig_prbs;//900-sig_prbs-16;
 
 	/*
 	EPwm6Regs.CMPA.half.CMPA = *(phase_reg.p2_phase+6);
