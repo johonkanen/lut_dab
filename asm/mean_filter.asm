@@ -34,8 +34,8 @@ _mean_filter:
 
 	QMPYUL	P,XT,ACC
 	MOVL	ACC,P
-	MOVW	DP, #_current_filter_2_output
-	MOV		@_current_filter_2_output,AH
+	MOVW	DP, #_mean_filtered
+	MOV		@_mean_filtered,AH
 
 	LRETR
 ;**************************************************************
@@ -44,4 +44,4 @@ _mean_filter:
 	.global	_AdcResult
 	.global	_ext_ad
 	.global _current_samples
-	.global _current_filter_2_output
+	.global _mean_filtered
