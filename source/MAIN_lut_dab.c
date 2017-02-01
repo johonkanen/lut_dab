@@ -100,7 +100,7 @@ main(void)
 
 
 
-   meas.pri_current_lp = &current_filter_2_output;
+   meas.pri_current_lp = &mean_filt;
 
    mailbox = (Uint16*)&meas.pri_current_lp;
 

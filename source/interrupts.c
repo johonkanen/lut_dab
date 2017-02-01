@@ -56,6 +56,10 @@ __interrupt void PWM1_int(void)
 
 	cnt_jee--;
 
+	current_filter_2_output = mean_filt	*current_filter2[0] +current_filter2_mem[0];
+	current_filter2_mem[0] =  mean_filt	*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
+	current_filter2_mem[1] =  mean_filt	*current_filter2[2] 						- current_filter_2_output*current_filter2[2+3];
+
 
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
 	d1_ctrl.ref= m_execute_fpid_ctrl(voltage_ctrl);

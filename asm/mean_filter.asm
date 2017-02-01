@@ -34,8 +34,8 @@ _mean_filter:
 
 	QMPYUL	P,XT,ACC
 	MOVL	ACC,P
-	MOVW	DP, #_current_filter_2_output
-	MOV		@_current_filter_2_output,AH
+	MOVW	DP, #_mean_filt
+	MOV		@_mean_filt,AH
 
 	LRETR
 ;**************************************************************
