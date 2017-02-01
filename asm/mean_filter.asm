@@ -34,8 +34,10 @@ _mean_filter:
 
 	QMPYUL	P,XT,ACC
 	MOVL	ACC,P
-	MOVW	DP, #_mean_filt
-	MOV		@_mean_filt,AH
+
+	MOVW	DP, #_mean_filtered
+	MOV		@_mean_filtered,AH
+>>>>>>> lab_savegame
 
 	LRETR
 ;**************************************************************
@@ -44,5 +46,4 @@ _mean_filter:
 	.global	_AdcResult
 	.global	_ext_ad
 	.global _current_samples
-	.global _current_filter_2_output
-	.global _mean_filt
+	.global _mean_filtered

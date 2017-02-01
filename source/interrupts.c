@@ -44,7 +44,7 @@ extern Uint16 mean_filt;
 
 Uint16* mailbox_addr;
 
-
+Uint16 mean_filtered;
 __interrupt void PWM1_int(void)
 {
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
@@ -56,9 +56,16 @@ __interrupt void PWM1_int(void)
 
 	cnt_jee--;
 
+<<<<<<< HEAD
 	current_filter_2_output = mean_filt	*current_filter2[0] +current_filter2_mem[0];
 	current_filter2_mem[0] =  mean_filt	*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
 	current_filter2_mem[1] =  mean_filt	*current_filter2[2] 						- current_filter_2_output*current_filter2[2+3];
+=======
+
+	current_filter_2_output = mean_filtered	*current_filter2[0] +current_filter2_mem[0];
+	current_filter2_mem[0] =  mean_filtered	*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
+	current_filter2_mem[1] =  mean_filtered	*current_filter2[2] 						- current_filter_2_output*current_filter2[2+3];
+>>>>>>> lab_savegame
 
 
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
