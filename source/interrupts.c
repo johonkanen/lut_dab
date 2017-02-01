@@ -61,8 +61,8 @@ __interrupt void PWM1_int(void)
 	current_filter2_mem[1] =  mean_filtered	*current_filter2[2] 						- current_filter_2_output*current_filter2[2+3];
 
 
-	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
-	d1_ctrl.ref= m_execute_fpid_ctrl(d1_ctrl);
+	d1_ctrl.ref = m_execute_fpid_ctrl(voltage_ctrl);
+	ctrl= m_execute_fpid_ctrl(d1_ctrl);
 
 	if(i>135)
 	{
