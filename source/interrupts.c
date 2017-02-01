@@ -62,7 +62,7 @@ __interrupt void PWM1_int(void)
 
 
 	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
-	d1_ctrl.ref= m_execute_fpid_ctrl(voltage_ctrl);
+	d1_ctrl.ref= m_execute_fpid_ctrl(d1_ctrl);
 
 	if(i>135)
 	{
