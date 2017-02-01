@@ -37,7 +37,6 @@ _mean_filter:
 
 	MOVW	DP, #_mean_filtered
 	MOV		@_mean_filtered,AH
->>>>>>> lab_savegame
 
 	LRETR
 ;**************************************************************
