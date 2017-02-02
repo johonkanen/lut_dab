@@ -60,16 +60,16 @@ float fpid_vcontrol(struct f_pid_ctrl* ctrl)
 
 	output = m_kp*input_current_error + m_ki*m_imem;
 
-	if(output>=.2)
+	if(output>=.12)
 	{
-		m_imem -= (float)0.1*fabs(input_current_error);
-		output = (float).2;
+		m_imem -= (float)0.01*fabs(input_current_error);
+		output = (float).12;
 		return output;
 	}
-	else if(output<=-.2)
+	else if(output<=-.12)
 	{
-		m_imem += (float)0.1*fabs(input_current_error);
-		output = (float)-.2;
+		m_imem += (float)0.01*fabs(input_current_error);
+		output = (float)-.12;
 		return output;
 	}
 	else
