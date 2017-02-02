@@ -104,8 +104,8 @@ main(void)
 
    mailbox = (Uint16*)&meas.pri_current_lp;
 
-	//#include "init_control_gains.txt"	Kp,			Ki			Kd		Kf			ref				measurement					control
-   init_f_pid_control(&voltage_ctrl, (float)8, (float)0.0005, (float)0, (float)0, (float)0.06, (Uint16*)&meas.sec_voltage, &fpid_vcontrol);
+	//									   Kp,			Ki			Kd		Kf			ref				measurement					control
+   init_f_pid_control(&voltage_ctrl, (float)2, (float)0.0002, (float)0, (float)0, (float)0.06, (Uint16*)&meas.sec_voltage, &fpid_vcontrol);
 
    init_f_pid_control(&d1_ctrl, (float)15, (float)0.05, (float)0, (float)0, (float)0.025, (Uint16*)&meas.pri_current_lp, &fpid_control);
    d1_ctrl.ref_mem = 1855*2.4420e-04; //primary current offset

@@ -53,7 +53,6 @@ float fpid_control(struct f_pid_ctrl* ctrl)
 	}
 }
 
-
 float fpid_vcontrol(struct f_pid_ctrl* ctrl)
 {
 	float input_current_error= m_ref-(float)m_ctrl_meas*m_12bit_gain+ctrl->ref_mem;
@@ -61,16 +60,16 @@ float fpid_vcontrol(struct f_pid_ctrl* ctrl)
 
 	output = m_kp*input_current_error + m_ki*m_imem;
 
-	if(output>=1)
+	if(output>=.2)
 	{
-		m_imem -= (float)0.01*fabs(input_current_error);
-		output = (float)1;
+		m_imem -= (float)0.1*fabs(input_current_error);
+		output = (float).2;
 		return output;
 	}
-	else if(output<=-1)
+	else if(output<=-.2)
 	{
-		m_imem += (float)0.01*fabs(input_current_error);
-		output = (float)-1;
+		m_imem += (float)0.1*fabs(input_current_error);
+		output = (float)-.2;
 		return output;
 	}
 	else
