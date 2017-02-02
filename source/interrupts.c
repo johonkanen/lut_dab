@@ -40,7 +40,8 @@ extern float current_filter2[6];
 extern float current_filter2_mem[2];
 extern Uint16 current_filter_2_output;
 
-Uint16 ctrl_send_out;
+Uint16 i_ctrl_send_out;
+Uint16 v_ctrl_send_out;
 
 
 Uint16* mailbox_addr;
@@ -275,8 +276,10 @@ __interrupt void PWM1_int(void)
 	s1_phase_m = s1_phase;
 	s2_phase_m = s2_phase;
 
-	ctrl_send_out = (Uint16)(225*ctrl+225);
-	meas.pri_current_2 = &ctrl_send_out;
+	i_ctrl_send_out = (Uint16)(225*ctrl+225);
+	v_ctrl_send_out = (Uint16)(1855*d1_ctrl.ref+1855);
+	meas.pri_current_2 = &i_ctrl_send_out;
+	meas.pri_current_1 = &v_ctrl_send_out;
 
 	if (ScibRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
