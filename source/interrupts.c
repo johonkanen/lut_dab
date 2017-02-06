@@ -329,49 +329,53 @@ __interrupt void PWM1_int(void)
 		{
 
 			Uint16 rx_vkp= rxdata-0x6000;
-			if(rx_vkp >(Uint16)1600)// 600 corresponds to 92.5v voltage
+			if(rx_vkp >(Uint16)4095)// 600 corresponds to 92.5v voltage
 			{
-				rx_vkp = 1600;
+				rx_vkp = 0;
 			}
-
-			voltage_ctrl.kp = rx_vkp*m_12bit_gain;
-
+			else
+			{
+				voltage_ctrl.kp = rx_vkp*m_8bit_gain;
+			}
 			//(duty-0x2000)/2048-1
 		}
 		else if(rxdata < 0x8000)
 		{
 			Uint16 rx_vki= rxdata-0x7000;
-			if(rx_vki >(Uint16)1600)// 600 corresponds to 92.5v voltage
+			if(rx_vki >(Uint16)4095)// 600 corresponds to 92.5v voltage
 			{
-				rx_vki = 1600;
+				rx_vki = 0;
 			}
-
-			voltage_ctrl.ki = rx_vki*m_12bit_gain*10;
-
+			else
+			{
+				voltage_ctrl.ki = rx_vki*m_15bit_gain;
+			}
 			//(duty-0x2000)/2048-1
 		}
 		else if(rxdata < 0x9000)
 		{
 			Uint16 rx_ikp= rxdata-0x8000;
-			if(rx_ikp >(Uint16)1600)// 600 corresponds to 92.5v voltage
+			if(rx_ikp >(Uint16)4095)// 600 corresponds to 92.5v voltage
 			{
-				rx_ikp = 1600;
+				rx_ikp = 0;
 			}
-
-			d1_ctrl.kp = rx_ikp*m_12bit_gain;
-
+			else
+			{
+				d1_ctrl.kp = rx_ikp*m_8bit_gain;
+			}
 			//(duty-0x2000)/2048-1
 		}
 		else if(rxdata < 0xA000)
 		{
 			Uint16 rx_iki= rxdata-0x9000;
-			if(rx_iki >(Uint16)1600)// 600 corresponds to 92.5v voltage
+			if(rx_iki >(Uint16)4095)// 600 corresponds to 92.5v voltage
 			{
 				rx_iki = 1600;
 			}
-
-			d1_ctrl.ki = rx_iki*m_12bit_gain;
-
+			else
+			{
+				d1_ctrl.ki = rx_iki*m_15bit_gain;
+			}
 /*******************************************************************************/
 		}
 		else if(rxdata == 0xf666)//start modulation command
