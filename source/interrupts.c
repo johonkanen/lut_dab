@@ -334,7 +334,7 @@ __interrupt void PWM1_int(void)
 				rx_vkp = 1600;
 			}
 
-			voltage_ctrl.ref = rx_vkp*m_12bit_gain;
+			voltage_ctrl.kp = rx_vkp*m_12bit_gain;
 
 			//(duty-0x2000)/2048-1
 		}
@@ -358,7 +358,7 @@ __interrupt void PWM1_int(void)
 				rx_ikp = 1600;
 			}
 
-			voltage_ctrl.ref = rx_ikp*m_12bit_gain;
+			d1_ctrl.kp = rx_ikp*m_12bit_gain;
 
 			//(duty-0x2000)/2048-1
 		}
@@ -370,7 +370,7 @@ __interrupt void PWM1_int(void)
 				rx_iki = 1600;
 			}
 
-			voltage_ctrl.ref = rx_iki*m_12bit_gain;
+			d1_ctrl.ki = rx_iki*m_12bit_gain;
 
 /*******************************************************************************/
 		}
