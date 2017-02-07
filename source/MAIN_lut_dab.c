@@ -96,10 +96,6 @@ main(void)
    current_samples.a12 = (Uint16*)&(AdcResult.ADCRESULT14);
    current_samples.a13 = (Uint16*)&(AdcResult.ADCRESULT15);
 
-
-
-
-
    meas.pri_current_lp = (Uint16*)&current_filter_2_output;
 
    mailbox = (Uint16*)&meas.pri_current_lp;
