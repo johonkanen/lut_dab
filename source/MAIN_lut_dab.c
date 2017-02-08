@@ -145,7 +145,7 @@ main(void)
 	PieVectTable.EPWM1_INT = &PWM1_int;
 	EDIS;    //
 
-/*
+
 	while(1)
 	{
 		if (ScibRegs.SCIFFRX.bit.RXFFST == 2)
@@ -180,7 +180,7 @@ main(void)
 			}
 		}
 	}
-*/
+
 	IER |= M_INT3;
 	PieCtrlRegs.PIEIER3.bit.INTx1 = 1;
 	EINT;   // Enable Global interrupt INTM

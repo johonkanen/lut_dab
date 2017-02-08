@@ -27,7 +27,7 @@ float sini[136] = {0, 0.0465253121977467, 0.0929498609293922, 0.139173100960065,
 
 Uint16 i=0;
 
-Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.3,rxduty2 = 4095*.12,rxdata=0,rxphase=2048, rx_vref=110;
+Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.25,rxduty2 = 4095*.27,rxdata=0,rxphase=2048, rx_vref=110;
 
 extern Uint16* mailbox;
 
@@ -315,9 +315,9 @@ __interrupt void PWM1_int(void)
 		else if(rxdata < 0x6000)
 		{
 			rx_vref= rxdata-0x5000;
-			if(rx_vref >(Uint16)1600)// 600 corresponds to 92.5v voltage
+			if(rx_vref >(Uint16)3600)// 600 corresponds to 92.5v voltage
 			{
-				rx_vref = 1600;
+				rx_vref = 3600;
 			}
 
 			voltage_ctrl.ref = rx_vref*m_12bit_gain;
@@ -325,11 +325,11 @@ __interrupt void PWM1_int(void)
 			//(duty-0x2000)/2048-1
 		}
 /*******************************************************************************/
-		else if(rxdata < 0x7000)
+		else if(rxdata < 0x7000) // voltage proportional gain
 		{
 
 			Uint16 rx_vkp= rxdata-0x6000;
-			if(rx_vkp >(Uint16)4095)// 600 corresponds to 92.5v voltage
+			if(rx_vkp >(Uint16)4095)
 			{
 				rx_vkp = 0;
 			}
@@ -339,10 +339,10 @@ __interrupt void PWM1_int(void)
 			}
 			//(duty-0x2000)/2048-1
 		}
-		else if(rxdata < 0x8000)
+		else if(rxdata < 0x8000) // voltage integrator gain
 		{
 			Uint16 rx_vki= rxdata-0x7000;
-			if(rx_vki >(Uint16)4095)// 600 corresponds to 92.5v voltage
+			if(rx_vki >(Uint16)4095)
 			{
 				rx_vki = 0;
 			}
@@ -352,10 +352,10 @@ __interrupt void PWM1_int(void)
 			}
 			//(duty-0x2000)/2048-1
 		}
-		else if(rxdata < 0x9000)
+		else if(rxdata < 0x9000) // current control proportional gain
 		{
 			Uint16 rx_ikp= rxdata-0x8000;
-			if(rx_ikp >(Uint16)4095)// 600 corresponds to 92.5v voltage
+			if(rx_ikp >(Uint16)4095)
 			{
 				rx_ikp = 0;
 			}
@@ -365,7 +365,7 @@ __interrupt void PWM1_int(void)
 			}
 			//(duty-0x2000)/2048-1
 		}
-		else if(rxdata < 0xA000)
+		else if(rxdata < 0xA000) // current control integrator gain
 		{
 			Uint16 rx_iki= rxdata-0x9000;
 			if(rx_iki >(Uint16)4095)// 600 corresponds to 92.5v voltage
