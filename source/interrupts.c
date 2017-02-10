@@ -113,6 +113,10 @@ __interrupt void PWM1_int(void)
 			dither_sel = dither000;
 		}
 	}
+	else
+	{
+		dither_sel = dither000;
+	}
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
