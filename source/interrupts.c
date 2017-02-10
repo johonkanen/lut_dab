@@ -116,6 +116,11 @@ __interrupt void PWM1_int(void)
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
+	dither_ind++;
+	if(dither_ind>4)
+	{
+		dither_ind = 0;
+	}
 	//phase =  (rxphase*4.88280e-4-1)*.25;
 	phase = ctrl;
 	duty1 =  rxduty1*m_12bit_gain;
@@ -129,6 +134,7 @@ __interrupt void PWM1_int(void)
 
 	if(phase>=0)
 	{
+		phase+=(float)(dither_sel[dither_ind])*per225 - per225;
 		if(duty1+duty2>=1.0)
 		{
 			if(duty1 == duty2)
@@ -189,6 +195,7 @@ __interrupt void PWM1_int(void)
 	else// if(phase<0)
 	{
 		phase = -phase;
+		phase+=(float)(dither_sel[dither_ind])*per225 - per225;
 		if(duty1+duty2>=1.0)
 		{
 			if(duty1 == duty2)
@@ -316,7 +323,7 @@ __interrupt void PWM1_int(void)
 	s1_phase_m = s1_phase;
 	s2_phase_m = s2_phase;
 
-	i_ctrl_send_out = (Uint16)(225*ctrl+225);
+	i_ctrl_send_out = (Uint16)(225*phase+225);
 	v_ctrl_send_out = (Uint16)(1855*d1_ctrl.ref+1855);
 	meas.pri_current_2 = &i_ctrl_send_out;
 	meas.pri_current_1 = &v_ctrl_send_out;
