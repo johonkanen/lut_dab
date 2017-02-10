@@ -35,6 +35,9 @@ extern float current_filter[2];// = {0.7921,0.2079};
 extern float current_filter_mem;// = 0;
 extern Uint16 current_filter_output;// = 0;
 
+Uint16 dither075[] = {1, 0, 1, 1};
+Uint16 dither050[] = {1, 0, 1, 0};
+Uint16 dither025[] = {0, 0, 1, 0};
 
 extern float current_filter2[6];
 extern float current_filter2_mem[2];
@@ -42,7 +45,6 @@ extern Uint16 current_filter_2_output;
 
 Uint16 i_ctrl_send_out;
 Uint16 v_ctrl_send_out;
-
 
 Uint16* mailbox_addr;
 
@@ -58,11 +60,9 @@ __interrupt void PWM1_int(void)
 
 	cnt_jee--;
 
-
 	current_filter_2_output = mean_filtered	*current_filter2[0] +current_filter2_mem[0];
 	current_filter2_mem[0] =  mean_filtered	*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
 	current_filter2_mem[1] =  mean_filtered	*current_filter2[2] 						- current_filter_2_output*current_filter2[2+3];
-
 
 	d1_ctrl.ref = m_execute_fpid_ctrl(voltage_ctrl);
 	ctrl= m_execute_fpid_ctrl(d1_ctrl);
@@ -73,6 +73,7 @@ __interrupt void PWM1_int(void)
 	}
 
 	ctrl = ctrl*.25;// + sini[i]*.2;
+
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
