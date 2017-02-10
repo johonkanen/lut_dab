@@ -35,9 +35,14 @@ extern float current_filter[2];// = {0.7921,0.2079};
 extern float current_filter_mem;// = 0;
 extern Uint16 current_filter_output;// = 0;
 
-Uint16 dither075[] = {1, 0, 1, 1};
-Uint16 dither050[] = {1, 0, 1, 0};
-Uint16 dither025[] = {0, 0, 1, 0};
+Uint16 dither080[] = {1, 1, 0, 1, 1};
+Uint16 dither060[] = {1, 0, 1, 0, 1};
+Uint16 dither040[] = {1, 0, 1, 0, 0};
+Uint16 dither020[] = {0, 1, 0, 0, 0};
+Uint16 dither000[] = {0, 0, 0, 0, 0};
+
+Uint16* dither_sel = dither000;
+Uint16 dither_ind =0;
 
 extern float current_filter2[6];
 extern float current_filter2_mem[2];
@@ -49,6 +54,13 @@ Uint16 v_ctrl_send_out;
 Uint16* mailbox_addr;
 
 Uint16 mean_filtered;
+
+float testisignaali;
+Uint16 testisignaali16;
+
+
+#define per225 (float)0.004444444444444
+
 __interrupt void PWM1_int(void)
 {
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
@@ -74,6 +86,33 @@ __interrupt void PWM1_int(void)
 
 	ctrl = ctrl*.25;// + sini[i]*.2;
 
+	testisignaali = ctrl*900;
+	testisignaali16 = testisignaali;
+	testisignaali = testisignaali - (float)testisignaali16;
+
+	if(testisignaali < 0.9)
+	{
+		if(testisignaali > 0.7)
+		{
+			dither_sel = dither080;
+		}
+		else if(testisignaali > 0.5)
+		{
+			dither_sel = dither060;
+		}
+		else if(testisignaali > 0.3)
+		{
+			dither_sel = dither040;
+		}
+		else if(testisignaali > 0.1)
+		{
+			dither_sel = dither020;
+		}
+		else
+		{
+			dither_sel = dither000;
+		}
+	}
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
