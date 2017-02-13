@@ -70,6 +70,18 @@ __interrupt void PWM1_int(void)
 	mean_filter();
 	prbs_9();
 
+
+	if (mean_filtered > 3600 || ext_ad.second_conv > 2016)
+	{
+		EALLOW;
+		EPwm2Regs.TZFRC.bit.OST =1;
+		EPwm3Regs.TZFRC.bit.OST =1;
+		EPwm4Regs.TZFRC.bit.OST =1;
+		EPwm5Regs.TZFRC.bit.OST =1;
+		EDIS;
+	}
+
+
 	cnt_jee--;
 
 	current_filter_2_output = mean_filtered	*current_filter2[0] +current_filter2_mem[0];
