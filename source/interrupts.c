@@ -68,7 +68,7 @@ __interrupt void PWM1_int(void)
 	//assembly functions in corresponding assembly files
 	read_ext_ad();
 	mean_filter();
-	prbs_9();
+	prbs_3();
 
 
 	if (mean_filtered > 3600 || ext_ad.second_conv > 2016)

@@ -20,6 +20,7 @@ __interrupt void PWM1_int(void);
 void read_ext_ad(void);
 void mean_filter(void);
 void prbs_9(void);
+void prbs_3(void);
 
 extern Uint16 sig_prbs;
 extern int16 cnt_jee;
