@@ -71,7 +71,7 @@ __interrupt void PWM1_int(void)
 	prbs_3();
 
 
-	if (mean_filtered > 3600 || ext_ad.second_conv > 2016)
+	if (mean_filtered > 3600 || ext_ad.second_conv > 3600)
 	{
 		EALLOW;
 		EPwm2Regs.TZFRC.bit.OST =1;
