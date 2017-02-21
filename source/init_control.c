@@ -36,13 +36,13 @@ float fpid_control(struct f_pid_ctrl* ctrl)
 
 	if(output>=1)
 	{
-		m_imem -= (float)0.001*fabs(input_current_error);
+		m_imem -= (float)0.005*fabs(input_current_error);
 		output = (float)1;
 		return output;
 	}
 	else if(output<=-1)
 	{
-		m_imem += (float)0.001*fabs(input_current_error);
+		m_imem += (float)0.005*fabs(input_current_error);
 		output = (float)-1;
 		return output;
 	}
@@ -60,16 +60,16 @@ float fpid_vcontrol(struct f_pid_ctrl* ctrl)
 
 	output = m_kp*input_current_error + m_ki*m_imem;
 
-	if(output>=.12)
+	if(output>=.5)
 	{
-		m_imem -= (float)0.0001*fabs(input_current_error);
-		output = (float).12;
+		m_imem -= (float)0.005*fabs(input_current_error);
+		output = (float).5;
 		return output;
 	}
-	else if(output<=-.12)
+	else if(output<=-.5)
 	{
-		m_imem += (float)0.0001*fabs(input_current_error);
-		output = (float)-.12;
+		m_imem += (float)0.005*fabs(input_current_error);
+		output = (float)-.5;
 		return output;
 	}
 	else
