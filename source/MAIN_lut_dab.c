@@ -75,7 +75,7 @@ main(void)
    scib_echoback_init();  // Initialize SCI for echoback
 
 
-   sig_prbs = 0x21;
+   sig_prbs = 0x3;
 
    //init the measurement structure
 
@@ -96,18 +96,14 @@ main(void)
    current_samples.a12 = (Uint16*)&(AdcResult.ADCRESULT14);
    current_samples.a13 = (Uint16*)&(AdcResult.ADCRESULT15);
 
-
-
-
-
    meas.pri_current_lp = &mean_filt;
 
    mailbox = (Uint16*)&meas.pri_current_lp;
 
-	//#include "init_control_gains.txt"	Kp,			Ki			Kd		Kf			ref				measurement					control
-   init_f_pid_control(&voltage_ctrl, (float)480, (float)0.02, (float)0, (float)0, (float)0.06, (Uint16*)&meas.sec_voltage, &fpid_control);
+	//									   Kp,			Ki			Kd		Kf			ref				measurement					control
+   init_f_pid_control(&voltage_ctrl, (float)2, (float)0.0002, (float)0, (float)0, (float)0.06, (Uint16*)&meas.sec_voltage, &fpid_vcontrol);
 
-   init_f_pid_control(&d1_ctrl, (float)5, (float)0.08, (float)0, (float)0, (float)0.025, (Uint16*)&meas.pri_current_lp, &fpid_control);
+   init_f_pid_control(&d1_ctrl, (float)15, (float)0.05, (float)0, (float)0, (float)0.025, (Uint16*)&meas.pri_current_lp, &fpid_control);
    d1_ctrl.ref_mem = 1855*2.4420e-04; //primary current offset
 
    //d1_ctrl.ref_mem = 1350*2.4420e-04;//secondary current offset
@@ -149,7 +145,7 @@ main(void)
 	PieVectTable.EPWM1_INT = &PWM1_int;
 	EDIS;    //
 
-/*
+
 	while(1)
 	{
 		if (ScibRegs.SCIFFRX.bit.RXFFST == 2)
@@ -184,7 +180,7 @@ main(void)
 			}
 		}
 	}
-*/
+
 	IER |= M_INT3;
 	PieCtrlRegs.PIEIER3.bit.INTx1 = 1;
 	EINT;   // Enable Global interrupt INTM

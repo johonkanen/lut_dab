@@ -27,7 +27,7 @@ float sini[136] = {0, 0.0465253121977467, 0.0929498609293922, 0.139173100960065,
 
 Uint16 i=0;
 
-Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.3,rxduty2 = 4095*.12,rxdata=0,rxphase=2048, rx_vref=110;
+Uint16 p1_phase,p2_phase,s1_phase,s2_phase,rxduty1 = 4095*.25,rxduty2 = 4095*.27,rxdata=0,rxphase=2048, rx_vref=110;
 
 extern Uint16* mailbox;
 
@@ -35,16 +35,34 @@ extern float current_filter[2];// = {0.7921,0.2079};
 extern float current_filter_mem;// = 0;
 extern Uint16 current_filter_output;// = 0;
 
+Uint16 dither080[] = {1, 1, 0, 1, 1};
+Uint16 dither060[] = {1, 0, 1, 0, 1};
+Uint16 dither040[] = {1, 0, 1, 0, 0};
+Uint16 dither020[] = {0, 1, 0, 0, 0};
+Uint16 dither000[] = {0, 0, 0, 0, 0};
+
+Uint16* dither_sel = dither000;
+Uint16 dither_ind =0;
 
 extern float current_filter2[6];
 extern float current_filter2_mem[2];
 extern Uint16 current_filter_2_output;
 
+
 extern Uint16 mean_filt;
+Uint16 i_ctrl_send_out;
+Uint16 v_ctrl_send_out;
 
 Uint16* mailbox_addr;
 
 Uint16 mean_filtered;
+
+float testisignaali;
+Uint16 testisignaali16;
+
+
+#define per225 (float)0.004444444444444
+
 __interrupt void PWM1_int(void)
 {
 	GpioDataRegs.GPASET.bit.GPIO17 = 1;
@@ -52,7 +70,19 @@ __interrupt void PWM1_int(void)
 	//assembly functions in corresponding assembly files
 	read_ext_ad();
 	mean_filter();
-	prbs_9();
+	prbs_3();
+
+
+	if (mean_filtered > 3600 || ext_ad.second_conv > 3600)
+	{
+		EALLOW;
+		EPwm2Regs.TZFRC.bit.OST =1;
+		EPwm3Regs.TZFRC.bit.OST =1;
+		EPwm4Regs.TZFRC.bit.OST =1;
+		EPwm5Regs.TZFRC.bit.OST =1;
+		EDIS;
+	}
+
 
 	cnt_jee--;
 
@@ -60,10 +90,8 @@ __interrupt void PWM1_int(void)
 	current_filter2_mem[0] =  mean_filtered	*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
 	current_filter2_mem[1] =  mean_filtered	*current_filter2[2] 						- current_filter_2_output*current_filter2[2+3];
 
-
-
-	ctrl = m_execute_fpid_ctrl(voltage_ctrl);
-	d1_ctrl.ref= m_execute_fpid_ctrl(d1_ctrl);
+	d1_ctrl.ref = m_execute_fpid_ctrl(voltage_ctrl);
+	ctrl= m_execute_fpid_ctrl(d1_ctrl);
 
 	if(i>135)
 	{
@@ -71,10 +99,47 @@ __interrupt void PWM1_int(void)
 	}
 
 	ctrl = ctrl*.25;// + sini[i]*.2;
+	//ctrl =  (rxphase*4.88280e-4-1)*.25;
+	testisignaali = ctrl*900;
+	testisignaali16 = testisignaali;
+	testisignaali = testisignaali - (float)testisignaali16;
+
+	if(testisignaali < 0.9)
+	{
+		if(testisignaali > 0.7)
+		{
+			dither_sel = dither080;
+		}
+		else if(testisignaali > 0.5)
+		{
+			dither_sel = dither060;
+		}
+		else if(testisignaali > 0.3)
+		{
+			dither_sel = dither040;
+		}
+		else if(testisignaali > 0.1)
+		{
+			dither_sel = dither020;
+		}
+		else
+		{
+			dither_sel = dither000;
+		}
+	}
+	else
+	{
+		dither_sel = dither000;
+	}
 	i++;
 	//ctrl = cnt_jee*3.0518e-05*.25;
 
-	//phase =  (rxphase*4.88280e-4-1)*.25;
+	dither_ind++;
+	if(dither_ind>4)
+	{
+		dither_ind = 0;
+	}
+
 	phase = ctrl;
 	duty1 =  rxduty1*m_12bit_gain;
 	duty2 =  rxduty2*m_12bit_gain;
@@ -87,6 +152,7 @@ __interrupt void PWM1_int(void)
 
 	if(phase>=0)
 	{
+		phase+=(float)(dither_sel[dither_ind])*per225 - per225;
 		if(duty1+duty2>=1.0)
 		{
 			if(duty1 == duty2)
@@ -147,6 +213,7 @@ __interrupt void PWM1_int(void)
 	else// if(phase<0)
 	{
 		phase = -phase;
+		phase+=(float)(dither_sel[dither_ind])*per225 - per225;
 		if(duty1+duty2>=1.0)
 		{
 			if(duty1 == duty2)
@@ -254,8 +321,8 @@ __interrupt void PWM1_int(void)
 	EPwm1Regs.CMPA.half.CMPA = 900-s2_phase-10;
 	EPwm1Regs.CMPB = 900-s2_phase-10;
 
-	EPwm6Regs.CMPA.half.CMPA = 750-sig_prbs;
-	EPwm6Regs.CMPB = 750-sig_prbs;//900-sig_prbs-16;
+	EPwm6Regs.CMPA.half.CMPA = 900-(sig_prbs<<7);
+	EPwm6Regs.CMPB = 900-(sig_prbs<<7);//900-sig_prbs-16;
 
 	/*
 	EPwm6Regs.CMPA.half.CMPA = *(phase_reg.p2_phase+6);
@@ -273,6 +340,11 @@ __interrupt void PWM1_int(void)
 	p2_phase_m = p2_phase;
 	s1_phase_m = s1_phase;
 	s2_phase_m = s2_phase;
+
+	i_ctrl_send_out = (Uint16)(225*phase+225);
+	v_ctrl_send_out = (Uint16)(1855*d1_ctrl.ref+1855);
+	meas.pri_current_2 = &i_ctrl_send_out;
+	meas.pri_current_1 = &v_ctrl_send_out;
 
 	if (ScibRegs.SCIFFTX.bit.TXFFST == 0)
 	    {
@@ -308,14 +380,68 @@ __interrupt void PWM1_int(void)
 		else if(rxdata < 0x6000)
 		{
 			rx_vref= rxdata-0x5000;
-			if(rx_vref >(Uint16)1600)// 600 corresponds to 92.5v voltage
+			if(rx_vref >(Uint16)3600)// 600 corresponds to 92.5v voltage
 			{
-				rx_vref = 1600;
+				rx_vref = 3600;
 			}
 
 			voltage_ctrl.ref = rx_vref*m_12bit_gain;
 
 			//(duty-0x2000)/2048-1
+		}
+/*******************************************************************************/
+		else if(rxdata < 0x7000) // voltage proportional gain
+		{
+
+			Uint16 rx_vkp= rxdata-0x6000;
+			if(rx_vkp >(Uint16)4095)
+			{
+				rx_vkp = 0;
+			}
+			else
+			{
+				voltage_ctrl.kp = rx_vkp*m_8bit_gain;
+			}
+			//(duty-0x2000)/2048-1
+		}
+		else if(rxdata < 0x8000) // voltage integrator gain
+		{
+			Uint16 rx_vki= rxdata-0x7000;
+			if(rx_vki >(Uint16)4095)
+			{
+				rx_vki = 0;
+			}
+			else
+			{
+				voltage_ctrl.ki = rx_vki*m_15bit_gain;
+			}
+			//(duty-0x2000)/2048-1
+		}
+		else if(rxdata < 0x9000) // current control proportional gain
+		{
+			Uint16 rx_ikp= rxdata-0x8000;
+			if(rx_ikp >(Uint16)4095)
+			{
+				rx_ikp = 0;
+			}
+			else
+			{
+				d1_ctrl.kp = rx_ikp*m_8bit_gain;
+			}
+			//(duty-0x2000)/2048-1
+		}
+		else if(rxdata < 0xA000) // current control integrator gain
+		{
+			Uint16 rx_iki= rxdata-0x9000;
+			if(rx_iki >(Uint16)4095)// 600 corresponds to 92.5v voltage
+			{
+				rx_iki = 1600;
+			}
+			else
+			{
+				d1_ctrl.ki = rx_iki*m_15bit_gain;
+			}
+/*******************************************************************************/
 		}
 		else if(rxdata == 0xf666)//start modulation command
 		{

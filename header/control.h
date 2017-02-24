@@ -22,6 +22,7 @@ void init_f_pid_control(struct f_pid_ctrl* pid_controller,//pointer to the contr
 						);
 
 float fpid_control(struct f_pid_ctrl*);
+float fpid_vcontrol(struct f_pid_ctrl*);
 
 extern struct measurements meas;
 
