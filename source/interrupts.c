@@ -441,8 +441,20 @@ __interrupt void PWM1_int(void)
 			{
 				d1_ctrl.ki = rx_iki*m_15bit_gain;
 			}
-/*******************************************************************************/
 		}
+		else if(rxdata < 0xB000) // current control integrator gain
+		{
+			Uint16 rx_iref= rxdata-0xA000;
+			if(rx_iref >(Uint16)3500)// 600 corresponds to 92.5v voltage
+			{
+				rx_iref = 3500;
+			}
+			else
+			{
+				d1_ctrl.ref = rx_iref*m_12bit_gain;
+			}
+		}
+		/*******************************************************************************/
 		else if(rxdata == 0xf666)//start modulation command
 		{
 			/*
