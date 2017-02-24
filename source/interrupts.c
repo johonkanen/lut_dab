@@ -73,7 +73,7 @@ __interrupt void PWM1_int(void)
 	prbs_3();
 
 
-	if (mean_filtered > 3600 || ext_ad.second_conv > 3600)
+	if (current_filter_2_output > 3600 || ext_ad.second_conv > 3600)
 	{
 		EALLOW;
 		EPwm2Regs.TZFRC.bit.OST =1;
@@ -90,7 +90,7 @@ __interrupt void PWM1_int(void)
 	current_filter2_mem[0] =  mean_filtered	*current_filter2[1] +current_filter2_mem[1] - current_filter_2_output*current_filter2[1+3];
 	current_filter2_mem[1] =  mean_filtered	*current_filter2[2] 						- current_filter_2_output*current_filter2[2+3];
 
-	d1_ctrl.ref = m_execute_fpid_ctrl(voltage_ctrl);
+	//d1_ctrl.ref = m_execute_fpid_ctrl(voltage_ctrl);
 	ctrl= m_execute_fpid_ctrl(d1_ctrl);
 
 	if(i>135)
