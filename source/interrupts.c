@@ -342,7 +342,7 @@ __interrupt void PWM1_int(void)
 	s2_phase_m = s2_phase;
 
 	i_ctrl_send_out = (Uint16)(225*phase+225);
-	v_ctrl_send_out = (Uint16)(1855*d1_ctrl.ref+1855);
+	v_ctrl_send_out = (Uint16)(225*ctrl+225);
 	meas.pri_current_2 = &i_ctrl_send_out;
 	meas.pri_current_1 = &v_ctrl_send_out;
 
