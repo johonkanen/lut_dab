@@ -97,7 +97,7 @@ __interrupt void PWM1_int(void)
 	}
 
 	ctrl = ctrl*.25;// + sini[i]*.2;
-
+	//ctrl =  (rxphase*4.88280e-4-1)*.25;
 	testisignaali = ctrl*900;
 	testisignaali16 = testisignaali;
 	testisignaali = testisignaali - (float)testisignaali16;
@@ -137,7 +137,7 @@ __interrupt void PWM1_int(void)
 	{
 		dither_ind = 0;
 	}
-	//phase =  (rxphase*4.88280e-4-1)*.25;
+
 	phase = ctrl;
 	duty1 =  rxduty1*m_12bit_gain;
 	duty2 =  rxduty2*m_12bit_gain;
@@ -319,8 +319,8 @@ __interrupt void PWM1_int(void)
 	EPwm1Regs.CMPA.half.CMPA = 900-s2_phase-10;
 	EPwm1Regs.CMPB = 900-s2_phase-10;
 
-	EPwm6Regs.CMPA.half.CMPA = 900-(sig_prbs<<6);
-	EPwm6Regs.CMPB = 900-(sig_prbs<<6);//900-sig_prbs-16;
+	EPwm6Regs.CMPA.half.CMPA = 900-(sig_prbs<<7);
+	EPwm6Regs.CMPB = 900-(sig_prbs<<7);//900-sig_prbs-16;
 
 	/*
 	EPwm6Regs.CMPA.half.CMPA = *(phase_reg.p2_phase+6);
