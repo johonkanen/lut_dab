@@ -99,7 +99,7 @@ __interrupt void PWM1_int(void)
 	}
 
 	ctrl = ctrl*.25;// + sini[i]*.2;
-	//ctrl =  (rxphase*4.88280e-4-1)*.25;
+	ctrl =  (rxphase*4.88280e-4-1)*.25;
 	testisignaali = ctrl*900;
 	testisignaali16 = testisignaali;
 	testisignaali = testisignaali - (float)testisignaali16;
