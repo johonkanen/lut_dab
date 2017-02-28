@@ -34,16 +34,16 @@ float fpid_control(struct f_pid_ctrl* ctrl)
 
 	output = m_kp*input_current_error + m_ki*m_imem;
 
-	if(output>=1)
+	if(output>=.95)
 	{
 		m_imem -= (float)0.005*fabs(input_current_error);
-		output = (float)1;
+		output = (float).95;
 		return output;
 	}
-	else if(output<=-1)
+	else if(output<=-.95)
 	{
 		m_imem += (float)0.005*fabs(input_current_error);
-		output = (float)-1;
+		output = (float)-.95;
 		return output;
 	}
 	else
